@@ -16,12 +16,12 @@
 {
 
     ***REMOVED***If keys load successfully, do stuff, if not, no need
-    if ([self loadKeys]) {
+***REMOVED***    if ([self loadKeys]) {
+    
+    [self loadKeys];
+    [self requestRegions];
         
-        
-        [self requestRegions];
-        
-    }
+***REMOVED***    }
     
 
     
@@ -34,17 +34,22 @@
 - (BOOL)loadKeys {
     
     userDefaults = [NSUserDefaults standardUserDefaults];
+
     
+
+
     
     ***REMOVED*** If no key values are found, no need to set them
-    if ([userDefaults objectForKey:@"ClientID"] == nil ||
+    if ([userDefaults objectForKey:@"clientID"] == nil ||
         [userDefaults objectForKey:@"APIKey"] == nil) {
         
         return NO;
     }
     
-    clientID = [userDefaults objectForKey:@"ClientID"];
+    clientID = [userDefaults objectForKey:@"clientID"];
     APIKey = [userDefaults objectForKey:@"APIKey"];
+    
+    NSLog(@"Loaded: %@, %@", clientID, APIKey);
     
     return YES;
 
@@ -71,11 +76,11 @@
 }
 
 - (void) requestImages {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@" ", clientID, APIKey]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https:***REMOVED***api.digitalocean.com/images/?client_id=%@&api_key=%@", clientID, APIKey]];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
-    dropletsConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
+    imagesConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
     
-    if(dropletsConnection) {
+    if(imagesConnection) {
         responseData = [[NSMutableData alloc] init];
     } else {
         NSLog(@"connection failed");
@@ -149,10 +154,14 @@
             NSArray *tempDropletsArray = [json objectForKey:@"droplets"];
 
             for (NSDictionary *dropletDictionary in tempDropletsArray) {
-                Droplet *droplet = [[Droplet alloc] initWithDictionary:dropletDictionary andRegions:regions];
+                Droplet *droplet = [[Droplet alloc] initWithDictionary:dropletDictionary regions:regions andImages:images];
                 [dropletsArray addObject:droplet];
+                
+                NSLog(@"Droplet: %@, image: %@", droplet.name, droplet.imageID);
+                
             }
             
+
 
             [self createMenuItems];
             
@@ -169,7 +178,7 @@
             }
             
             
-            [self requestDroplets];
+            [self requestImages];
             
         } else  if (connection == imagesConnection) {
             
@@ -177,10 +186,13 @@
             NSArray *tempImagesArray = [json objectForKey:@"images"];
             
             for (NSDictionary *image in tempImagesArray) {
-                NSString *regionID = [image objectForKey:@"id"];
-                NSString *regionName = [image objectForKey:@"name"];
+                NSString *imageID = [image objectForKey:@"id"];
+                NSString *distro = [image objectForKey:@"name"];
                 
-                [regions setObject:regionName forKey:regionID];
+                NSLog(@"Image: %@:%@", imageID, distro);
+                
+                
+                [images setObject:distro forKey:imageID];
             }
             
             
@@ -214,15 +226,21 @@
         [submenu addItemWithTitle:[NSString stringWithFormat:@"Status: %@", droplet.status]
                            action:nil
                     keyEquivalent:@""];
+
+        [submenu addItemWithTitle:[NSString stringWithFormat:@"IP: %@", droplet.ip]
+                           action:@selector(copyIPAddress:)
+                    keyEquivalent:@""];
         
         [submenu addItemWithTitle:[NSString stringWithFormat:@"Region: %@", droplet.region]
                            action:nil
                     keyEquivalent:@""];
         
+        [submenu addItemWithTitle:[NSString stringWithFormat:@"Distro: %@", droplet.distro]
+                           action:nil
+                    keyEquivalent:@""];
         
         [menu setSubmenu:submenu forItem:menu.itemArray.firstObject];
         
-
     }
     
     [menu addItem:[NSMenuItem separatorItem]];
@@ -233,6 +251,12 @@
     [menu addItem:[NSMenuItem separatorItem]];
     [menu addItemWithTitle:@"Quit DO Indicator" action:@selector(terminate:) keyEquivalent:@""];
     _statusItem.menu = menu;
+}
+
+- (void)copyIPAddress:(id)sender {
+    NSString *ipAddress = ((NSMenuItem*)sender).title;
+    [[NSPasteboard generalPasteboard] clearContents];
+    [[NSPasteboard generalPasteboard] setString:ipAddress forType:NSStringPboardType];
 }
 
 

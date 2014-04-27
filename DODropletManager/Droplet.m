@@ -10,7 +10,7 @@
 
 @implementation Droplet
 
-- (id) initWithDictionary:(NSDictionary*) dictionary andRegions:(NSDictionary*) regions {
+- (id) initWithDictionary:(NSDictionary*) dictionary regions:(NSDictionary*) regions andImages:(NSDictionary*)images{
     
     if (self = [super init]) {
         _name = [dictionary objectForKey:@"name"];
@@ -24,6 +24,7 @@
         _status = [dictionary objectForKey:@"status"];
         
         _region = [regions objectForKey:_regionID];
+        _distro = [images objectForKey:_imageID];
         
         _backupActive = (BOOL)[dictionary valueForKey:@"backups_active"];
         if ([_status isEqualToString:@"active"]) {
