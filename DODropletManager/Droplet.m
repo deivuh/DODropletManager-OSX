@@ -1,0 +1,44 @@
+***REMOVED***
+***REMOVED***  Droplet.m
+***REMOVED***  DODropletManager
+***REMOVED***
+***REMOVED***  Created by David Hsieh on 4/27/14.
+***REMOVED***  Copyright (c) 2014 David Hsieh. All rights reserved.
+***REMOVED***
+
+#import "Droplet.h"
+
+@implementation Droplet
+
+- (id) initWithDictionary:(NSDictionary*) dictionary andRegions:(NSDictionary*) regions {
+    
+    if (self = [super init]) {
+        _name = [dictionary objectForKey:@"name"];
+        _ip = [dictionary objectForKey:@"ip_address"];
+        _dropletID = [dictionary objectForKey:@"id"];
+        _imageID = [dictionary objectForKey:@"image_id"];
+        _sizeID = [dictionary objectForKey:@"size_id"];
+        _regionID = [dictionary objectForKey:@"region_id"];
+        _privateIP = [dictionary objectForKey:@"private_ip_address"];
+        _createdAt = [dictionary objectForKey:@"created_at"];
+        _status = [dictionary objectForKey:@"status"];
+        
+        _region = [regions objectForKey:_regionID];
+        
+        _backupActive = (BOOL)[dictionary valueForKey:@"backups_active"];
+        if ([_status isEqualToString:@"active"]) {
+            _active = YES;
+        } else {
+            _active = NO;
+        }
+        
+        _locked = (BOOL)[dictionary valueForKey:@"locked"];
+        
+        
+        
+    }
+    
+    return self;
+}
+
+@end
