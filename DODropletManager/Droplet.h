@@ -21,10 +21,11 @@
 @property (nonatomic, strong) NSString *status;
 
 @property (nonatomic, strong) NSString *region;
+@property (nonatomic, strong) NSString *distro;
 @property BOOL backupActive;
 @property BOOL active;
 @property BOOL locked;
 
-- (id) initWithDictionary:(NSDictionary*) dictionary andRegions:(NSDictionary*) regions;
+- (id) initWithDictionary:(NSDictionary*) dictionary regions:(NSDictionary*) regions andImages:(NSDictionary*)images;
 
 @end
