@@ -1,0 +1,499 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		4DC5DB00190CEA0A0080C9CD /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DC5DAFF190CEA0A0080C9CD /* Cocoa.framework */; };
+		4DC5DB0A190CEA0A0080C9CD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4DC5DB08190CEA0A0080C9CD /* InfoPlist.strings */; };
+		4DC5DB0C190CEA0A0080C9CD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5DB0B190CEA0A0080C9CD /* main.m */; };
+		4DC5DB10190CEA0A0080C9CD /* Credits.rtf in Resources */ = {isa = PBXBuildFile; fileRef = 4DC5DB0E190CEA0A0080C9CD /* Credits.rtf */; };
+		4DC5DB13190CEA0A0080C9CD /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5DB12190CEA0A0080C9CD /* AppDelegate.m */; };
+		4DC5DB16190CEA0A0080C9CD /* MainMenu.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DC5DB14190CEA0A0080C9CD /* MainMenu.xib */; };
+		4DC5DB18190CEA0A0080C9CD /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 4DC5DB17190CEA0A0080C9CD /* Images.xcassets */; };
+		4DC5DB1F190CEA0A0080C9CD /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DC5DB1E190CEA0A0080C9CD /* XCTest.framework */; };
+		4DC5DB20190CEA0A0080C9CD /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DC5DAFF190CEA0A0080C9CD /* Cocoa.framework */; };
+		4DC5DB28190CEA0A0080C9CD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4DC5DB26190CEA0A0080C9CD /* InfoPlist.strings */; };
+		4DC5DB2A190CEA0A0080C9CD /* DODropletManagerTests.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5DB29190CEA0A0080C9CD /* DODropletManagerTests.m */; };
+		4DC5DB35190CF38B0080C9CD /* Droplet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5DB34190CF38B0080C9CD /* Droplet.m */; };
+		4DC5DB3A190D030C0080C9CD /* PreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DC5DB39190D030C0080C9CD /* PreferencesWindow.xib */; };
+		4DC5DB3D190D03C30080C9CD /* PreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5DB3C190D03C30080C9CD /* PreferencesWindowController.m */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		4DC5DB21190CEA0A0080C9CD /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 4DC5DAF4190CEA0A0080C9CD /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 4DC5DAFB190CEA0A0080C9CD;
+			remoteInfo = DODropletManager;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		4DC5DAFC190CEA0A0080C9CD /* DODropletManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DODropletManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		4DC5DAFF190CEA0A0080C9CD /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
+		4DC5DB02190CEA0A0080C9CD /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
+		4DC5DB03190CEA0A0080C9CD /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
+		4DC5DB04190CEA0A0080C9CD /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		4DC5DB07190CEA0A0080C9CD /* DODropletManager-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DODropletManager-Info.plist"; sourceTree = "<group>"; };
+		4DC5DB09190CEA0A0080C9CD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		4DC5DB0B190CEA0A0080C9CD /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		4DC5DB0D190CEA0A0080C9CD /* DODropletManager-Prefix.pch */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "DODropletManager-Prefix.pch"; sourceTree = "<group>"; };
+		4DC5DB0F190CEA0A0080C9CD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.rtf; name = en; path = en.lproj/Credits.rtf; sourceTree = "<group>"; };
+		4DC5DB11190CEA0A0080C9CD /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
+		4DC5DB12190CEA0A0080C9CD /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
+		4DC5DB15190CEA0A0080C9CD /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/MainMenu.xib; sourceTree = "<group>"; };
+		4DC5DB17190CEA0A0080C9CD /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		4DC5DB1D190CEA0A0080C9CD /* DODropletManagerTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = DODropletManagerTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		4DC5DB1E190CEA0A0080C9CD /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
+		4DC5DB25190CEA0A0080C9CD /* DODropletManagerTests-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "DODropletManagerTests-Info.plist"; sourceTree = "<group>"; };
+		4DC5DB27190CEA0A0080C9CD /* en */ = {isa = PBXFileReference; lastKnownFileType = text.plist.strings; name = en; path = en.lproj/InfoPlist.strings; sourceTree = "<group>"; };
+		4DC5DB29190CEA0A0080C9CD /* DODropletManagerTests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = DODropletManagerTests.m; sourceTree = "<group>"; };
+		4DC5DB33190CF38B0080C9CD /* Droplet.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Droplet.h; sourceTree = "<group>"; };
+		4DC5DB34190CF38B0080C9CD /* Droplet.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Droplet.m; sourceTree = "<group>"; };
+		4DC5DB39190D030C0080C9CD /* PreferencesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreferencesWindow.xib; sourceTree = "<group>"; };
+		4DC5DB3B190D03C30080C9CD /* PreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesWindowController.h; sourceTree = "<group>"; };
+		4DC5DB3C190D03C30080C9CD /* PreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesWindowController.m; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		4DC5DAF9190CEA0A0080C9CD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4DC5DB00190CEA0A0080C9CD /* Cocoa.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4DC5DB1A190CEA0A0080C9CD /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4DC5DB20190CEA0A0080C9CD /* Cocoa.framework in Frameworks */,
+				4DC5DB1F190CEA0A0080C9CD /* XCTest.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		4DC5DAF3190CEA0A0080C9CD = {
+			isa = PBXGroup;
+			children = (
+				4DC5DB05190CEA0A0080C9CD /* DODropletManager */,
+				4DC5DB23190CEA0A0080C9CD /* DODropletManagerTests */,
+				4DC5DAFE190CEA0A0080C9CD /* Frameworks */,
+				4DC5DAFD190CEA0A0080C9CD /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		4DC5DAFD190CEA0A0080C9CD /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				4DC5DAFC190CEA0A0080C9CD /* DODropletManager.app */,
+				4DC5DB1D190CEA0A0080C9CD /* DODropletManagerTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		4DC5DAFE190CEA0A0080C9CD /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4DC5DAFF190CEA0A0080C9CD /* Cocoa.framework */,
+				4DC5DB1E190CEA0A0080C9CD /* XCTest.framework */,
+				4DC5DB01190CEA0A0080C9CD /* Other Frameworks */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		4DC5DB01190CEA0A0080C9CD /* Other Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				4DC5DB02190CEA0A0080C9CD /* AppKit.framework */,
+				4DC5DB03190CEA0A0080C9CD /* CoreData.framework */,
+				4DC5DB04190CEA0A0080C9CD /* Foundation.framework */,
+			);
+			name = "Other Frameworks";
+			sourceTree = "<group>";
+		};
+		4DC5DB05190CEA0A0080C9CD /* DODropletManager */ = {
+			isa = PBXGroup;
+			children = (
+				4DC5DB11190CEA0A0080C9CD /* AppDelegate.h */,
+				4DC5DB12190CEA0A0080C9CD /* AppDelegate.m */,
+				4DC5DB39190D030C0080C9CD /* PreferencesWindow.xib */,
+				4DC5DB3B190D03C30080C9CD /* PreferencesWindowController.h */,
+				4DC5DB3C190D03C30080C9CD /* PreferencesWindowController.m */,
+				4DC5DB33190CF38B0080C9CD /* Droplet.h */,
+				4DC5DB34190CF38B0080C9CD /* Droplet.m */,
+				4DC5DB14190CEA0A0080C9CD /* MainMenu.xib */,
+				4DC5DB17190CEA0A0080C9CD /* Images.xcassets */,
+				4DC5DB06190CEA0A0080C9CD /* Supporting Files */,
+			);
+			path = DODropletManager;
+			sourceTree = "<group>";
+		};
+		4DC5DB06190CEA0A0080C9CD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4DC5DB07190CEA0A0080C9CD /* DODropletManager-Info.plist */,
+				4DC5DB08190CEA0A0080C9CD /* InfoPlist.strings */,
+				4DC5DB0B190CEA0A0080C9CD /* main.m */,
+				4DC5DB0D190CEA0A0080C9CD /* DODropletManager-Prefix.pch */,
+				4DC5DB0E190CEA0A0080C9CD /* Credits.rtf */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		4DC5DB23190CEA0A0080C9CD /* DODropletManagerTests */ = {
+			isa = PBXGroup;
+			children = (
+				4DC5DB29190CEA0A0080C9CD /* DODropletManagerTests.m */,
+				4DC5DB24190CEA0A0080C9CD /* Supporting Files */,
+			);
+			path = DODropletManagerTests;
+			sourceTree = "<group>";
+		};
+		4DC5DB24190CEA0A0080C9CD /* Supporting Files */ = {
+			isa = PBXGroup;
+			children = (
+				4DC5DB25190CEA0A0080C9CD /* DODropletManagerTests-Info.plist */,
+				4DC5DB26190CEA0A0080C9CD /* InfoPlist.strings */,
+			);
+			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		4DC5DAFB190CEA0A0080C9CD /* DODropletManager */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4DC5DB2D190CEA0A0080C9CD /* Build configuration list for PBXNativeTarget "DODropletManager" */;
+			buildPhases = (
+				4DC5DAF8190CEA0A0080C9CD /* Sources */,
+				4DC5DAF9190CEA0A0080C9CD /* Frameworks */,
+				4DC5DAFA190CEA0A0080C9CD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = DODropletManager;
+			productName = DODropletManager;
+			productReference = 4DC5DAFC190CEA0A0080C9CD /* DODropletManager.app */;
+			productType = "com.apple.product-type.application";
+		};
+		4DC5DB1C190CEA0A0080C9CD /* DODropletManagerTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 4DC5DB30190CEA0A0080C9CD /* Build configuration list for PBXNativeTarget "DODropletManagerTests" */;
+			buildPhases = (
+				4DC5DB19190CEA0A0080C9CD /* Sources */,
+				4DC5DB1A190CEA0A0080C9CD /* Frameworks */,
+				4DC5DB1B190CEA0A0080C9CD /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				4DC5DB22190CEA0A0080C9CD /* PBXTargetDependency */,
+			);
+			name = DODropletManagerTests;
+			productName = DODropletManagerTests;
+			productReference = 4DC5DB1D190CEA0A0080C9CD /* DODropletManagerTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		4DC5DAF4190CEA0A0080C9CD /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastUpgradeCheck = 0510;
+				ORGANIZATIONNAME = "David Hsieh";
+				TargetAttributes = {
+					4DC5DB1C190CEA0A0080C9CD = {
+						TestTargetID = 4DC5DAFB190CEA0A0080C9CD;
+					};
+				};
+			};
+			buildConfigurationList = 4DC5DAF7190CEA0A0080C9CD /* Build configuration list for PBXProject "DODropletManager" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 4DC5DAF3190CEA0A0080C9CD;
+			productRefGroup = 4DC5DAFD190CEA0A0080C9CD /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				4DC5DAFB190CEA0A0080C9CD /* DODropletManager */,
+				4DC5DB1C190CEA0A0080C9CD /* DODropletManagerTests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		4DC5DAFA190CEA0A0080C9CD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4DC5DB0A190CEA0A0080C9CD /* InfoPlist.strings in Resources */,
+				4DC5DB18190CEA0A0080C9CD /* Images.xcassets in Resources */,
+				4DC5DB3A190D030C0080C9CD /* PreferencesWindow.xib in Resources */,
+				4DC5DB10190CEA0A0080C9CD /* Credits.rtf in Resources */,
+				4DC5DB16190CEA0A0080C9CD /* MainMenu.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4DC5DB1B190CEA0A0080C9CD /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4DC5DB28190CEA0A0080C9CD /* InfoPlist.strings in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		4DC5DAF8190CEA0A0080C9CD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4DC5DB13190CEA0A0080C9CD /* AppDelegate.m in Sources */,
+				4DC5DB0C190CEA0A0080C9CD /* main.m in Sources */,
+				4DC5DB3D190D03C30080C9CD /* PreferencesWindowController.m in Sources */,
+				4DC5DB35190CF38B0080C9CD /* Droplet.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		4DC5DB19190CEA0A0080C9CD /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				4DC5DB2A190CEA0A0080C9CD /* DODropletManagerTests.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		4DC5DB22190CEA0A0080C9CD /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 4DC5DAFB190CEA0A0080C9CD /* DODropletManager */;
+			targetProxy = 4DC5DB21190CEA0A0080C9CD /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		4DC5DB08190CEA0A0080C9CD /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4DC5DB09190CEA0A0080C9CD /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+		4DC5DB0E190CEA0A0080C9CD /* Credits.rtf */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4DC5DB0F190CEA0A0080C9CD /* en */,
+			);
+			name = Credits.rtf;
+			sourceTree = "<group>";
+		};
+		4DC5DB14190CEA0A0080C9CD /* MainMenu.xib */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4DC5DB15190CEA0A0080C9CD /* Base */,
+			);
+			name = MainMenu.xib;
+			sourceTree = "<group>";
+		};
+		4DC5DB26190CEA0A0080C9CD /* InfoPlist.strings */ = {
+			isa = PBXVariantGroup;
+			children = (
+				4DC5DB27190CEA0A0080C9CD /* en */,
+			);
+			name = InfoPlist.strings;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		4DC5DB2B190CEA0A0080C9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_SYMBOLS_PRIVATE_EXTERN = NO;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+			};
+			name = Debug;
+		};
+		4DC5DB2C190CEA0A0080C9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_ENABLE_OBJC_EXCEPTIONS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.9;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		4DC5DB2E190CEA0A0080C9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "DODropletManager/DODropletManager-Prefix.pch";
+				INFOPLIST_FILE = "DODropletManager/DODropletManager-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Debug;
+		};
+		4DC5DB2F190CEA0A0080C9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "DODropletManager/DODropletManager-Prefix.pch";
+				INFOPLIST_FILE = "DODropletManager/DODropletManager-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				WRAPPER_EXTENSION = app;
+			};
+			name = Release;
+		};
+		4DC5DB31190CEA0A0080C9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/DODropletManager.app/Contents/MacOS/DODropletManager";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "DODropletManager/DODropletManager-Prefix.pch";
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				INFOPLIST_FILE = "DODropletManagerTests/DODropletManagerTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Debug;
+		};
+		4DC5DB32190CEA0A0080C9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(BUILT_PRODUCTS_DIR)/DODropletManager.app/Contents/MacOS/DODropletManager";
+				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(DEVELOPER_FRAMEWORKS_DIR)",
+					"$(inherited)",
+				);
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "DODropletManager/DODropletManager-Prefix.pch";
+				INFOPLIST_FILE = "DODropletManagerTests/DODropletManagerTests-Info.plist";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUNDLE_LOADER)";
+				WRAPPER_EXTENSION = xctest;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		4DC5DAF7190CEA0A0080C9CD /* Build configuration list for PBXProject "DODropletManager" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4DC5DB2B190CEA0A0080C9CD /* Debug */,
+				4DC5DB2C190CEA0A0080C9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4DC5DB2D190CEA0A0080C9CD /* Build configuration list for PBXNativeTarget "DODropletManager" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4DC5DB2E190CEA0A0080C9CD /* Debug */,
+				4DC5DB2F190CEA0A0080C9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		4DC5DB30190CEA0A0080C9CD /* Build configuration list for PBXNativeTarget "DODropletManagerTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				4DC5DB31190CEA0A0080C9CD /* Debug */,
+				4DC5DB32190CEA0A0080C9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 4DC5DAF4190CEA0A0080C9CD /* Project object */;
+}
