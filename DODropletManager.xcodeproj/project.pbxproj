@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D8538EF190E068E00803294 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D8538EE190E068E00803294 /* Sparkle.framework */; };
+		4D8538F1190E07F100803294 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4D8538EE190E068E00803294 /* Sparkle.framework */; };
 		4DC5DB00190CEA0A0080C9CD /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DC5DAFF190CEA0A0080C9CD /* Cocoa.framework */; };
 		4DC5DB0A190CEA0A0080C9CD /* InfoPlist.strings in Resources */ = {isa = PBXBuildFile; fileRef = 4DC5DB08190CEA0A0080C9CD /* InfoPlist.strings */; };
 		4DC5DB0C190CEA0A0080C9CD /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5DB0B190CEA0A0080C9CD /* main.m */; };
@@ -33,7 +35,21 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		4D8538F0190E07BE00803294 /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				4D8538F1190E07F100803294 /* Sparkle.framework in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
+		4D8538EE190E068E00803294 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = DODropletManager/Frameworks/Sparkle.framework; sourceTree = "<group>"; };
 		4DC5DAFC190CEA0A0080C9CD /* DODropletManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DODropletManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DC5DAFF190CEA0A0080C9CD /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
 		4DC5DB02190CEA0A0080C9CD /* AppKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AppKit.framework; path = System/Library/Frameworks/AppKit.framework; sourceTree = SDKROOT; };
@@ -66,6 +82,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4DC5DB00190CEA0A0080C9CD /* Cocoa.framework in Frameworks */,
+				4D8538EF190E068E00803294 /* Sparkle.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -103,6 +120,7 @@
 		4DC5DAFE190CEA0A0080C9CD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4D8538EE190E068E00803294 /* Sparkle.framework */,
 				4DC5DAFF190CEA0A0080C9CD /* Cocoa.framework */,
 				4DC5DB1E190CEA0A0080C9CD /* XCTest.framework */,
 				4DC5DB01190CEA0A0080C9CD /* Other Frameworks */,
@@ -177,6 +195,7 @@
 				4DC5DAF8190CEA0A0080C9CD /* Sources */,
 				4DC5DAF9190CEA0A0080C9CD /* Frameworks */,
 				4DC5DAFA190CEA0A0080C9CD /* Resources */,
+				4D8538F0190E07BE00803294 /* CopyFiles */,
 			);
 			buildRules = (
 			);
@@ -402,6 +421,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/DODropletManager/Frameworks",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DODropletManager/DODropletManager-Prefix.pch";
 				INFOPLIST_FILE = "DODropletManager/DODropletManager-Info.plist";
@@ -415,6 +438,10 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/DODropletManager/Frameworks",
+				);
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DODropletManager/DODropletManager-Prefix.pch";
 				INFOPLIST_FILE = "DODropletManager/DODropletManager-Info.plist";
