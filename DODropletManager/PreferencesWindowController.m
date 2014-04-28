@@ -59,6 +59,8 @@
 - (IBAction)savePreferences:(id)sender {
     
     
+    [_ClientIDTF setStringValue:[_ClientIDTF.stringValue stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]]];
+    [_APIKeyTF setStringValue:[_APIKeyTF.stringValue stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]]];
     
     
     [userDefaults setObject:_ClientIDTF.stringValue forKey:@"clientID"];
@@ -67,13 +69,14 @@
     [userDefaults synchronize];
     
     NSLog(@"saved %@", _ClientIDTF.stringValue);
+
     
-    if ([_ClientIDTF.stringValue length] != 32 || [_APIKeyTF.stringValue length] != 32) {
-        [_statusLB setStringValue:@"Incorrect client-ID and/or API-Key length"];
-    } else {
+//    if ([_ClientIDTF.stringValue length] != 32 || [_APIKeyTF.stringValue length] != 32) {
+//        [_statusLB setStringValue:@"Incorrect client-ID and/or API-Key length"];
+//    } else {
         [_statusLB setStringValue:@"Verifying..."];
         [self requestDroplets];
-    }
+//    }
     
 }
 
