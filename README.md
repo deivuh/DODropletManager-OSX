@@ -14,4 +14,3 @@ Inspired by Andresomething's [DigitalOcean Indicator](http:***REMOVED***blog.and
 - Auto-start feature
 - Auto-refresh
 - Refactor redundant code
-

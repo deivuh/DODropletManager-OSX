@@ -38,10 +38,19 @@
         [userDefaults objectForKey:@"APIKey"] == nil) {
         
         return NO;
+    
+    
     }
     
+    
+
     clientID = [userDefaults objectForKey:@"clientID"];
     APIKey = [userDefaults objectForKey:@"APIKey"];
+    
+    clientID = [clientID stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]];
+    APIKey = [APIKey stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]];
+    
+    
     
     NSLog(@"Loaded: %@, %@", clientID, APIKey);
     
