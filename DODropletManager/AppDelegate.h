@@ -15,6 +15,8 @@
     
     NSURLConnection *dropletsConnection, *regionsConnection, *imagesConnection;
     
+    NSURLConnection *rebootDropletConnection, *shutdownDropletConnection, *turnOnDropletConnection;
+    
     NSString *clientID, *APIKey;
     
     NSMutableDictionary *regions;
