@@ -24,6 +24,10 @@
     
     NSUserDefaults *userDefaults;
 
+    
+    NSMenuItem *refreshMI;
+    
+    BOOL firstRun;
 }
 
 @property (assign) IBOutlet NSWindow *window;

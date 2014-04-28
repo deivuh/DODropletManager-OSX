@@ -27,7 +27,7 @@
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="Account" identifier="1" id="YNb-wf-6YT">
-                                <view key="view" ambiguous="YES" id="mfB-2t-2iH">
+                                <view key="view" id="mfB-2t-2iH">
                                     <rect key="frame" x="10" y="33" width="434" height="208"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -99,10 +99,30 @@
                                     </subviews>
                                 </view>
                             </tabViewItem>
-                            <tabViewItem label="Update" identifier="2" id="uwe-Kh-qZi">
-                                <view key="view" id="3xP-DR-Fqb">
+                            <tabViewItem label="About" identifier="2" id="uwe-Kh-qZi">
+                                <view key="view" ambiguous="YES" id="3xP-DR-Fqb">
                                     <rect key="frame" x="10" y="33" width="434" height="208"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="fTe-sU-WYG">
+                                            <rect key="frame" x="15" y="162" width="200" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="DigitalOcean droplets manager" id="WEI-He-JbL">
+                                                <font key="font" metaFont="titleBar"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="bKB-Wn-ygm">
+                                            <rect key="frame" x="15" y="115" width="390" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Source: https://github.com/deivuh/DODropletManager-OSX " id="OHD-ZY-Cxw">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
+                                    </subviews>
                                 </view>
                             </tabViewItem>
                         </tabViewItems>

@@ -18,6 +18,7 @@
     //If keys load successfully, do stuff, if not, no need
 //    if ([self loadKeys]) {
     
+    
     [self loadKeys];
     [self requestRegions];
         
@@ -30,9 +31,6 @@
 - (BOOL)loadKeys {
     
     userDefaults = [NSUserDefaults standardUserDefaults];
-
-    
-
 
     
     // If no key values are found, no need to set them
@@ -165,6 +163,8 @@
     responseData = nil;
     
     NSLog(@"connection error");
+    
+    refreshMI.title = @"Refresh";
 }
 
 - (void) connectionDidFinishLoading:(NSURLConnection *)connection
@@ -196,6 +196,8 @@
 
 
             [self createMenuItems];
+            refreshMI.title = @"Refresh";
+            refreshMI.action = @selector(refresh:);
             
         } else  if (connection == regionsConnection) {
             
@@ -319,7 +321,6 @@
             NSMenuItem *shutdownMI = [[NSMenuItem alloc] initWithTitle:@"Shutdown" action:@selector(shutdownDroplet:) keyEquivalent:@""];
             
             [shutdownMI setImage:[NSImage imageNamed:@"power-icon"]];
-//            [shutdownMI setOnStateImage:[NSImage imageNamed:@"power-icon-highlighted"]];
             [shutdownMI setRepresentedObject:droplet];
             
             [submenu addItem:shutdownMI];
@@ -328,7 +329,6 @@
 
             NSMenuItem *turnOnMI = [[NSMenuItem alloc] initWithTitle:@"Power On" action:@selector(turnOnDroplet:) keyEquivalent:@""];
             [turnOnMI setImage:[NSImage imageNamed:@"power-icon"]];
-//            [turnOnMI setOnStateImage:[NSImage imageNamed:@"power-icon-highlighted"]];
             [turnOnMI setRepresentedObject:droplet];
         
             [submenu addItem:turnOnMI];
@@ -340,7 +340,10 @@
     
     [menu addItem:[NSMenuItem separatorItem]];
     
-    [menu addItemWithTitle:@"Refresh" action:@selector(refresh:) keyEquivalent:@""];
+    
+    refreshMI = [[NSMenuItem alloc] initWithTitle:@"Refresh" action:@selector(refresh:) keyEquivalent:@""];
+    [menu addItem:refreshMI];
+    
     [menu addItemWithTitle:@"Preferences" action:@selector(showPreferencesWindow:) keyEquivalent:@""];
     
     [menu addItem:[NSMenuItem separatorItem]];
@@ -371,6 +374,8 @@
 }
 
 - (void)refresh:(id)sender {
+    refreshMI.title = @"Refreshing...";
+    refreshMI.action = nil;
     [self requestRegions];
 }
 
