@@ -104,8 +104,45 @@
     
 }
 
+- (void) requestRebootForDroplet:(Droplet*)droplet {
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.digitalocean.com/droplets/%@/reboot/?client_id=%@&api_key=%@", droplet.dropletID, clientID, APIKey]];
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
+    rebootDropletConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
+    
+    if(rebootDropletConnection) {
+        responseData = [[NSMutableData alloc] init];
+    } else {
+        NSLog(@"connection failed");
+    }
+}
 
+- (void) requestShutdownForDroplet:(Droplet*)droplet {
 
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.digitalocean.com/droplets/%@/shutdown/?client_id=%@&api_key=%@", droplet.dropletID, clientID, APIKey]];
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
+    shutdownDropletConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
+    
+    if(shutdownDropletConnection) {
+        responseData = [[NSMutableData alloc] init];
+    } else {
+        NSLog(@"connection failed");
+    }
+    
+}
+
+- (void) requestTurnOnForDroplet:(Droplet*)droplet {
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.digitalocean.com/droplets/%@/power_on/?client_id=%@&api_key=%@", droplet.dropletID, clientID, APIKey]];
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
+    turnOnDropletConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
+    
+    NSLog(@"Request turnOn %@", urlRequest.URL);
+    
+    if(turnOnDropletConnection) {
+        responseData = [[NSMutableData alloc] init];
+    } else {
+        NSLog(@"connection failed");
+    }
+}
 
 
 - (void) connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
@@ -157,8 +194,7 @@
                 Droplet *droplet = [[Droplet alloc] initWithDictionary:dropletDictionary regions:regions andImages:images];
                 [dropletsArray addObject:droplet];
                 
-                NSLog(@"Droplet: %@, image: %@", droplet.name, droplet.imageID);
-                
+
             }
             
 
@@ -189,7 +225,7 @@
                 NSString *imageID = [image objectForKey:@"id"];
                 NSString *distro = [image objectForKey:@"name"];
                 
-                NSLog(@"Image: %@:%@", imageID, distro);
+                
                 
                 
                 [images setObject:distro forKey:imageID];
@@ -199,7 +235,26 @@
             [self requestDroplets];
             
         
+        } else  if (connection == rebootDropletConnection) {
+            
+            NSLog(@"Result status %@", [json objectForKey:@"status"]);
+            
+            [self refresh:self];
+            
+        } else  if (connection == shutdownDropletConnection) {
+            
+            NSLog(@"Result status %@", json);
+            
+            [self refresh:self];
+            
+        } else  if (connection == turnOnDropletConnection) {
+            
+            NSLog(@"Result status %@", json);
+            
+            [self refresh:self];
+            
         }
+            
         
     }
     
@@ -218,6 +273,7 @@
     
     NSMenu *menu = [[NSMenu alloc] init];
 
+
     
     for (Droplet *droplet in dropletsArray) {
         [menu addItemWithTitle:droplet.name  action:nil keyEquivalent:@""];
@@ -227,17 +283,49 @@
                            action:nil
                     keyEquivalent:@""];
 
-        [submenu addItemWithTitle:[NSString stringWithFormat:@"IP: %@", droplet.ip]
-                           action:@selector(copyIPAddress:)
-                    keyEquivalent:@""];
+
+        NSMenuItem *ipAddressMI = [[NSMenuItem alloc] initWithTitle:[NSString stringWithFormat:@"IP: %@", droplet.ip] action:@selector(copyIPAddress:) keyEquivalent:@""];
+        
+        [ipAddressMI setRepresentedObject:droplet.ip];
+        
+        [submenu addItem:ipAddressMI];
+        
+        if (droplet.distro != nil) {
+            [submenu addItemWithTitle:[NSString stringWithFormat:@"Distro: %@", droplet.distro]
+                               action:nil
+                        keyEquivalent:@""];
+        }
+        
+
         
         [submenu addItemWithTitle:[NSString stringWithFormat:@"Region: %@", droplet.region]
                            action:nil
                     keyEquivalent:@""];
         
-        [submenu addItemWithTitle:[NSString stringWithFormat:@"Distro: %@", droplet.distro]
-                           action:nil
-                    keyEquivalent:@""];
+        [submenu addItem:[NSMenuItem separatorItem]];
+        
+        
+        NSMenuItem *rebootMI = [[NSMenuItem alloc] initWithTitle:@"Reboot" action:@selector(rebootDroplet:) keyEquivalent:@""];
+        
+        [rebootMI setRepresentedObject:droplet];
+        
+        [submenu addItem:rebootMI];
+        
+        if (droplet.active) {
+            NSMenuItem *shutdownMI = [[NSMenuItem alloc] initWithTitle:@"Shutdown" action:@selector(shutdownDroplet:) keyEquivalent:@""];
+            
+            [shutdownMI setRepresentedObject:droplet];
+            
+            [submenu addItem:shutdownMI];
+            
+        } else {
+
+            NSMenuItem *turnOnMI = [[NSMenuItem alloc] initWithTitle:@"Power On" action:@selector(turnOnDroplet:) keyEquivalent:@""];
+            
+            [turnOnMI setRepresentedObject:droplet];
+        
+            [submenu addItem:turnOnMI];
+        }
         
         [menu setSubmenu:submenu forItem:menu.itemArray.firstObject];
         
@@ -245,16 +333,19 @@
     
     [menu addItem:[NSMenuItem separatorItem]];
     
-    [menu addItemWithTitle:@"Refresh" action:nil keyEquivalent:@""];
+    [menu addItemWithTitle:@"Refresh" action:@selector(refresh:) keyEquivalent:@""];
     [menu addItemWithTitle:@"Preferences" action:@selector(showPreferencesWindow:) keyEquivalent:@""];
     
     [menu addItem:[NSMenuItem separatorItem]];
+
+    
     [menu addItemWithTitle:@"Quit DO Indicator" action:@selector(terminate:) keyEquivalent:@""];
     _statusItem.menu = menu;
 }
 
 - (void)copyIPAddress:(id)sender {
-    NSString *ipAddress = ((NSMenuItem*)sender).title;
+    
+    NSString *ipAddress = ((NSMenuItem*)sender).representedObject;
     [[NSPasteboard generalPasteboard] clearContents];
     [[NSPasteboard generalPasteboard] setString:ipAddress forType:NSStringPboardType];
 }
@@ -264,6 +355,35 @@
     _preferencesWC = [[PreferencesWindowController alloc] initWithWindowNibName:@"PreferencesWindow"];
     [_preferencesWC showWindow:self];
     
+    
 }
+
+- (void)refresh:(id)sender {
+    [self requestRegions];
+}
+
+- (void)rebootDroplet:(id)sender {
+    
+    Droplet *currentDroplet = ((NSMenuItem*)sender).representedObject;
+    
+    [self requestRebootForDroplet:currentDroplet];
+    
+}
+
+- (void)shutdownDroplet:(id)sender {
+    
+    Droplet *currentDroplet = ((NSMenuItem*)sender).representedObject;
+    
+    [self requestShutdownForDroplet:currentDroplet];
+}
+
+- (void)turnOnDroplet:(id)sender {
+    
+    Droplet *currentDroplet = ((NSMenuItem*)sender).representedObject;
+    
+    [self requestTurnOnForDroplet:currentDroplet];
+}
+
+
 
 @end
