@@ -14,17 +14,13 @@
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-
     ***REMOVED***If keys load successfully, do stuff, if not, no need
-***REMOVED***    if ([self loadKeys]) {
-    
+    ***REMOVED***if ([self loadKeys]) {
     
     [self loadKeys];
     [self requestRegions];
         
-***REMOVED***    }
-    
-
+    ***REMOVED***}
 
 }
 
@@ -38,19 +34,14 @@
         [userDefaults objectForKey:@"APIKey"] == nil) {
         
         return NO;
-    
-    
+
     }
-    
-    
 
     clientID = [userDefaults objectForKey:@"clientID"];
     APIKey = [userDefaults objectForKey:@"APIKey"];
     
     clientID = [clientID stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]];
     APIKey = [APIKey stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]];
-    
-    
     
     NSLog(@"Loaded: %@, %@", clientID, APIKey);
     
@@ -60,9 +51,6 @@
 
 
 - (void) requestRegions {
-
-
-    
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https:***REMOVED***api.digitalocean.com/regions/?client_id=%@&api_key=%@", clientID, APIKey]];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
     regionsConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
@@ -72,9 +60,6 @@
     } else {
         NSLog(@"connection failed");
     }
-    
-    
-    
     
 }
 
@@ -155,11 +140,7 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-    
-    
     [responseData appendData:data];
-    
-
 }
 
 
@@ -320,6 +301,12 @@
         
         [submenu addItem:viewOnWebMI];
         
+        NSMenuItem *connectToDroplet = [[NSMenuItem alloc] initWithTitle:@"Connect to Droplet" action:@selector(establishSSHConnectionToDroplet:) keyEquivalent:@""];
+        
+        [connectToDroplet setImage:[NSImage imageNamed:@"ssh-icon"]];
+        [connectToDroplet setRepresentedObject:droplet];
+        
+        [submenu addItem:connectToDroplet];
         
         NSMenuItem *rebootMI = [[NSMenuItem alloc] initWithTitle:@"Reboot" action:@selector(rebootDroplet:) keyEquivalent:@""];
         
@@ -420,7 +407,9 @@
     
 }
 
-
-
+- (void)establishSSHConnectionToDroplet:(id)sender {
+    Droplet *currentDroplet = ((NSMenuItem*)sender).representedObject;
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"ssh:***REMOVED***root@%@", currentDroplet.ip]]];
+}
 
 @end
