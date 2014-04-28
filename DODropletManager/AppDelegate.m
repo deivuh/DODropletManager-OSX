@@ -279,6 +279,8 @@
     _statusItem.highlightMode = YES;
     
     NSMenu *menu = [[NSMenu alloc] init];
+    
+    int dropletMIIndex = 0;
 
 
     
@@ -343,7 +345,8 @@
             [submenu addItem:turnOnMI];
         }
         
-        [menu setSubmenu:submenu forItem:menu.itemArray.firstObject];
+        [menu setSubmenu:submenu forItem:[menu.itemArray objectAtIndex:dropletMIIndex]];
+        dropletMIIndex ++;
         
     }
     
