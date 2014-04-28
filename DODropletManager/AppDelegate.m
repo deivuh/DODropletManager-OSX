@@ -343,7 +343,7 @@
             [submenu addItem:turnOnMI];
         }
         
-        [menu setSubmenu:submenu forItem:menu.itemArray.firstObject];
+        [menu setSubmenu:submenu forItem:menu.itemArray.lastObject];
         
     }
     
