@@ -39,7 +39,7 @@
     [super windowDidLoad];
     
 
-    //perform any initializations
+    
     
     userDefaults = [NSUserDefaults standardUserDefaults];
     
@@ -59,12 +59,80 @@
 - (IBAction)savePreferences:(id)sender {
     
     
+    
+    
     [userDefaults setObject:_ClientIDTF.stringValue forKey:@"clientID"];
     [userDefaults setObject:_APIKeyTF.stringValue forKey:@"APIKey"];
     
     [userDefaults synchronize];
     
     NSLog(@"saved %@", _ClientIDTF.stringValue);
+    
+    if ([_ClientIDTF.stringValue length] != 32 || [_APIKeyTF.stringValue length] != 32) {
+        [_statusLB setStringValue:@"Incorrect client-ID and/or API-Key length"];
+    } else {
+        [_statusLB setStringValue:@"Verifying..."];
+        [self requestDroplets];
+    }
+    
+}
+
+
+- (void) requestDroplets {
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.digitalocean.com/droplets/?client_id=%@&api_key=%@", _ClientIDTF.stringValue, _APIKeyTF.stringValue]];
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
+    NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
+    
+    if(connection) {
+        responseData = [[NSMutableData alloc] init];
+    } else {
+        NSLog(@"connection failed");
+    }
+    
+}
+
+- (void) connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
+{
+    [responseData setLength:0];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
+{
+    
+    [responseData appendData:data];
+    
+}
+
+- (void) connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
+{
+    connection = nil;
+    
+    responseData = nil;
+    
+    NSLog(@"connection error");
+}
+
+
+- (void) connectionDidFinishLoading:(NSURLConnection *)connection
+{
+    NSError *error;
+    
+    NSDictionary* json = [NSJSONSerialization
+                          JSONObjectWithData:responseData
+                          options:NSUTF8StringEncoding
+                          error:&error];
+    
+    if(json != nil)
+    {
+        
+        NSLog(@"JSON %@", json);
+        
+        if ([[json objectForKey:@"status"] isEqualToString:@"OK"]) {
+            [_statusLB setStringValue:@"Successful! Please refresh"];
+        } else {
+            [_statusLB setStringValue:@"Incorrect client-ID and/or API-Key"];
+        }
+    }
     
 }
 

@@ -302,6 +302,7 @@
         
         NSMenuItem *viewOnWebMI = [[NSMenuItem alloc] initWithTitle:@"View on website" action:@selector(viewDropletOnBrowser:) keyEquivalent:@""];
         
+        [viewOnWebMI setImage:[NSImage imageNamed:@"info-icon"]];
         [viewOnWebMI setRepresentedObject:droplet];
         
         [submenu addItem:viewOnWebMI];
@@ -309,6 +310,7 @@
         
         NSMenuItem *rebootMI = [[NSMenuItem alloc] initWithTitle:@"Reboot" action:@selector(rebootDroplet:) keyEquivalent:@""];
         
+        [rebootMI setImage:[NSImage imageNamed:@"reboot-icon"]];
         [rebootMI setRepresentedObject:droplet];
         
         [submenu addItem:rebootMI];
@@ -316,6 +318,8 @@
         if (droplet.active) {
             NSMenuItem *shutdownMI = [[NSMenuItem alloc] initWithTitle:@"Shutdown" action:@selector(shutdownDroplet:) keyEquivalent:@""];
             
+            [shutdownMI setImage:[NSImage imageNamed:@"power-icon"]];
+//            [shutdownMI setOnStateImage:[NSImage imageNamed:@"power-icon-highlighted"]];
             [shutdownMI setRepresentedObject:droplet];
             
             [submenu addItem:shutdownMI];
@@ -323,7 +327,8 @@
         } else {
 
             NSMenuItem *turnOnMI = [[NSMenuItem alloc] initWithTitle:@"Power On" action:@selector(turnOnDroplet:) keyEquivalent:@""];
-            
+            [turnOnMI setImage:[NSImage imageNamed:@"power-icon"]];
+//            [turnOnMI setOnStateImage:[NSImage imageNamed:@"power-icon-highlighted"]];
             [turnOnMI setRepresentedObject:droplet];
         
             [submenu addItem:turnOnMI];
