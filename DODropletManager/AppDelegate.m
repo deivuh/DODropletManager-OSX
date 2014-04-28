@@ -24,10 +24,6 @@
 ***REMOVED***    }
     
 
-    
-
-    
-    
 
 }
 
@@ -304,6 +300,12 @@
         
         [submenu addItem:[NSMenuItem separatorItem]];
         
+        NSMenuItem *viewOnWebMI = [[NSMenuItem alloc] initWithTitle:@"View on website" action:@selector(viewDropletOnBrowser:) keyEquivalent:@""];
+        
+        [viewOnWebMI setRepresentedObject:droplet];
+        
+        [submenu addItem:viewOnWebMI];
+        
         
         NSMenuItem *rebootMI = [[NSMenuItem alloc] initWithTitle:@"Reboot" action:@selector(rebootDroplet:) keyEquivalent:@""];
         
@@ -339,7 +341,7 @@
     [menu addItem:[NSMenuItem separatorItem]];
 
     
-    [menu addItemWithTitle:@"Quit DO Indicator" action:@selector(terminate:) keyEquivalent:@""];
+    [menu addItemWithTitle:@"Quit Droplets Manager" action:@selector(terminate:) keyEquivalent:@""];
     _statusItem.menu = menu;
 }
 
@@ -352,8 +354,13 @@
 
 
 - (void)showPreferencesWindow:(id)sender {
+    
+    ***REMOVED***Show preferences window
     _preferencesWC = [[PreferencesWindowController alloc] initWithWindowNibName:@"PreferencesWindow"];
     [_preferencesWC showWindow:self];
+    
+    ***REMOVED***Focus on window
+    [NSApp activateIgnoringOtherApps:YES];
     
     
 }
@@ -383,6 +390,14 @@
     
     [self requestTurnOnForDroplet:currentDroplet];
 }
+
+- (void)viewDropletOnBrowser:(id)sender {
+    Droplet *currentDroplet = ((NSMenuItem*)sender).representedObject;
+
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"https:***REMOVED***cloud.digitalocean.com/droplets/%@", currentDroplet.dropletID]]];
+    
+}
+
 
 
 
