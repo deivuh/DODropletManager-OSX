@@ -1,6 +1,6 @@
 # DigitalOcean Droplets Manager for OSX
 
-Inspired by Andresomething's [DigitalOcean Indicator](http://blog.andrewsomething.com/2014/04/25/digitalocean-indicator-release/).
+Inspired by Andrewsomething's [DigitalOcean Indicator](http://blog.andrewsomething.com/2014/04/25/digitalocean-indicator-release/).
 
 ##What works:
 
