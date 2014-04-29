@@ -23,6 +23,8 @@
 		4DC5DB35190CF38B0080C9CD /* Droplet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5DB34190CF38B0080C9CD /* Droplet.m */; };
 		4DC5DB3A190D030C0080C9CD /* PreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DC5DB39190D030C0080C9CD /* PreferencesWindow.xib */; };
 		4DC5DB3D190D03C30080C9CD /* PreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5DB3C190D03C30080C9CD /* PreferencesWindowController.m */; };
+		65E32DB0190F7A4900476F2B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65E32DAF190F7A4900476F2B /* Security.framework */; };
+		65E32DB3190F7B2E00476F2B /* KeychainAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 65E32DB2190F7B2E00476F2B /* KeychainAccess.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -74,6 +76,9 @@
 		4DC5DB39190D030C0080C9CD /* PreferencesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreferencesWindow.xib; sourceTree = "<group>"; };
 		4DC5DB3B190D03C30080C9CD /* PreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesWindowController.h; sourceTree = "<group>"; };
 		4DC5DB3C190D03C30080C9CD /* PreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesWindowController.m; sourceTree = "<group>"; };
+		65E32DAF190F7A4900476F2B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		65E32DB1190F7B2E00476F2B /* KeychainAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainAccess.h; sourceTree = "<group>"; };
+		65E32DB2190F7B2E00476F2B /* KeychainAccess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainAccess.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +86,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65E32DB0190F7A4900476F2B /* Security.framework in Frameworks */,
 				4DC5DB00190CEA0A0080C9CD /* Cocoa.framework in Frameworks */,
 				4D8538EF190E068E00803294 /* Sparkle.framework in Frameworks */,
 			);
@@ -120,6 +126,7 @@
 		4DC5DAFE190CEA0A0080C9CD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				65E32DAF190F7A4900476F2B /* Security.framework */,
 				4D8538EE190E068E00803294 /* Sparkle.framework */,
 				4DC5DAFF190CEA0A0080C9CD /* Cocoa.framework */,
 				4DC5DB1E190CEA0A0080C9CD /* XCTest.framework */,
@@ -148,6 +155,8 @@
 				4DC5DB3C190D03C30080C9CD /* PreferencesWindowController.m */,
 				4DC5DB33190CF38B0080C9CD /* Droplet.h */,
 				4DC5DB34190CF38B0080C9CD /* Droplet.m */,
+				65E32DB1190F7B2E00476F2B /* KeychainAccess.h */,
+				65E32DB2190F7B2E00476F2B /* KeychainAccess.m */,
 				4DC5DB14190CEA0A0080C9CD /* MainMenu.xib */,
 				4DC5DB17190CEA0A0080C9CD /* Images.xcassets */,
 				4DC5DB06190CEA0A0080C9CD /* Supporting Files */,
@@ -288,6 +297,7 @@
 				4DC5DB13190CEA0A0080C9CD /* AppDelegate.m in Sources */,
 				4DC5DB0C190CEA0A0080C9CD /* main.m in Sources */,
 				4DC5DB3D190D03C30080C9CD /* PreferencesWindowController.m in Sources */,
+				65E32DB3190F7B2E00476F2B /* KeychainAccess.m in Sources */,
 				4DC5DB35190CF38B0080C9CD /* Droplet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

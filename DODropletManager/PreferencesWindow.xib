@@ -16,7 +16,7 @@
         <window title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <rect key="contentRect" x="1075" y="562" width="480" height="270"/>
-            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
+            <rect key="screenRect" x="0.0" y="0.0" width="1920" height="1058"/>
             <view key="contentView" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                 <autoresizingMask key="autoresizingMask"/>
@@ -27,7 +27,7 @@
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="Account" identifier="1" id="YNb-wf-6YT">
-                                <view key="view" id="mfB-2t-2iH">
+                                <view key="view" ambiguous="YES" id="mfB-2t-2iH">
                                     <rect key="frame" x="10" y="33" width="434" height="208"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -100,7 +100,7 @@
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="About" identifier="2" id="uwe-Kh-qZi">
-                                <view key="view" ambiguous="YES" id="3xP-DR-Fqb">
+                                <view key="view" id="3xP-DR-Fqb">
                                     <rect key="frame" x="10" y="33" width="434" height="208"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
