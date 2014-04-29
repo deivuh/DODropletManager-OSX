@@ -281,7 +281,7 @@
         [submenu addItem:ipAddressMI];
         
         if (droplet.distro != nil) {
-            [submenu addItemWithTitle:[NSString stringWithFormat:@"Distro: %@", droplet.distro]
+            [submenu addItemWithTitle:[NSString stringWithFormat:@"Image: %@", droplet.distro]
                                action:nil
                         keyEquivalent:@""];
         }
