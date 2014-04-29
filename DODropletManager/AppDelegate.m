@@ -17,6 +17,13 @@
     //If keys load successfully, do stuff, if not, no need
     //if ([self loadKeys]) {
     
+    _statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
+    
+    _statusItem.title = @"";
+    _statusItem.image = [NSImage imageNamed:@"DropletStatusIcon"];
+    _statusItem.alternateImage = [NSImage imageNamed:@"DropletStatusIconHighlighted"];
+    _statusItem.highlightMode = YES;
+    
     [self loadKeys];
     [self requestRegions];
         
@@ -252,12 +259,7 @@
 }
 
 - (void) createMenuItems {
-    _statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
-    
-    _statusItem.title = @"";
-    _statusItem.image = [NSImage imageNamed:@"DropletStatusIcon"];
-    _statusItem.alternateImage = [NSImage imageNamed:@"DropletStatusIconHighlighted"];
-    _statusItem.highlightMode = YES;
+
     
     NSMenu *menu = [[NSMenu alloc] init];
     
