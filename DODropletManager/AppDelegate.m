@@ -9,6 +9,7 @@
 #import "AppDelegate.h"
 #import "Droplet.h"
 
+#import "DropletFormWindowController.h"
 
 @implementation AppDelegate
 
@@ -339,6 +340,8 @@
         
     }
     
+    [menu addItemWithTitle:@"Add New Droplet" action:@selector(showDropletFormUI) keyEquivalent:@""];
+    
     [menu addItem:[NSMenuItem separatorItem]];
     
     
@@ -361,6 +364,13 @@
     [[NSPasteboard generalPasteboard] setString:ipAddress forType:NSStringPboardType];
 }
 
+- (void)showDropletFormUI
+{
+    _dropletFormWindowController = [[DropletFormWindowController alloc] initWithWindowNibName:@"DropletFormWindow"];
+    [_dropletFormWindowController showWindow:self];
+    
+    [NSApp activateIgnoringOtherApps:YES];
+}
 
 - (void)showPreferencesWindow:(id)sender {
     
