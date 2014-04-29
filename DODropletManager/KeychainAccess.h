@@ -10,4 +10,7 @@
 
 @interface KeychainAccess : NSObject
 
++ (BOOL) storeClientId:(NSString*)clientId andAPIKey:(NSString*)apiKey error:(NSError**)error;
++ (BOOL) getClientId:(NSString**)clientId andAPIKey:(NSString**)apiKey error:(NSError**)error;
+
 @end

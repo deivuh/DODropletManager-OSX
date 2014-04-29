@@ -8,61 +8,36 @@
 
 #import "AppDelegate.h"
 #import "Droplet.h"
-
+#import "KeychainAccess.h"
 
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-
-    ***REMOVED***If keys load successfully, do stuff, if not, no need
-***REMOVED***    if ([self loadKeys]) {
-    
-    
-    [self loadKeys];
-    [self requestRegions];
-        
-***REMOVED***    }
-    
-
-
+    if([self loadKeys]) {
+        [self requestRegions];
+    } else {
+        [self createMenuItems];
+        [self showPreferencesWindow: self];
+    }
 }
 
 - (BOOL)loadKeys {
+    NSString *client;
+    NSString *key;
     
-    userDefaults = [NSUserDefaults standardUserDefaults];
-
-    
-    ***REMOVED*** If no key values are found, no need to set them
-    if ([userDefaults objectForKey:@"clientID"] == nil ||
-        [userDefaults objectForKey:@"APIKey"] == nil) {
+    if([KeychainAccess getClientId: &client andAPIKey: &key error: nil]) {
+        clientID = client;
+        APIKey = key;
         
-        return NO;
-    
-    
+        return YES;
     }
     
-    
-
-    clientID = [userDefaults objectForKey:@"clientID"];
-    APIKey = [userDefaults objectForKey:@"APIKey"];
-    
-    clientID = [clientID stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]];
-    APIKey = [APIKey stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]];
-    
-    
-    
-    NSLog(@"Loaded: %@, %@", clientID, APIKey);
-    
-    return YES;
-
+    return NO;
 }
 
 
 - (void) requestRegions {
-
-
-    
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https:***REMOVED***api.digitalocean.com/regions/?client_id=%@&api_key=%@", clientID, APIKey]];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
     regionsConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
@@ -70,12 +45,10 @@
     if(regionsConnection) {
         responseData = [[NSMutableData alloc] init];
     } else {
+***REMOVED***
         NSLog(@"connection failed");
+***REMOVED***
     }
-    
-    
-    
-    
 }
 
 - (void) requestImages {
@@ -86,13 +59,11 @@
     if(imagesConnection) {
         responseData = [[NSMutableData alloc] init];
     } else {
+***REMOVED***
         NSLog(@"connection failed");
+***REMOVED***
     }
-    
 }
-
-
-
 
 - (void) requestDroplets {
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https:***REMOVED***api.digitalocean.com/droplets/?client_id=%@&api_key=%@", clientID, APIKey]];
@@ -102,7 +73,9 @@
     if(dropletsConnection) {
         responseData = [[NSMutableData alloc] init];
     } else {
+***REMOVED***
         NSLog(@"connection failed");
+***REMOVED***
     }
     
 }
@@ -115,7 +88,9 @@
     if(rebootDropletConnection) {
         responseData = [[NSMutableData alloc] init];
     } else {
+***REMOVED***
         NSLog(@"connection failed");
+***REMOVED***
     }
 }
 
@@ -128,7 +103,9 @@
     if(shutdownDropletConnection) {
         responseData = [[NSMutableData alloc] init];
     } else {
+***REMOVED***
         NSLog(@"connection failed");
+***REMOVED***
     }
     
 }
@@ -138,12 +115,16 @@
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
     turnOnDropletConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
     
+***REMOVED***
     NSLog(@"Request turnOn %@", urlRequest.URL);
+***REMOVED***
     
     if(turnOnDropletConnection) {
         responseData = [[NSMutableData alloc] init];
     } else {
+***REMOVED***
         NSLog(@"connection failed");
+***REMOVED***
     }
 }
 
@@ -155,24 +136,17 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-    
-    
     [responseData appendData:data];
-    
-
 }
-
-
-
 
 - (void) connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
     connection = nil;
-    
     responseData = nil;
     
+***REMOVED***
     NSLog(@"connection error");
-    
+***REMOVED***
     refreshMI.title = @"Refresh";
 }
 
@@ -184,8 +158,6 @@
                           JSONObjectWithData:responseData
                           options:NSUTF8StringEncoding
                           error:&error];
-    
-
     
     if(json != nil)
     {
@@ -244,48 +216,52 @@
         
         } else  if (connection == rebootDropletConnection) {
             
+***REMOVED***
             NSLog(@"Result status %@", [json objectForKey:@"status"]);
-            
+***REMOVED***
             [self refresh:self];
             
         } else  if (connection == shutdownDropletConnection) {
-            
+***REMOVED***
             NSLog(@"Result status %@", json);
-            
+***REMOVED***
             [self refresh:self];
             
         } else  if (connection == turnOnDropletConnection) {
-            
+***REMOVED***
             NSLog(@"Result status %@", json);
-            
+***REMOVED***
             [self refresh:self];
             
         }
-            
-        
     }
-    
-
-    
-    
 }
 
 - (void) createMenuItems {
-    _statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
-    
-    _statusItem.title = @"";
-    _statusItem.image = [NSImage imageNamed:@"DropletStatusIcon"];
-    _statusItem.alternateImage = [NSImage imageNamed:@"DropletStatusIconHighlighted"];
-    _statusItem.highlightMode = YES;
-    
-    NSMenu *menu = [[NSMenu alloc] init];
+    NSMenu *menu;
+    BOOL add_items;
+    if(_statusItem == nil) {
+        _statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
+        
+        _statusItem.title = @"";
+        _statusItem.image = [NSImage imageNamed:@"DropletStatusIcon"];
+        _statusItem.alternateImage = [NSImage imageNamed:@"DropletStatusIconHighlighted"];
+        _statusItem.highlightMode = YES;
+        menu = [[NSMenu alloc] init];
+        add_items = YES;
+    } else {
+        menu = _statusItem.menu;
+        add_items = NO;
+        
+        while(![[menu itemAtIndex: 0] isSeparatorItem]) {
+            [menu removeItemAtIndex: 0];
+        }
+    }
     
     int dropletMIIndex = 0;
-
-
     
     for (Droplet *droplet in dropletsArray) {
-        [menu addItemWithTitle:droplet.name  action:nil keyEquivalent:@""];
+        [menu insertItemWithTitle: droplet.name action: nil keyEquivalent: @"" atIndex: dropletMIIndex];
 
         NSMenu *submenu = [[NSMenu alloc] init];
         [submenu addItemWithTitle:[NSString stringWithFormat:@"Status: %@", droplet.status]
@@ -350,19 +326,20 @@
         
     }
     
-    [menu addItem:[NSMenuItem separatorItem]];
-    
-    
-    refreshMI = [[NSMenuItem alloc] initWithTitle:@"Refresh" action:@selector(refresh:) keyEquivalent:@""];
-    [menu addItem:refreshMI];
-    
-    [menu addItemWithTitle:@"Preferences" action:@selector(showPreferencesWindow:) keyEquivalent:@""];
-    
-    [menu addItem:[NSMenuItem separatorItem]];
+    if(add_items) {
+        [menu addItem:[NSMenuItem separatorItem]];
+        
+        refreshMI = [[NSMenuItem alloc] initWithTitle:@"Refresh" action:@selector(refresh:) keyEquivalent:@""];
+        [menu addItem:refreshMI];
+        
+        [menu addItemWithTitle:@"Preferences" action:@selector(showPreferencesWindow:) keyEquivalent:@""];
+        
+        [menu addItem:[NSMenuItem separatorItem]];
 
-    
-    [menu addItemWithTitle:@"Quit Droplets Manager" action:@selector(terminate:) keyEquivalent:@""];
-    _statusItem.menu = menu;
+        
+        [menu addItemWithTitle:@"Quit Droplets Manager" action:@selector(terminate:) keyEquivalent:@""];
+        _statusItem.menu = menu;
+    }
 }
 
 - (void)copyIPAddress:(id)sender {
@@ -386,6 +363,8 @@
 }
 
 - (void)refresh:(id)sender {
+    [self loadKeys];
+    
     refreshMI.title = @"Refreshing...";
     refreshMI.action = nil;
     [self requestRegions];
