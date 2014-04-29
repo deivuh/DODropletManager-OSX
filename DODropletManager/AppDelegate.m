@@ -48,9 +48,7 @@
     if(regionsConnection) {
         responseData = [[NSMutableData alloc] init];
     } else {
-#ifdef DEBUG
-        NSLog(@"connection failed");
-#endif
+        DLog(@"connection failed");
     }
 
 }
@@ -63,9 +61,7 @@
     if(imagesConnection) {
         responseData = [[NSMutableData alloc] init];
     } else {
-#ifdef DEBUG
-        NSLog(@"connection failed");
-#endif
+        DLog(@"connection failed");
     }
 }
 
@@ -77,9 +73,7 @@
     if(dropletsConnection) {
         responseData = [[NSMutableData alloc] init];
     } else {
-#ifdef DEBUG
-        NSLog(@"connection failed");
-#endif
+        DLog(@"connection failed");
     }
     
 }
@@ -92,9 +86,7 @@
     if(rebootDropletConnection) {
         responseData = [[NSMutableData alloc] init];
     } else {
-#ifdef DEBUG
-        NSLog(@"connection failed");
-#endif
+        DLog(@"connection failed");
     }
 }
 
@@ -107,9 +99,7 @@
     if(shutdownDropletConnection) {
         responseData = [[NSMutableData alloc] init];
     } else {
-#ifdef DEBUG
-        NSLog(@"connection failed");
-#endif
+        DLog(@"connection failed");
     }
     
 }
@@ -119,16 +109,12 @@
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
     turnOnDropletConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
     
-#ifdef DEBUG
-    NSLog(@"Request turnOn %@", urlRequest.URL);
-#endif
+    DLog(@"Request turnOn %@", urlRequest.URL);
     
     if(turnOnDropletConnection) {
         responseData = [[NSMutableData alloc] init];
     } else {
-#ifdef DEBUG
-        NSLog(@"connection failed");
-#endif
+        DLog(@"connection failed");
     }
 }
 
@@ -148,9 +134,7 @@
     connection = nil;
     responseData = nil;
     
-#ifdef DEBUG
-    NSLog(@"connection error");
-#endif
+    DLog(@"connection error");
     refreshMI.title = @"Refresh";
 }
 
@@ -220,21 +204,15 @@
         
         } else  if (connection == rebootDropletConnection) {
             
-#ifdef DEBUG
-            NSLog(@"Result status %@", [json objectForKey:@"status"]);
-#endif
+            DLog(@"Result status %@", [json objectForKey:@"status"]);
             [self refresh:self];
             
         } else  if (connection == shutdownDropletConnection) {
-#ifdef DEBUG
-            NSLog(@"Result status %@", json);
-#endif
+            DLog(@"Result status %@", json);
             [self refresh:self];
             
         } else  if (connection == turnOnDropletConnection) {
-#ifdef DEBUG
-            NSLog(@"Result status %@", json);
-#endif
+            DLog(@"Result status %@", json);
             [self refresh:self];
             
         }

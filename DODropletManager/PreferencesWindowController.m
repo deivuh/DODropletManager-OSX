@@ -119,9 +119,7 @@
     if(json)
     {
 
-#ifdef DEBUG
-        NSLog(@"JSON %@", json);
-#endif
+        DLog(@"JSON %@", json);
         if ([[json objectForKey:@"status"] isEqualToString:@"OK"]) {
             [_statusLB setStringValue:@"Successful! Please refresh"];
         } else {
