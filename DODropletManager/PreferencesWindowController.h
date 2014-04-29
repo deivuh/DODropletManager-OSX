@@ -9,9 +9,6 @@
 #import <Cocoa/Cocoa.h>
 
 @interface PreferencesWindowController : NSWindowController <NSURLConnectionDataDelegate, NSURLConnectionDelegate> {
-    NSUserDefaults *userDefaults;
-    
-    NSMutableData *responseData;
 }
 
 @property (strong) IBOutlet NSTextField *ClientIDTF;
