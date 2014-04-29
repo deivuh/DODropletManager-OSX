@@ -48,9 +48,7 @@
     if(regionsConnection) {
         responseData = [[NSMutableData alloc] init];
     } else {
-***REMOVED***
-        NSLog(@"connection failed");
-***REMOVED***
+        DLog(@"connection failed");
     }
 
 }
@@ -63,9 +61,7 @@
     if(imagesConnection) {
         responseData = [[NSMutableData alloc] init];
     } else {
-***REMOVED***
-        NSLog(@"connection failed");
-***REMOVED***
+        DLog(@"connection failed");
     }
 }
 
@@ -77,9 +73,7 @@
     if(dropletsConnection) {
         responseData = [[NSMutableData alloc] init];
     } else {
-***REMOVED***
-        NSLog(@"connection failed");
-***REMOVED***
+        DLog(@"connection failed");
     }
     
 }
@@ -92,9 +86,7 @@
     if(rebootDropletConnection) {
         responseData = [[NSMutableData alloc] init];
     } else {
-***REMOVED***
-        NSLog(@"connection failed");
-***REMOVED***
+        DLog(@"connection failed");
     }
 }
 
@@ -107,9 +99,7 @@
     if(shutdownDropletConnection) {
         responseData = [[NSMutableData alloc] init];
     } else {
-***REMOVED***
-        NSLog(@"connection failed");
-***REMOVED***
+        DLog(@"connection failed");
     }
     
 }
@@ -119,16 +109,12 @@
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
     turnOnDropletConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
     
-***REMOVED***
-    NSLog(@"Request turnOn %@", urlRequest.URL);
-***REMOVED***
+    DLog(@"Request turnOn %@", urlRequest.URL);
     
     if(turnOnDropletConnection) {
         responseData = [[NSMutableData alloc] init];
     } else {
-***REMOVED***
-        NSLog(@"connection failed");
-***REMOVED***
+        DLog(@"connection failed");
     }
 }
 
@@ -148,9 +134,7 @@
     connection = nil;
     responseData = nil;
     
-***REMOVED***
-    NSLog(@"connection error");
-***REMOVED***
+    DLog(@"connection error");
     refreshMI.title = @"Refresh";
 }
 
@@ -220,21 +204,15 @@
         
         } else  if (connection == rebootDropletConnection) {
             
-***REMOVED***
-            NSLog(@"Result status %@", [json objectForKey:@"status"]);
-***REMOVED***
+            DLog(@"Result status %@", [json objectForKey:@"status"]);
             [self refresh:self];
             
         } else  if (connection == shutdownDropletConnection) {
-***REMOVED***
-            NSLog(@"Result status %@", json);
-***REMOVED***
+            DLog(@"Result status %@", json);
             [self refresh:self];
             
         } else  if (connection == turnOnDropletConnection) {
-***REMOVED***
-            NSLog(@"Result status %@", json);
-***REMOVED***
+            DLog(@"Result status %@", json);
             [self refresh:self];
             
         }
