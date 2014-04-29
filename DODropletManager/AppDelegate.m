@@ -10,6 +10,8 @@
 #import "Droplet.h"
 #import "KeychainAccess.h"
 
+#import "DropletFormWindowController.h"
+
 @implementation AppDelegate
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -324,7 +326,6 @@
         [menu addItemWithTitle:@"Preferences" action:@selector(showPreferencesWindow:) keyEquivalent:@""];
         
         [menu addItem:[NSMenuItem separatorItem]];
-
         
         [menu addItemWithTitle:@"Quit Droplets Manager" action:@selector(terminate:) keyEquivalent:@""];
         _statusItem.menu = menu;
@@ -338,6 +339,13 @@
     [[NSPasteboard generalPasteboard] setString:ipAddress forType:NSStringPboardType];
 }
 
+- (void)showDropletFormUI
+{
+    _dropletFormWindowController = [[DropletFormWindowController alloc] initWithWindowNibName:@"DropletFormWindow"];
+    [_dropletFormWindowController showWindow:self];
+    
+    [NSApp activateIgnoringOtherApps:YES];
+}
 
 - (void)showPreferencesWindow:(id)sender {
     
