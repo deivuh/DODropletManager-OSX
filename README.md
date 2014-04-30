@@ -2,18 +2,19 @@
 
 Inspired by Andrewsomething's [DigitalOcean Indicator](http:***REMOVED***blog.andrewsomething.com/2014/04/25/digitalocean-indicator-release/).
 
-##What works:
+## Features:
 
 - List droplets
 - Show each droplets status, IP address, distro and region
 - Copy droplet’s IP address to clipboard
 - Reboot, shutdown and power on droplets
+- Open a SSH root session to droplets
+ 
 
-##To do: 
+## To do: 
 
 - Auto-start feature
 - Auto-refresh
-- Refactor redundant code
 
 ##License
 DigitalOcean Droplets Manager for OSX Copyright (C) 2014 David Hsieh
