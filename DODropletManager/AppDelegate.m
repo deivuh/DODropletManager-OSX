@@ -222,7 +222,7 @@
 - (void) createMenuItems {
 
     NSMenu *menu;
-    BOOL add_items;
+    BOOL addItems;
     if(_statusItem == nil) {
         _statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
         
@@ -231,10 +231,10 @@
         _statusItem.alternateImage = [NSImage imageNamed:@"DropletStatusIconHighlighted"];
         _statusItem.highlightMode = YES;
         menu = [[NSMenu alloc] init];
-        add_items = YES;
+        addItems = YES;
     } else {
         menu = _statusItem.menu;
-        add_items = NO;
+        addItems = NO;
         
         while(![[menu itemAtIndex: 0] isSeparatorItem]) {
             [menu removeItemAtIndex: 0];
@@ -286,7 +286,7 @@
         
         [submenu addItem:connectToDroplet];
         
-        NSMenuItem *rebootMI = [[NSMenuItem alloc] initWithTitle:@"Reboot" action:@selector(rebootDroplet:) keyEquivalent:@""];
+        NSMenuItem *rebootMI = [[NSMenuItem alloc] initWithTitle:@"Reboot" action:@selector(confirmReboot:) keyEquivalent:@""];
         
         [rebootMI setImage:[NSImage imageNamed:@"reboot-icon"]];
         [rebootMI setRepresentedObject:droplet];
@@ -294,7 +294,7 @@
         [submenu addItem:rebootMI];
         
         if (droplet.active) {
-            NSMenuItem *shutdownMI = [[NSMenuItem alloc] initWithTitle:@"Shutdown" action:@selector(shutdownDroplet:) keyEquivalent:@""];
+            NSMenuItem *shutdownMI = [[NSMenuItem alloc] initWithTitle:@"Shutdown" action:@selector(confirmShutdown:) keyEquivalent:@""];
             
             [shutdownMI setImage:[NSImage imageNamed:@"power-icon"]];
             [shutdownMI setRepresentedObject:droplet];
@@ -315,7 +315,7 @@
         
     }
     
-    if(add_items) {
+    if(addItems) {
         [menu addItem:[NSMenuItem separatorItem]];
         
         refreshMI = [[NSMenuItem alloc] initWithTitle:@"Refresh" action:@selector(refresh:) keyEquivalent:@""];
@@ -359,9 +359,44 @@
     [self requestRegions];
 }
 
-- (void)rebootDroplet:(id)sender {
+- (void)confirmReboot:(id)sender {
     
     Droplet *currentDroplet = ((NSMenuItem*)sender).representedObject;
+    
+    rebootAlert = [NSAlert alertWithMessageText:[NSString stringWithFormat:@"Reboot '%@'", currentDroplet.name]
+                                     defaultButton:@"Ok"
+                                   alternateButton:@"Cancel"
+                                       otherButton:nil
+                         informativeTextWithFormat:@"Do you wish to proceed?"];
+    [rebootAlert beginSheetModalForWindow:[self window]
+                      modalDelegate:self didEndSelector:@selector(alertDidEnd:returnCode:contextInfo:) 
+                        contextInfo:(__bridge_retained void *)(currentDroplet)];
+    
+    
+}
+
+
+- (void)confirmShutdown:(id)sender {
+    
+    Droplet *currentDroplet = ((NSMenuItem*)sender).representedObject;
+    
+
+    
+    shutdownAlert = [NSAlert alertWithMessageText:[NSString stringWithFormat:@"Shutdown '%@'", currentDroplet.name]
+                                  defaultButton:@"Ok"
+                                alternateButton:@"Cancel"
+                                    otherButton:nil
+                      informativeTextWithFormat:@"Do you wish to proceed?"];
+    [shutdownAlert beginSheetModalForWindow:[self window]
+                              modalDelegate:self didEndSelector:@selector(alertDidEnd:returnCode:contextInfo:)
+                                contextInfo:(__bridge_retained void *)(currentDroplet)];
+    
+
+}
+
+- (void)rebootDroplet:(id)sender {
+    
+    Droplet *currentDroplet = (Droplet*)sender;
     
     [self requestRebootForDroplet:currentDroplet];
     
@@ -369,7 +404,7 @@
 
 - (void)shutdownDroplet:(id)sender {
     
-    Droplet *currentDroplet = ((NSMenuItem*)sender).representedObject;
+    Droplet *currentDroplet = (Droplet*)sender;
     
     [self requestShutdownForDroplet:currentDroplet];
 }
@@ -391,6 +426,26 @@
 - (void)establishSSHConnectionToDroplet:(id)sender {
     Droplet *currentDroplet = ((NSMenuItem*)sender).representedObject;
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"ssh:***REMOVED***root@%@", currentDroplet.ip]]];
+}
+
+- (void)alertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
+{
+
+    if (returnCode == NSOKButton)
+    {
+        Droplet *currentDroplet = (__bridge_transfer Droplet*)contextInfo;
+
+        if (alert == rebootAlert) {
+            [self rebootDroplet:currentDroplet];
+        } else if (alert == shutdownAlert) {
+            [self shutdownDroplet:currentDroplet];
+        }
+        DLog(@"(returnCode == NSOKButton)");
+    }
+    else if (returnCode == NSCancelButton)
+    {
+        DLog(@"(returnCode == NSCancelButton)");
+    }
 }
 
 @end
