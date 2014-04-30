@@ -10,15 +10,38 @@
 #import "Droplet.h"
 #import "KeychainAccess.h"
 
-@implementation AppDelegate
+@implementation AppDelegate {
+    NSMutableData *responseData;
+    NSMutableArray *dropletsArray;
+    
+    NSURLConnection *dropletsConnection, *regionsConnection, *imagesConnection;
+    
+    NSURLConnection *rebootDropletConnection, *shutdownDropletConnection, *turnOnDropletConnection;
+    
+    NSString *clientID, *APIKey;
+    
+    NSMutableDictionary *regions;
+    NSMutableDictionary *images;
+    
+    NSUserDefaults *userDefaults;
+    
+    
+    NSMenuItem *refreshMI;
+    NSAlert *rebootAlert, *shutdownAlert;
+    
+    NSTimer *refreshingTimer;
+    float fade, delta;
+    
+    BOOL firstRun;
+}
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
-
+    [self createMenuItems];
+    
     if([self loadKeys]) {
-        [self requestRegions];
+        [self refresh: self];
     } else {
-        [self createMenuItems];
         [self showPreferencesWindow: self];
     }
 
@@ -39,6 +62,8 @@
 
 }
 
+#pragma mark -
+#pragma mark Communication methods
 
 - (void) requestRegions {
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.digitalocean.com/regions/?client_id=%@&api_key=%@", clientID, APIKey]];
@@ -135,7 +160,10 @@
     responseData = nil;
     
     DLog(@"connection error");
-    refreshMI.title = @"Refresh";
+    refreshMI.title = NSLocalizedString(@"Refresh", @"Refresh");
+    refreshMI.action = @selector(refresh:);
+    
+    [self setStatusImage: @"DropletStatusIconFailed"];
 }
 
 - (void) connectionDidFinishLoading:(NSURLConnection *)connection
@@ -149,29 +177,21 @@
     
     if(json != nil)
     {
-        
         if (connection == dropletsConnection) {
-            
-            dropletsArray = [[NSMutableArray alloc] init];
             NSArray *tempDropletsArray = [json objectForKey:@"droplets"];
+            dropletsArray = [[NSMutableArray alloc] init];
 
             for (NSDictionary *dropletDictionary in tempDropletsArray) {
                 Droplet *droplet = [[Droplet alloc] initWithDictionary:dropletDictionary regions:regions andImages:images];
                 [dropletsArray addObject:droplet];
-                
-
             }
-            
-
 
             [self createMenuItems];
             refreshMI.title = @"Refresh";
             refreshMI.action = @selector(refresh:);
-            
         } else  if (connection == regionsConnection) {
-            
-            regions = [[NSMutableDictionary alloc] init];
             NSArray *tempRegionsArray = [json objectForKey:@"regions"];
+            regions = [[NSMutableDictionary alloc] init];
             
             for (NSDictionary *region in tempRegionsArray) {
                 NSString *regionID = [region objectForKey:@"id"];
@@ -180,43 +200,42 @@
                 [regions setObject:regionName forKey:regionID];
             }
             
-            
             [self requestImages];
-            
         } else  if (connection == imagesConnection) {
-            
-            images = [[NSMutableDictionary alloc] init];
             NSArray *tempImagesArray = [json objectForKey:@"images"];
+            images = [[NSMutableDictionary alloc] init];
             
             for (NSDictionary *image in tempImagesArray) {
                 NSString *imageID = [image objectForKey:@"id"];
                 NSString *distro = [image objectForKey:@"name"];
                 
-                
-                
-                
                 [images setObject:distro forKey:imageID];
             }
             
-            
             [self requestDroplets];
-            
-        
         } else  if (connection == rebootDropletConnection) {
-            
             DLog(@"Result status %@", [json objectForKey:@"status"]);
             [self refresh:self];
-            
         } else  if (connection == shutdownDropletConnection) {
             DLog(@"Result status %@", json);
             [self refresh:self];
-            
         } else  if (connection == turnOnDropletConnection) {
             DLog(@"Result status %@", json);
             [self refresh:self];
-            
         }
     }
+}
+
+#pragma mark -
+#pragma mark Menu methods
+
+- (void) setStatusImage:(NSString*)name {
+    if(refreshingTimer) {
+        [refreshingTimer invalidate];
+        refreshingTimer = nil;
+    }
+    
+    _statusItem.image = [NSImage imageNamed: name];
 }
 
 - (void) createMenuItems {
@@ -227,7 +246,6 @@
         _statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
         
         _statusItem.title = @"";
-        _statusItem.image = [NSImage imageNamed:@"DropletStatusIcon"];
         _statusItem.alternateImage = [NSImage imageNamed:@"DropletStatusIconHighlighted"];
         _statusItem.highlightMode = YES;
         menu = [[NSMenu alloc] init];
@@ -240,6 +258,8 @@
             [menu removeItemAtIndex: 0];
         }
     }
+    
+    [self setStatusImage: @"DropletStatusIcon"];
     
     int dropletMIIndex = 0;
     
@@ -318,18 +338,21 @@
     if(addItems) {
         [menu addItem:[NSMenuItem separatorItem]];
         
-        refreshMI = [[NSMenuItem alloc] initWithTitle:@"Refresh" action:@selector(refresh:) keyEquivalent:@""];
+        refreshMI = [[NSMenuItem alloc] initWithTitle: NSLocalizedString(@"Refresh", @"Refresh") action:@selector(refresh:) keyEquivalent:@""];
         [menu addItem:refreshMI];
         
-        [menu addItemWithTitle:@"Preferences" action:@selector(showPreferencesWindow:) keyEquivalent:@""];
+        [menu addItemWithTitle: NSLocalizedString(@"Preferences", @"Preferences") action:@selector(showPreferencesWindow:) keyEquivalent:@""];
         
         [menu addItem:[NSMenuItem separatorItem]];
 
         
-        [menu addItemWithTitle:@"Quit Droplets Manager" action:@selector(terminate:) keyEquivalent:@""];
+        [menu addItemWithTitle: NSLocalizedString(@"Quit Droplets Manager", @"Quit Droplets Manager") action:@selector(terminate:) keyEquivalent:@""];
         _statusItem.menu = menu;
     }
 }
+
+#pragma mark -
+#pragma mark Menu actions
 
 - (void)copyIPAddress:(id)sender {
     
@@ -353,8 +376,14 @@
 
 - (void)refresh:(id)sender {
     [self loadKeys];
+
+    if(refreshingTimer == nil) {
+        refreshingTimer = [NSTimer scheduledTimerWithTimeInterval: 0.1 target: self selector: @selector(refreshingTimerTick:) userInfo: nil repeats: YES];
+        fade = 0;
+        delta = 0.1;
+    }
     
-    refreshMI.title = @"Refreshing...";
+    refreshMI.title = NSLocalizedString(@"Refreshing...", @"Refreshing...");
     refreshMI.action = nil;
     [self requestRegions];
 }
@@ -446,6 +475,32 @@
     {
         DLog(@"(returnCode == NSCancelButton)");
     }
+}
+
+#pragma mark -
+#pragma mark Refreshing timer callback
+
+- (void) refreshingTimerTick:(NSTimer*)timer {
+    fade += delta;
+    if(fade <= 0.0) {
+        fade = 0.0;
+        delta = -delta;
+    } else if(fade >= 1.0) {
+        fade = 1.0;
+        delta = -delta;
+    }
+    
+    NSImage *img1 = [NSImage imageNamed:@"DropletStatusIconHighlighted"];
+    NSImage *img2 = [NSImage imageNamed:@"DropletStatusIcon"];
+    NSSize size = img1.size;
+    NSImage *img = [[NSImage alloc] initWithSize: size];
+    NSRect r = NSMakeRect(0, 0, size.width, size.height);
+    [img lockFocus];
+    [img1 drawInRect: r fromRect: r operation: NSCompositeCopy fraction: 1.0];
+    [img2 drawInRect: r fromRect: r operation: NSCompositeSourceOver fraction: fade];
+    [img unlockFocus];
+    
+    _statusItem.image = img;
 }
 
 @end
