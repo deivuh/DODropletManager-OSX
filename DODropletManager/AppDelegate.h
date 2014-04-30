@@ -10,26 +10,6 @@
 #import <Cocoa/Cocoa.h>
 
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSURLConnectionDataDelegate, NSURLConnectionDelegate> {
-    NSMutableData *responseData;
-    NSMutableArray *dropletsArray;
-    
-    NSURLConnection *dropletsConnection, *regionsConnection, *imagesConnection;
-    
-    NSURLConnection *rebootDropletConnection, *shutdownDropletConnection, *turnOnDropletConnection;
-    
-    NSString *clientID, *APIKey;
-    
-    NSMutableDictionary *regions;
-    NSMutableDictionary *images;
-    
-    NSUserDefaults *userDefaults;
-
-    
-    NSMenuItem *refreshMI;
-    
-    NSAlert *rebootAlert, *shutdownAlert;
-    
-    BOOL firstRun;
 }
 
 @property (assign) IBOutlet NSWindow *window;
