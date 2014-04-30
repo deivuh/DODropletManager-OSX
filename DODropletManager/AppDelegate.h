@@ -27,6 +27,8 @@
     
     NSMenuItem *refreshMI;
     
+    NSAlert *rebootAlert, *shutdownAlert;
+    
     BOOL firstRun;
 }
 
