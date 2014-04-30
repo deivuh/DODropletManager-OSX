@@ -8,6 +8,7 @@
 
 #import "DropletFormWindowController.h"
 #import "NSString+URLEncode.h"
+#import "KeychainAccess.h"
 
 @interface DropletFormWindowController ()
 
@@ -41,13 +42,13 @@
 {
     [super windowDidLoad];
     
-    NSUserDefaults *userDefaults = [NSUserDefaults standardUserDefaults];
+    NSString *client;
+    NSString *key;
     
-    clientID = [userDefaults objectForKey:@"clientID"];
-    APIKey = [userDefaults objectForKey:@"APIKey"];
-    
-    clientID = [clientID stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]];
-    APIKey = [APIKey stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]];
+    if([KeychainAccess getClientId: &client andAPIKey: &key error: nil]) {
+        clientID = client;
+        APIKey = key;
+    }
     
     [self.availableImagesPopup addItemWithTitle:@"Select image..."];
     [self loadAvailableImages];
@@ -60,18 +61,16 @@
 
 - (void)createDroplet:(id)sender
 {
-    NSInteger selectedSizeIndex = [self.availableSizePopup indexOfItem:self.availableSizePopup.selectedItem];
+    NSInteger selectedSizeIndex = [self.availableSizePopup indexOfItem:self.availableSizePopup.selectedItem] - 1;
     NSNumber *sizeID = availableSizes[selectedSizeIndex][@"id"];
     
-    NSInteger selectedImageIndex = [self.availableImagesPopup indexOfItem:self.availableImagesPopup.selectedItem];
+    NSInteger selectedImageIndex = [self.availableImagesPopup indexOfItem:self.availableImagesPopup.selectedItem] - 1;
     NSNumber *imageID = availableImages[selectedImageIndex][@"id"];
     
-    NSInteger selectedRegionIndex = [self.availableRegionsPopup indexOfItem:self.availableRegionsPopup.selectedItem];
+    NSInteger selectedRegionIndex = [self.availableRegionsPopup indexOfItem:self.availableRegionsPopup.selectedItem] - 1;
     NSNumber *regionID = availableImages[selectedImageIndex][@"region_slugs"][selectedRegionIndex];
     
     NSString *path = [NSString stringWithFormat:@"https://api.digitalocean.com/droplets/new/?client_id=%@&api_key=%@&name=%@&size_id=%@&image_id=%@&region_slug=%@", clientID, APIKey, [self.dropletNameField.stringValue urlEncode], sizeID, imageID, regionID];
-    
-    NSLog(@"%@", path);
     
     NSURL *url = [NSURL URLWithString:path];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];

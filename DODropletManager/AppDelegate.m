@@ -317,6 +317,8 @@
         
     }
     
+    [menu insertItemWithTitle:@"Create New Droplet" action:@selector(showDropletFormUI) keyEquivalent:@"" atIndex:dropletMIIndex];
+    
     if(addItems) {
         [menu addItem:[NSMenuItem separatorItem]];
         
