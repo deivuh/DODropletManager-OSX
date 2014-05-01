@@ -121,9 +121,9 @@
 
         DLog(@"JSON %@", json);
         if ([[json objectForKey:@"status"] isEqualToString:@"OK"]) {
-            [_statusLB setStringValue:@"Successful! Please refresh"];
+            [_statusLB setStringValue:NSLocalizedString(@"Successful! Please refresh", @"Successful! Please refresh")];
         } else {
-            [_statusLB setStringValue:@"Incorrect client-ID and/or API-Key"];
+            [_statusLB setStringValue:NSLocalizedString(@"Incorrect client-ID and/or API-Key",@"Incorrect client-ID and/or API-Key")];
         }
     } else {
         [self showAlert: error];
