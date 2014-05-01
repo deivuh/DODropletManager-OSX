@@ -392,11 +392,11 @@
     
     Droplet *currentDroplet = ((NSMenuItem*)sender).representedObject;
     
-    rebootAlert = [NSAlert alertWithMessageText:[NSString stringWithFormat:@"Reboot '%@'", currentDroplet.name]
-                                     defaultButton:@"Ok"
-                                   alternateButton:@"Cancel"
+    rebootAlert = [NSAlert alertWithMessageText:[NSString stringWithFormat:NSLocalizedString(@"Reboot droplet", @"Reboot '%@'"), currentDroplet.name]
+                                     defaultButton:NSLocalizedString(@"Ok", @"Ok")
+                                   alternateButton:NSLocalizedString(@"Cancel", @"Cancel")
                                        otherButton:nil
-                         informativeTextWithFormat:@"Do you wish to proceed?"];
+                         informativeTextWithFormat:NSLocalizedString(@"Do you wish to proceed?", @"Do you wish to proceed?")];
     [rebootAlert beginSheetModalForWindow:[self window]
                       modalDelegate:self didEndSelector:@selector(alertDidEnd:returnCode:contextInfo:) 
                         contextInfo:(__bridge_retained void *)(currentDroplet)];
@@ -411,9 +411,9 @@
     
 
     
-    shutdownAlert = [NSAlert alertWithMessageText:[NSString stringWithFormat:@"Shutdown '%@'", currentDroplet.name]
-                                  defaultButton:@"Ok"
-                                alternateButton:@"Cancel"
+    shutdownAlert = [NSAlert alertWithMessageText:[NSString stringWithFormat:NSLocalizedString(@"Shutdown droplet", @"Shutdown '%@'"), currentDroplet.name]
+                                    defaultButton:NSLocalizedString(@"Ok", @"Ok")
+                                  alternateButton:NSLocalizedString(@"Cancel", @"Cancel")
                                     otherButton:nil
                       informativeTextWithFormat:@"Do you wish to proceed?"];
     [shutdownAlert beginSheetModalForWindow:[self window]
@@ -469,11 +469,11 @@
         } else if (alert == shutdownAlert) {
             [self shutdownDroplet:currentDroplet];
         }
-        DLog(@"(returnCode == NSOKButton)");
+        DLog(@"Action confirmed");
     }
     else if (returnCode == NSCancelButton)
     {
-        DLog(@"(returnCode == NSCancelButton)");
+        DLog(@"Action canceled");
     }
 }
 
