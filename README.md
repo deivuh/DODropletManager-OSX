@@ -11,11 +11,6 @@ Inspired by Andrewsomething's [DigitalOcean Indicator](http://blog.andrewsomethi
 - Open a SSH root session to droplets
  
 
-## To do: 
-
-- Auto-start feature
-- Auto-refresh
-
 ##License
 DigitalOcean Droplets Manager for OSX Copyright (C) 2014 David Hsieh
 
