@@ -10,6 +10,8 @@
 	<string>DODropletManager</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
+		<key>97F3647B-9C4C-4835-9619-B68FBD761B28</key>
+		<string>https://github.com/Mozketo/LaunchAtLoginController.git</string>
 		<key>A0359024-6206-450A-8409-FE148B03D565</key>
 		<string>https://github.com/deivuh/DODropletManager-OSX.git</string>
 	</dict>
@@ -17,6 +19,8 @@
 	<string>DODropletManager.xcodeproj/project.xcworkspace</string>
 	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
 	<dict>
+		<key>97F3647B-9C4C-4835-9619-B68FBD761B28</key>
+		<string>../../DODropletManager/Frameworks/LaunchAtLoginController</string>
 		<key>A0359024-6206-450A-8409-FE148B03D565</key>
 		<string>../..</string>
 	</dict>
@@ -35,6 +39,14 @@
 			<string>A0359024-6206-450A-8409-FE148B03D565</string>
 			<key>IDESourceControlWCCName</key>
 			<string>DODropletManager</string>
+		</dict>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>97F3647B-9C4C-4835-9619-B68FBD761B28</string>
+			<key>IDESourceControlWCCName</key>
+			<string>LaunchAtLoginController</string>
 		</dict>
 	</array>
 </dict>

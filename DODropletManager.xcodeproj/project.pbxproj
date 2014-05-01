@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D13EE2B1911CCC400DCAED1 /* LaunchAtLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D13EE291911CCC400DCAED1 /* LaunchAtLoginController.m */; };
+		4D13EE2C1911CCC400DCAED1 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4D13EE2A1911CCC400DCAED1 /* README.md */; };
 		4D8538EF190E068E00803294 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D8538EE190E068E00803294 /* Sparkle.framework */; };
 		4D8538F1190E07F100803294 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4D8538EE190E068E00803294 /* Sparkle.framework */; };
 		4DC5DB00190CEA0A0080C9CD /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DC5DAFF190CEA0A0080C9CD /* Cocoa.framework */; };
@@ -51,6 +53,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4D13EE281911CCC400DCAED1 /* LaunchAtLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchAtLoginController.h; sourceTree = "<group>"; };
+		4D13EE291911CCC400DCAED1 /* LaunchAtLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchAtLoginController.m; sourceTree = "<group>"; };
+		4D13EE2A1911CCC400DCAED1 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		4D8538EE190E068E00803294 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = DODropletManager/Frameworks/Sparkle.framework; sourceTree = "<group>"; };
 		4DC5DAFC190CEA0A0080C9CD /* DODropletManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DODropletManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DC5DAFF190CEA0A0080C9CD /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -104,6 +109,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4D13EE271911CCC400DCAED1 /* LaunchAtLoginController */ = {
+			isa = PBXGroup;
+			children = (
+				4D13EE281911CCC400DCAED1 /* LaunchAtLoginController.h */,
+				4D13EE291911CCC400DCAED1 /* LaunchAtLoginController.m */,
+				4D13EE2A1911CCC400DCAED1 /* README.md */,
+			);
+			name = LaunchAtLoginController;
+			path = DODropletManager/Frameworks/LaunchAtLoginController;
+			sourceTree = "<group>";
+		};
 		4DC5DAF3190CEA0A0080C9CD = {
 			isa = PBXGroup;
 			children = (
@@ -126,6 +142,7 @@
 		4DC5DAFE190CEA0A0080C9CD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4D13EE271911CCC400DCAED1 /* LaunchAtLoginController */,
 				65E32DAF190F7A4900476F2B /* Security.framework */,
 				4D8538EE190E068E00803294 /* Sparkle.framework */,
 				4DC5DAFF190CEA0A0080C9CD /* Cocoa.framework */,
@@ -271,6 +288,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D13EE2C1911CCC400DCAED1 /* README.md in Resources */,
 				4DC5DB0A190CEA0A0080C9CD /* InfoPlist.strings in Resources */,
 				4DC5DB18190CEA0A0080C9CD /* Images.xcassets in Resources */,
 				4DC5DB3A190D030C0080C9CD /* PreferencesWindow.xib in Resources */,
@@ -297,6 +315,7 @@
 				4DC5DB13190CEA0A0080C9CD /* AppDelegate.m in Sources */,
 				4DC5DB0C190CEA0A0080C9CD /* main.m in Sources */,
 				4DC5DB3D190D03C30080C9CD /* PreferencesWindowController.m in Sources */,
+				4D13EE2B1911CCC400DCAED1 /* LaunchAtLoginController.m in Sources */,
 				65E32DB3190F7B2E00476F2B /* KeychainAccess.m in Sources */,
 				4DC5DB35190CF38B0080C9CD /* Droplet.m in Sources */,
 			);
