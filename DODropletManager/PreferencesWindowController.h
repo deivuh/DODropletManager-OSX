@@ -16,6 +16,8 @@
 @property (weak) IBOutlet NSTextField *statusLB;
 
 
+@property (weak) IBOutlet NSButton *launchAtLoginCB;
+
 
 
 @end

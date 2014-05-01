@@ -8,6 +8,7 @@
 
 #import "PreferencesWindowController.h"
 #import "KeychainAccess.h"
+#import "LaunchAtLoginController.h"
 
 @interface PreferencesWindowController ()
 
@@ -15,6 +16,8 @@
 
 @implementation PreferencesWindowController {
     NSMutableData *responseData;
+    
+    LaunchAtLoginController *launchController;
 }
 
 #pragma mark -
@@ -45,6 +48,9 @@
 
     NSString *clientId;
     NSString *apiKey;
+    launchController = [[LaunchAtLoginController alloc] init];
+    _launchAtLoginCB.state = [launchController launchAtLogin];
+    
     
     if([KeychainAccess getClientId: &clientId andAPIKey: &apiKey error: nil]) {
         [_ClientIDTF setStringValue: clientId];
@@ -68,6 +74,15 @@
         [self showAlert: error];
     }
     
+}
+
+
+- (IBAction)checkLaunchAtLogin:(id)sender {
+
+        
+        [launchController setLaunchAtLogin:[sender state]];
+
+
 }
 
 #pragma mark -
