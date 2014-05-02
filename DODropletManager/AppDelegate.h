@@ -9,11 +9,14 @@
 #import "PreferencesWindowController.h"
 #import <Cocoa/Cocoa.h>
 
+@class DropletFormWindowController;
+
 @interface AppDelegate : NSObject <NSApplicationDelegate, NSURLConnectionDataDelegate, NSURLConnectionDelegate> {
 }
 
 @property (assign) IBOutlet NSWindow *window;
 @property (strong, nonatomic) NSStatusItem *statusItem;
 @property (strong) PreferencesWindowController *preferencesWC;
+@property (strong, nonatomic) DropletFormWindowController *dropletFormWindowController;
 
 @end
