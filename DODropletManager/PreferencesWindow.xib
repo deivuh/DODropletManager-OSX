@@ -30,7 +30,7 @@
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="Account" identifier="1" id="YNb-wf-6YT">
-                                <view key="view" id="mfB-2t-2iH">
+                                <view key="view" ambiguous="YES" id="mfB-2t-2iH">
                                     <rect key="frame" x="10" y="33" width="434" height="208"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
@@ -103,7 +103,7 @@
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="Options" identifier="" id="NLr-d2-Ivl">
-                                <view key="view" ambiguous="YES" id="sEf-t5-9vJ">
+                                <view key="view" id="sEf-t5-9vJ">
                                     <rect key="frame" x="10" y="33" width="434" height="208"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
