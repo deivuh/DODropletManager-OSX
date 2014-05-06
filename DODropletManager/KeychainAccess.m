@@ -12,17 +12,27 @@
 static const char *digital_ocean = "Digital Ocean";
 static const char *account = "Account";
 
+static NSString *serviceName = @"digital_ocean";
+
 @implementation KeychainAccess
 
 + (BOOL) storeClientId:(NSString*)clientId andAPIKey:(NSString*)apiKey error:(NSError**)error {
     ***REMOVED*** Set password
     SecKeychainRef keychain = NULL; ***REMOVED*** User's default keychain
+    
+    
+    ***REMOVED*** Delete keychain item if already exists
+    [self removeClientId:clientId andAPIKey:apiKey error:nil];
+    
     const char *passwordData = [[NSString stringWithFormat: @"%@:%@", clientId, apiKey] UTF8String];
     OSStatus status = SecKeychainAddGenericPassword(keychain,
                                                     (UInt32)strlen(digital_ocean), digital_ocean,
                                                     (UInt32)strlen(account), account,
                                                     (UInt32)strlen(passwordData), passwordData,
                                                     NULL);
+    
+    
+
     
     if (status == noErr) {
         return YES;
@@ -62,6 +72,33 @@ static const char *account = "Account";
     if(error) {
         *error = [NSError errorWithDomain: NSLocalizedString(@"Keychain", @"Keychain") code: status userInfo: nil];
     }
+    
+    return NO;
+}
+
+
+
++ (BOOL) removeClientId:(NSString*)clientId andAPIKey:(NSString*)apiKey error:(NSError**)error {
+    
+    
+    SecKeychainRef keychain = NULL; ***REMOVED*** User's default keychain
+    SecKeychainItemRef keychainItem;
+    
+    OSStatus status = SecKeychainFindGenericPassword(keychain,
+                                                     (UInt32)strlen(digital_ocean), digital_ocean,
+                                                     (UInt32)strlen(account), account,
+                                                     NULL, NULL,
+                                                     &keychainItem);
+    
+    
+    if (status == noErr) {
+        SecKeychainItemDelete(keychainItem);
+        CFRelease(keychainItem);
+    } else {
+        *error = [NSError errorWithDomain: NSLocalizedString(@"Keychain", @"Keychain") code: status userInfo: nil];
+    }
+    
+    
     
     return NO;
 }

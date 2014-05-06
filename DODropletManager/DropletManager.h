@@ -11,17 +11,7 @@
 
 @interface DropletManager : NSObject <NSURLConnectionDataDelegate, NSURLConnectionDelegate> {
 
-    NSString *someProperty;
-    
-    NSMutableData *responseData;
 
-    
-    NSURLConnection *dropletsConnection, *regionsConnection, *imagesConnection;
-    
-    NSURLConnection *rebootDropletConnection, *shutdownDropletConnection, *turnOnDropletConnection;
-
-    NSMutableDictionary *regions;
-    NSMutableDictionary *images;
     
 }
 
