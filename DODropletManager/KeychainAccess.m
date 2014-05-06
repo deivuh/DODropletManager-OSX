@@ -95,7 +95,9 @@ static NSString *serviceName = @"digital_ocean";
         SecKeychainItemDelete(keychainItem);
         CFRelease(keychainItem);
     } else {
-        *error = [NSError errorWithDomain: NSLocalizedString(@"Keychain", @"Keychain") code: status userInfo: nil];
+        if (error) {
+            *error = [NSError errorWithDomain: NSLocalizedString(@"Keychain", @"Keychain") code: status userInfo: nil];
+        }
     }
     
     
