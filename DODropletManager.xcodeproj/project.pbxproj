@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4D13EE2B1911CCC400DCAED1 /* LaunchAtLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D13EE291911CCC400DCAED1 /* LaunchAtLoginController.m */; };
+		4D13EE2C1911CCC400DCAED1 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4D13EE2A1911CCC400DCAED1 /* README.md */; };
+		4D20C35F19173DA1008A0E2C /* DropletManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D20C35E19173DA1008A0E2C /* DropletManager.m */; };
 		4D8538EF190E068E00803294 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D8538EE190E068E00803294 /* Sparkle.framework */; };
 		4D8538F1190E07F100803294 /* Sparkle.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = 4D8538EE190E068E00803294 /* Sparkle.framework */; };
 		4DC5DB00190CEA0A0080C9CD /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DC5DAFF190CEA0A0080C9CD /* Cocoa.framework */; };
@@ -23,6 +26,11 @@
 		4DC5DB35190CF38B0080C9CD /* Droplet.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5DB34190CF38B0080C9CD /* Droplet.m */; };
 		4DC5DB3A190D030C0080C9CD /* PreferencesWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 4DC5DB39190D030C0080C9CD /* PreferencesWindow.xib */; };
 		4DC5DB3D190D03C30080C9CD /* PreferencesWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4DC5DB3C190D03C30080C9CD /* PreferencesWindowController.m */; };
+		65E32DB0190F7A4900476F2B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 65E32DAF190F7A4900476F2B /* Security.framework */; };
+		65E32DB3190F7B2E00476F2B /* KeychainAccess.m in Sources */ = {isa = PBXBuildFile; fileRef = 65E32DB2190F7B2E00476F2B /* KeychainAccess.m */; };
+		DB835654190EE99900B62EA0 /* DropletFormWindowController.m in Sources */ = {isa = PBXBuildFile; fileRef = DB835653190EE99900B62EA0 /* DropletFormWindowController.m */; };
+		DB835656190EE9C400B62EA0 /* DropletFormWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = DB835655190EE9C400B62EA0 /* DropletFormWindow.xib */; };
+		DB835659190F4B9E00B62EA0 /* NSString+URLEncode.m in Sources */ = {isa = PBXBuildFile; fileRef = DB835658190F4B9E00B62EA0 /* NSString+URLEncode.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,6 +57,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+		4D13EE281911CCC400DCAED1 /* LaunchAtLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchAtLoginController.h; sourceTree = "<group>"; };
+		4D13EE291911CCC400DCAED1 /* LaunchAtLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchAtLoginController.m; sourceTree = "<group>"; };
+		4D13EE2A1911CCC400DCAED1 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		4D20C35D19173DA1008A0E2C /* DropletManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropletManager.h; sourceTree = "<group>"; };
+		4D20C35E19173DA1008A0E2C /* DropletManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropletManager.m; sourceTree = "<group>"; };
 		4D8538EE190E068E00803294 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Sparkle.framework; path = DODropletManager/Frameworks/Sparkle.framework; sourceTree = "<group>"; };
 		4DC5DAFC190CEA0A0080C9CD /* DODropletManager.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = DODropletManager.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4DC5DAFF190CEA0A0080C9CD /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = System/Library/Frameworks/Cocoa.framework; sourceTree = SDKROOT; };
@@ -74,6 +87,14 @@
 		4DC5DB39190D030C0080C9CD /* PreferencesWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = PreferencesWindow.xib; sourceTree = "<group>"; };
 		4DC5DB3B190D03C30080C9CD /* PreferencesWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = PreferencesWindowController.h; sourceTree = "<group>"; };
 		4DC5DB3C190D03C30080C9CD /* PreferencesWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = PreferencesWindowController.m; sourceTree = "<group>"; };
+		65E32DAF190F7A4900476F2B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		65E32DB1190F7B2E00476F2B /* KeychainAccess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = KeychainAccess.h; sourceTree = "<group>"; };
+		65E32DB2190F7B2E00476F2B /* KeychainAccess.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = KeychainAccess.m; sourceTree = "<group>"; };
+		DB835652190EE99900B62EA0 /* DropletFormWindowController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropletFormWindowController.h; sourceTree = "<group>"; };
+		DB835653190EE99900B62EA0 /* DropletFormWindowController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropletFormWindowController.m; sourceTree = "<group>"; };
+		DB835655190EE9C400B62EA0 /* DropletFormWindow.xib */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.xib; path = DropletFormWindow.xib; sourceTree = "<group>"; };
+		DB835657190F4B9E00B62EA0 /* NSString+URLEncode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncode.h"; sourceTree = "<group>"; };
+		DB835658190F4B9E00B62EA0 /* NSString+URLEncode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEncode.m"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -81,6 +102,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				65E32DB0190F7A4900476F2B /* Security.framework in Frameworks */,
 				4DC5DB00190CEA0A0080C9CD /* Cocoa.framework in Frameworks */,
 				4D8538EF190E068E00803294 /* Sparkle.framework in Frameworks */,
 			);
@@ -98,6 +120,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		4D13EE271911CCC400DCAED1 /* LaunchAtLoginController */ = {
+			isa = PBXGroup;
+			children = (
+				4D13EE281911CCC400DCAED1 /* LaunchAtLoginController.h */,
+				4D13EE291911CCC400DCAED1 /* LaunchAtLoginController.m */,
+				4D13EE2A1911CCC400DCAED1 /* README.md */,
+			);
+			name = LaunchAtLoginController;
+			path = DODropletManager/Frameworks/LaunchAtLoginController;
+			sourceTree = "<group>";
+		};
 		4DC5DAF3190CEA0A0080C9CD = {
 			isa = PBXGroup;
 			children = (
@@ -120,6 +153,8 @@
 		4DC5DAFE190CEA0A0080C9CD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				4D13EE271911CCC400DCAED1 /* LaunchAtLoginController */,
+				65E32DAF190F7A4900476F2B /* Security.framework */,
 				4D8538EE190E068E00803294 /* Sparkle.framework */,
 				4DC5DAFF190CEA0A0080C9CD /* Cocoa.framework */,
 				4DC5DB1E190CEA0A0080C9CD /* XCTest.framework */,
@@ -143,14 +178,23 @@
 			children = (
 				4DC5DB11190CEA0A0080C9CD /* AppDelegate.h */,
 				4DC5DB12190CEA0A0080C9CD /* AppDelegate.m */,
+				4D20C35D19173DA1008A0E2C /* DropletManager.h */,
+				4D20C35E19173DA1008A0E2C /* DropletManager.m */,
 				4DC5DB39190D030C0080C9CD /* PreferencesWindow.xib */,
 				4DC5DB3B190D03C30080C9CD /* PreferencesWindowController.h */,
 				4DC5DB3C190D03C30080C9CD /* PreferencesWindowController.m */,
 				4DC5DB33190CF38B0080C9CD /* Droplet.h */,
 				4DC5DB34190CF38B0080C9CD /* Droplet.m */,
+				65E32DB1190F7B2E00476F2B /* KeychainAccess.h */,
+				65E32DB2190F7B2E00476F2B /* KeychainAccess.m */,
 				4DC5DB14190CEA0A0080C9CD /* MainMenu.xib */,
 				4DC5DB17190CEA0A0080C9CD /* Images.xcassets */,
 				4DC5DB06190CEA0A0080C9CD /* Supporting Files */,
+				DB835652190EE99900B62EA0 /* DropletFormWindowController.h */,
+				DB835653190EE99900B62EA0 /* DropletFormWindowController.m */,
+				DB835655190EE9C400B62EA0 /* DropletFormWindow.xib */,
+				DB835657190F4B9E00B62EA0 /* NSString+URLEncode.h */,
+				DB835658190F4B9E00B62EA0 /* NSString+URLEncode.m */,
 			);
 			path = DODropletManager;
 			sourceTree = "<group>";
@@ -262,8 +306,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				4D13EE2C1911CCC400DCAED1 /* README.md in Resources */,
 				4DC5DB0A190CEA0A0080C9CD /* InfoPlist.strings in Resources */,
 				4DC5DB18190CEA0A0080C9CD /* Images.xcassets in Resources */,
+				DB835656190EE9C400B62EA0 /* DropletFormWindow.xib in Resources */,
 				4DC5DB3A190D030C0080C9CD /* PreferencesWindow.xib in Resources */,
 				4DC5DB10190CEA0A0080C9CD /* Credits.rtf in Resources */,
 				4DC5DB16190CEA0A0080C9CD /* MainMenu.xib in Resources */,
@@ -286,8 +332,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				4DC5DB13190CEA0A0080C9CD /* AppDelegate.m in Sources */,
+				DB835659190F4B9E00B62EA0 /* NSString+URLEncode.m in Sources */,
 				4DC5DB0C190CEA0A0080C9CD /* main.m in Sources */,
+				DB835654190EE99900B62EA0 /* DropletFormWindowController.m in Sources */,
 				4DC5DB3D190D03C30080C9CD /* PreferencesWindowController.m in Sources */,
+				4D13EE2B1911CCC400DCAED1 /* LaunchAtLoginController.m in Sources */,
+				4D20C35F19173DA1008A0E2C /* DropletManager.m in Sources */,
+				65E32DB3190F7B2E00476F2B /* KeychainAccess.m in Sources */,
 				4DC5DB35190CF38B0080C9CD /* Droplet.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -428,6 +479,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DODropletManager/DODropletManager-Prefix.pch";
 				INFOPLIST_FILE = "DODropletManager/DODropletManager-Info.plist";
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};
@@ -445,6 +497,7 @@
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "DODropletManager/DODropletManager-Prefix.pch";
 				INFOPLIST_FILE = "DODropletManager/DODropletManager-Info.plist";
+				OTHER_CFLAGS = "";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				WRAPPER_EXTENSION = app;
 			};

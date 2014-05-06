@@ -9,15 +9,14 @@
 #import <Cocoa/Cocoa.h>
 
 @interface PreferencesWindowController : NSWindowController <NSURLConnectionDataDelegate, NSURLConnectionDelegate> {
-    NSUserDefaults *userDefaults;
-    
-    NSMutableData *responseData;
 }
 
 @property (strong) IBOutlet NSTextField *ClientIDTF;
 @property (strong) IBOutlet NSTextField *APIKeyTF;
 @property (weak) IBOutlet NSTextField *statusLB;
 
+
+@property (weak) IBOutlet NSButton *launchAtLoginCB;
 
 
 

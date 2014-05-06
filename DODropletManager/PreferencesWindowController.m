@@ -7,13 +7,21 @@
 //
 
 #import "PreferencesWindowController.h"
+#import "KeychainAccess.h"
+#import "LaunchAtLoginController.h"
 
 @interface PreferencesWindowController ()
 
 @end
 
-@implementation PreferencesWindowController
+@implementation PreferencesWindowController {
+    NSMutableData *responseData;
+    
+    LaunchAtLoginController *launchController;
+}
 
+#pragma mark -
+#pragma mark Initialization code
 
 - (id)init {
     self=[super initWithWindowNibName:@"PreferencesWindow"];
@@ -37,49 +45,53 @@
 - (void)windowDidLoad
 {
     [super windowDidLoad];
-    
 
+    NSString *clientId;
+    NSString *apiKey;
+    launchController = [[LaunchAtLoginController alloc] init];
+    _launchAtLoginCB.state = [launchController launchAtLogin];
     
     
-    userDefaults = [NSUserDefaults standardUserDefaults];
-    
-    
-    if ([userDefaults objectForKey:@"clientID"]) {
-        [_ClientIDTF setStringValue:[userDefaults objectForKey:@"clientID"]];
+    if([KeychainAccess getClientId: &clientId andAPIKey: &apiKey error: nil]) {
+        [_ClientIDTF setStringValue: clientId];
+        [_APIKeyTF setStringValue: apiKey];
     }
-    
-    if ([userDefaults objectForKey:@"APIKey"]) {
-        [_APIKeyTF setStringValue:[userDefaults objectForKey:@"APIKey"]];
-    }
-    
-    NSLog(@"ClientID %@", [userDefaults objectForKey:@"clientID"]);
 }
 
+#pragma mark -
+#pragma mark Actions
 
 - (IBAction)savePreferences:(id)sender {
-    
+    NSError *error = nil;
     
     [_ClientIDTF setStringValue:[_ClientIDTF.stringValue stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]]];
     [_APIKeyTF setStringValue:[_APIKeyTF.stringValue stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]]];
     
-    
-    [userDefaults setObject:_ClientIDTF.stringValue forKey:@"clientID"];
-    [userDefaults setObject:_APIKeyTF.stringValue forKey:@"APIKey"];
-    
-    [userDefaults synchronize];
-    
-    NSLog(@"saved %@", _ClientIDTF.stringValue);
-
-    
-//    if ([_ClientIDTF.stringValue length] != 32 || [_APIKeyTF.stringValue length] != 32) {
-//        [_statusLB setStringValue:@"Incorrect client-ID and/or API-Key length"];
-//    } else {
-        [_statusLB setStringValue:@"Verifying..."];
+    if([KeychainAccess storeClientId: _ClientIDTF.stringValue andAPIKey: _APIKeyTF.stringValue error: &error]) {
+        [_statusLB setStringValue: NSLocalizedString(@"Verifying...", @"Verifying...")];
         [self requestDroplets];
-//    }
+    } else {
+        [self showAlert: error];
+    }
     
 }
 
+
+- (IBAction)checkLaunchAtLogin:(id)sender {
+
+        
+        [launchController setLaunchAtLogin:[sender state]];
+
+
+}
+
+#pragma mark -
+#pragma mark Utility methods
+
+- (void) showAlert:(NSError*)error {
+    NSAlert *alert = [NSAlert alertWithError: error];
+    [alert runModal];
+}
 
 - (void) requestDroplets {
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.digitalocean.com/droplets/?client_id=%@&api_key=%@", _ClientIDTF.stringValue, _APIKeyTF.stringValue]];
@@ -89,9 +101,8 @@
     if(connection) {
         responseData = [[NSMutableData alloc] init];
     } else {
-        NSLog(@"connection failed");
+        [_statusLB setStringValue: NSLocalizedString(@"Connection failed", @"Connection failed")];
     }
-    
 }
 
 - (void) connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
@@ -101,18 +112,13 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-    
     [responseData appendData:data];
-    
 }
 
 - (void) connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
     connection = nil;
-    
     responseData = nil;
-    
-    NSLog(@"connection error");
 }
 
 
@@ -125,16 +131,17 @@
                           options:NSUTF8StringEncoding
                           error:&error];
     
-    if(json != nil)
+    if(json)
     {
-        
-        NSLog(@"JSON %@", json);
-        
+
+        DLog(@"JSON %@", json);
         if ([[json objectForKey:@"status"] isEqualToString:@"OK"]) {
-            [_statusLB setStringValue:@"Successful! Please refresh"];
+            [_statusLB setStringValue:NSLocalizedString(@"Successful! Please refresh", @"Successful! Please refresh")];
         } else {
-            [_statusLB setStringValue:@"Incorrect client-ID and/or API-Key"];
+            [_statusLB setStringValue:NSLocalizedString(@"Incorrect client-ID and/or API-Key",@"Incorrect client-ID and/or API-Key")];
         }
+    } else {
+        [self showAlert: error];
     }
     
 }
