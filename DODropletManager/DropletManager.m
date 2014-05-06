@@ -9,7 +9,13 @@
 #import "DropletManager.h"
 
 
-@implementation DropletManager
+@implementation DropletManager {
+    NSMutableData *responseData;
+    NSURLConnection *dropletsConnection, *regionsConnection, *imagesConnection;
+    NSURLConnection *rebootDropletConnection, *shutdownDropletConnection, *turnOnDropletConnection;
+    NSMutableDictionary *regions;
+    NSMutableDictionary *images;
+}
 
 
 #pragma mark Singleton Methods
