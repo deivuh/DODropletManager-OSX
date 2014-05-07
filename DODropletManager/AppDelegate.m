@@ -31,6 +31,11 @@
     BOOL firstRun;
     
     DropletManager *dropletManager;
+    
+    NSUserDefaults *userdefaults;
+    NSMutableDictionary *sshUserDictionary;
+    
+    
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -56,6 +61,17 @@
                                                  name:@"dropletsFailed"
                                                object:nil];
 
+    
+    userdefaults = [NSUserDefaults standardUserDefaults];
+    
+    
+    //    If dictionary exists, load it from userDefaults;
+    if ([userdefaults objectForKey:@"sshUserDictionary"] == nil) {
+        sshUserDictionary = [[NSMutableDictionary alloc] init];
+    } else {
+        sshUserDictionary = [[userdefaults objectForKey:@"sshUserDictionary"] mutableCopy];
+    }
+    
 }
 
 - (BOOL)loadKeys {
@@ -312,8 +328,20 @@
 }
 
 - (void)establishSSHConnectionToDroplet:(id)sender {
+    
+
+
+    
     Droplet *currentDroplet = ((NSMenuItem*)sender).representedObject;
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"ssh://root@%@", currentDroplet.ip]]];
+    
+    
+    if ([sshUserDictionary objectForKey:currentDroplet.name] == nil) {
+        [sshUserDictionary setObject:@"root" forKey:currentDroplet.name];
+    }
+    
+    NSString *dropletSSHUsername = [sshUserDictionary objectForKey:currentDroplet.name];
+    
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"ssh://%@@%@", dropletSSHUsername,  currentDroplet.ip]]];
 }
 
 - (void)alertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
