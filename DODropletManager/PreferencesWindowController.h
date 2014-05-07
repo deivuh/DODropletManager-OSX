@@ -8,7 +8,9 @@
 
 #import <Cocoa/Cocoa.h>
 
-@interface PreferencesWindowController : NSWindowController <NSURLConnectionDataDelegate, NSURLConnectionDelegate> {
+@interface PreferencesWindowController : NSWindowController <NSURLConnectionDataDelegate, NSURLConnectionDelegate, NSTableViewDataSource, NSTableViewDelegate, NSTextFieldDelegate> {
+    
+    IBOutlet NSTableView *sshUsersTableview;
 }
 
 @property (strong) IBOutlet NSTextField *ClientIDTF;

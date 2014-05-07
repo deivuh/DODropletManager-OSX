@@ -9,6 +9,7 @@
 #import "PreferencesWindowController.h"
 #import "KeychainAccess.h"
 #import "LaunchAtLoginController.h"
+#import "DropletManager.h"
 
 @interface PreferencesWindowController ()
 
@@ -18,6 +19,10 @@
     NSMutableData *responseData;
     
     LaunchAtLoginController *launchController;
+    
+    DropletManager *dropletManager;
+    NSUserDefaults *userdefaults;
+    NSMutableDictionary *sshUserDictionary;
 }
 
 #pragma mark -
@@ -51,6 +56,19 @@
     launchController = [[LaunchAtLoginController alloc] init];
     _launchAtLoginCB.state = [launchController launchAtLogin];
     
+    dropletManager = [DropletManager sharedManager];
+    userdefaults = [NSUserDefaults standardUserDefaults];
+    
+    
+    ***REMOVED***    If dictionary exists, load it from userDefaults;
+    if ([userdefaults objectForKey:@"sshUserDictionary"] == nil) {
+        sshUserDictionary = [[NSMutableDictionary alloc] init];
+    } else {
+        sshUserDictionary = [[userdefaults objectForKey:@"sshUserDictionary"] mutableCopy];
+    }
+    
+    
+    
     
     if([KeychainAccess getClientId: &clientId andAPIKey: &apiKey error: nil]) {
         [_ClientIDTF setStringValue: clientId];
@@ -73,6 +91,7 @@
     } else {
         [self showAlert: error];
     }
+    
     
 }
 
@@ -146,5 +165,85 @@
     
 }
 
+#pragma mark -
+#pragma mark NSTableview delegate methods
+
+- (NSInteger)numberOfRowsInTableView:(NSTableView *)tableView {
+    return dropletManager.droplets.count;
+}
+
+- (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+    
+    ***REMOVED*** Get a new ViewCell
+    NSTableCellView *cellView = [tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
+    
+
+    Droplet *currentDroplet = [dropletManager.droplets objectAtIndex:row];
+    
+
+    if( [tableColumn.identifier isEqualToString:@"dropletColumn"] )
+    {
+        
+        [cellView.textField setStringValue:currentDroplet.name];
+        
+        
+    } else if ([tableColumn.identifier isEqualToString:@"usernameColumn"]) {
+        
+        if ([sshUserDictionary objectForKey:currentDroplet.name] == nil) {
+            [sshUserDictionary setObject:@"root" forKey:currentDroplet.name];
+            
+        }
+        
+        NSString *currentDropletSSHUser = [sshUserDictionary objectForKey:currentDroplet.name];
+        
+        [cellView.textField setStringValue: currentDropletSSHUser];
+        [cellView.textField setEditable:YES];
+        cellView.textField.delegate = self;
+
+    }
+    
+    [userdefaults setObject:sshUserDictionary forKey:@"sshUserDictionary"];
+    [userdefaults synchronize];
+    
+    return cellView;
+}
+
+- (BOOL)tableView:(NSTableView *)tableView shouldEditTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
+    if ([tableColumn.identifier isEqualToString:@"usernameColumn"]) {
+        return YES;
+    }
+    
+    return NO;
+}
+
+#pragma mark -
+#pragma mark NSTextfield delegate methods
+
+- (void)controlTextDidEndEditing:(NSNotification *)obj
+{
+    NSDictionary *userInfo = [obj userInfo];
+    NSTextView *aView = [userInfo valueForKey:@"NSFieldEditor"];
+    DLog(@"controlTextDidEndEditing %@", [aView string] );
+    
+    Droplet *currentDroplet = [dropletManager.droplets objectAtIndex:sshUsersTableview.selectedRow];
+    
+    [sshUserDictionary setObject:[aView string] forKey:currentDroplet.name];
+    
+    [userdefaults setObject:sshUserDictionary forKey:@"sshUserDictionary"];
+    [userdefaults synchronize];
+}
+
+- (void)controlTextDidChange:(NSNotification *)aNotification
+{
+    NSDictionary *userInfo = [aNotification userInfo];
+    NSTextView *aView = [userInfo valueForKey:@"NSFieldEditor"];
+    DLog(@"controlTextDidChange >>%@<<", [aView string] );
+}
+
+- (BOOL)control:(NSControl *)control textShouldEndEditing:(NSText *)fieldEditor
+{
+    DLog(@"control: textShouldEndEditing >%@<", [fieldEditor string] );
+    return YES;
+}
 
 @end
