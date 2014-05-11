@@ -13,8 +13,8 @@
     IBOutlet NSTableView *sshUsersTableview;
 }
 
-@property (strong) IBOutlet NSTextField *ClientIDTF;
-@property (strong) IBOutlet NSTextField *APIKeyTF;
+@property (weak) IBOutlet NSTextField *ClientIDTF;
+@property (weak) IBOutlet NSTextField *APIKeyTF;
 @property (weak) IBOutlet NSTextField *statusLB;
 
 
