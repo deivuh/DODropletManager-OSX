@@ -239,9 +239,13 @@
 
 - (void)showPreferencesWindow:(id)sender {
     
+    
+    
     ***REMOVED***Show preferences window
     _preferencesWC = [[PreferencesWindowController alloc] initWithWindowNibName:@"PreferencesWindow"];
     [_preferencesWC showWindow:self];
+    
+    
     
     ***REMOVED***Focus on window
     [NSApp activateIgnoringOtherApps:YES];

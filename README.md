@@ -8,7 +8,7 @@ Inspired by Andrewsomething's [DigitalOcean Indicator](http:***REMOVED***blog.an
 - Show each droplets status, IP address, distro and region
 - Copy droplet’s IP address to clipboard
 - Reboot, shutdown and power on droplets
-- Open a SSH root session to droplets
+- Open a SSH session to droplets
  
 
 ##License
