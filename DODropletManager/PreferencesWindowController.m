@@ -23,6 +23,7 @@
     DropletManager *dropletManager;
     NSUserDefaults *userdefaults;
     NSMutableDictionary *sshUserDictionary;
+    NSMutableDictionary *sshPortDictionary;
 }
 
 #pragma mark -
@@ -65,6 +66,13 @@
         sshUserDictionary = [[NSMutableDictionary alloc] init];
     } else {
         sshUserDictionary = [[userdefaults objectForKey:@"sshUserDictionary"] mutableCopy];
+    }
+    
+    ***REMOVED***    If dictionary exists, load it from userDefaults;
+    if ([userdefaults objectForKey:@"sshPortDictionary"] == nil) {
+        sshPortDictionary = [[NSMutableDictionary alloc] init];
+    } else {
+        sshPortDictionary = [[userdefaults objectForKey:@"sshPortDictionary"] mutableCopy];
     }
     
     
@@ -199,17 +207,41 @@
         [cellView.textField setStringValue: currentDropletSSHUser];
         [cellView.textField setEditable:YES];
         cellView.textField.delegate = self;
+        
 
+    } else if ([tableColumn.identifier isEqualToString:@"portColumn"]) {
+        
+        if ([sshPortDictionary objectForKey:currentDroplet.name] == nil) {
+            [sshPortDictionary setObject:@"22" forKey:currentDroplet.name];
+            
+        }
+        
+        NSString *currentDropletSSHPort = [sshPortDictionary objectForKey:currentDroplet.name];
+        
+        [cellView.textField setStringValue: currentDropletSSHPort];
+        [cellView.textField setEditable:YES];
+        cellView.textField.delegate = self;
+        
+        
     }
     
+***REMOVED***    cellView.objectValue = cellView.textField;
+    
     [userdefaults setObject:sshUserDictionary forKey:@"sshUserDictionary"];
+    [userdefaults setObject:sshPortDictionary forKey:@"sshPortDictionary"];
     [userdefaults synchronize];
+    
+
     
     return cellView;
 }
 
 - (BOOL)tableView:(NSTableView *)tableView shouldEditTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     if ([tableColumn.identifier isEqualToString:@"usernameColumn"]) {
+        return YES;
+    }
+    
+    if ([tableColumn.identifier isEqualToString:@"portColumn"]) {
         return YES;
     }
     
@@ -223,13 +255,55 @@
 {
     NSDictionary *userInfo = [obj userInfo];
     NSTextView *aView = [userInfo valueForKey:@"NSFieldEditor"];
-    DLog(@"controlTextDidEndEditing %@", [aView string] );
+    NSString *inputString = [aView string];
+    DLog(@"controlTextDidEndEditing %@", inputString );
+    
+    NSAlert *errorAlert = [NSAlert alertWithMessageText:@"Invalid port number" defaultButton:@"Ok" alternateButton:nil otherButton:nil informativeTextWithFormat:@"Should be a number within range 1-65535" ];
+    
+    NSTextField *currentTextField = (NSTextField*)[obj object];
     
     Droplet *currentDroplet = [dropletManager.droplets objectAtIndex:sshUsersTableview.selectedRow];
     
-    [sshUserDictionary setObject:[aView string] forKey:currentDroplet.name];
     
-    [userdefaults setObject:sshUserDictionary forKey:@"sshUserDictionary"];
+    NSInteger selected = [sshUsersTableview selectedRow];
+    
+    NSTextField *selectedUserTF = [[sshUsersTableview viewAtColumn:1 row:selected makeIfNecessary:YES] textField];
+    
+    NSTextField *selectedPortTF = [[sshUsersTableview viewAtColumn:2 row:selected makeIfNecessary:YES] textField];
+
+    
+    if (currentTextField == selectedUserTF) {
+        DLog(@"UserTF end editing");
+        [sshUserDictionary setObject:inputString forKey:currentDroplet.name];
+        
+        [userdefaults setObject:sshUserDictionary forKey:@"sshUserDictionary"];
+    } else if (currentTextField == selectedPortTF) {
+        DLog(@"PortTF end editing");
+        
+        ***REMOVED***Check if valid port
+        if([inputString rangeOfCharacterFromSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]].location == NSNotFound) {
+            
+            if ([inputString integerValue] > 65535 || [inputString integerValue] < 1) {
+                
+                [errorAlert runModal];
+                
+                return;
+            }
+            
+            
+            
+        } else {
+            [errorAlert runModal];
+            return;
+        }
+        
+        
+        [sshPortDictionary setObject:inputString forKey:currentDroplet.name];
+        
+        [userdefaults setObject:sshPortDictionary forKey:@"sshPortDictionary"];
+    }
+    
+
     [userdefaults synchronize];
 }
 
