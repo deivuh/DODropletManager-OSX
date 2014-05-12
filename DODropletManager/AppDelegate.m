@@ -34,12 +34,14 @@
     
     NSUserDefaults *userdefaults;
     NSMutableDictionary *sshUserDictionary;
+    NSMutableDictionary *sshPortDictionary;
     
     
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
+
     dropletManager = [DropletManager sharedManager];
     
     [self createMenuItems];
@@ -71,6 +73,14 @@
     } else {
         sshUserDictionary = [[userdefaults objectForKey:@"sshUserDictionary"] mutableCopy];
     }
+    
+    //    If dictionary exists, load it from userDefaults;
+    if ([userdefaults objectForKey:@"sshPortDictionary"] == nil) {
+        sshPortDictionary = [[NSMutableDictionary alloc] init];
+    } else {
+        sshPortDictionary = [[userdefaults objectForKey:@"sshPortDictionary"] mutableCopy];
+    }
+    
     
 }
 
@@ -338,10 +348,14 @@
     if ([sshUserDictionary objectForKey:currentDroplet.name] == nil) {
         [sshUserDictionary setObject:@"root" forKey:currentDroplet.name];
     }
+    if ([sshPortDictionary objectForKey:currentDroplet.name] == nil) {
+        [sshPortDictionary setObject:@"22" forKey:currentDroplet.name];
+    }
     
     NSString *dropletSSHUsername = [sshUserDictionary objectForKey:currentDroplet.name];
+    NSString *dropletSSHPort = [sshPortDictionary objectForKey:currentDroplet.name];
     
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"ssh://%@@%@", dropletSSHUsername,  currentDroplet.ip]]];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"ssh://%@@%@:%@", dropletSSHUsername,  currentDroplet.ip,dropletSSHPort]]];
 }
 
 - (void)alertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
