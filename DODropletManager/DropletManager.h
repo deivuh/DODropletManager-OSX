@@ -27,6 +27,7 @@
 - (void)rebootDroplet:(Droplet*)droplet;
 - (void)shutdownDroplet:(Droplet*)droplet;
 - (void)turnOnDroplet:(Droplet*)droplet;
+- (void)deleteDroplet:(Droplet*)droplet;
 
 
 @end
