@@ -12,7 +12,7 @@
 @implementation DropletManager {
     NSMutableData *responseData;
     NSURLConnection *dropletsConnection, *regionsConnection, *imagesConnection;
-    NSURLConnection *rebootDropletConnection, *shutdownDropletConnection, *turnOnDropletConnection;
+    NSURLConnection *rebootDropletConnection, *shutdownDropletConnection, *turnOnDropletConnection, *deleteDropletConnection;
     NSMutableDictionary *regions;
     NSMutableDictionary *images;
 }
@@ -126,6 +126,13 @@
     }
 }
 
+- (void)requestDeleteForDroplet:(Droplet*)droplet
+{
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https:***REMOVED***api.digitalocean.com/droplets/%@/destroy/?client_id=%@&api_key=%@&scrub_data=true", droplet.dropletID, _clientID, _APIKey]];
+    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
+    deleteDropletConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
+}
+
 
 - (void) connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
@@ -210,6 +217,8 @@
         } else  if (connection == turnOnDropletConnection) {
             DLog(@"Result status %@", json);
 
+        } else if (connection == deleteDropletConnection) {
+            [self refreshDroplets];
         }
     }
 }
@@ -232,7 +241,10 @@
     [self requestTurnOnForDroplet:droplet];
 }
 
-
+- (void)deleteDroplet:(Droplet *)droplet
+{
+    [self requestDeleteForDroplet:droplet];
+}
 
 
 @end
