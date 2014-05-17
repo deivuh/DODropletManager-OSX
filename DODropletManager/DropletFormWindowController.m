@@ -9,6 +9,7 @@
 #import "DropletFormWindowController.h"
 #import "NSString+URLEncode.h"
 #import "KeychainAccess.h"
+#import "DropletManager.h"
 
 @interface DropletFormWindowController ()
 
@@ -220,6 +221,8 @@
                               modalDelegate:self
                              didEndSelector:@selector(didEndSuccessAlert)
                                 contextInfo:nil];
+            
+            [[DropletManager sharedManager] refreshDroplets];
         }
     }
 }
