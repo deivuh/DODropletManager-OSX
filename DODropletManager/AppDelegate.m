@@ -21,7 +21,7 @@
     NSUserDefaults *userDefaults;
     
     NSMenuItem *refreshMI;
-    NSAlert *rebootAlert, *shutdownAlert;
+    NSAlert *rebootAlert, *shutdownAlert, *deleteConfirmAlert;
     
     NSTimer *refreshingTimer;
     
@@ -35,8 +35,6 @@
     NSUserDefaults *userdefaults;
     NSMutableDictionary *sshUserDictionary;
     NSMutableDictionary *sshPortDictionary;
-    
-    
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
@@ -207,6 +205,13 @@
             [submenu addItem:turnOnMI];
         }
         
+        NSMenuItem *deleteDropletMI = [[NSMenuItem alloc] initWithTitle:@"Delete Droplet" action:@selector(confirmDropletDeletion:) keyEquivalent:@""];
+        
+        [deleteDropletMI setImage:[NSImage imageNamed:@"trash-icon"]];
+        [deleteDropletMI setRepresentedObject:droplet];
+        
+        [submenu addItem:deleteDropletMI];
+        
         [menu setSubmenu:submenu forItem:[menu.itemArray objectAtIndex:dropletMIIndex]];
         dropletMIIndex ++;
         
@@ -308,6 +313,21 @@
 
 }
 
+- (void)confirmDropletDeletion:(id)sender
+{
+    Droplet *currentDroplet = ((NSMenuItem*)sender).representedObject;
+    
+    deleteConfirmAlert = [NSAlert alertWithMessageText:[NSString stringWithFormat:@"Are you sure you want to delete '%@'? THIS CANNOT BE UNDONE", currentDroplet.name]
+                                         defaultButton:@"Delete"
+                                       alternateButton:@"Cancel"
+                                           otherButton:nil
+                             informativeTextWithFormat:@""];
+    
+    [deleteConfirmAlert beginSheetModalForWindow:[self window]
+                              modalDelegate:self didEndSelector:@selector(alertDidEnd:returnCode:contextInfo:)
+                                contextInfo:(__bridge_retained void *)(currentDroplet)];
+}
+
 - (void)rebootDroplet:(id)sender {
     
     Droplet *currentDroplet = (Droplet*)sender;
@@ -358,9 +378,15 @@
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"ssh://%@@%@:%@", dropletSSHUsername,  currentDroplet.ip,dropletSSHPort]]];
 }
 
+- (void)deleteDroplet:(id)sender {
+    
+    Droplet *currentDroplet = (Droplet*)sender;
+    
+    [dropletManager deleteDroplet:currentDroplet];
+}
+
 - (void)alertDidEnd:(NSAlert *)alert returnCode:(NSInteger)returnCode contextInfo:(void *)contextInfo
 {
-
     if (returnCode == NSOKButton)
     {
         Droplet *currentDroplet = (__bridge_transfer Droplet*)contextInfo;
@@ -369,6 +395,8 @@
             [self rebootDroplet:currentDroplet];
         } else if (alert == shutdownAlert) {
             [self shutdownDroplet:currentDroplet];
+        } else if (alert == deleteConfirmAlert) {
+            [self deleteDroplet:currentDroplet];
         }
         DLog(@"Action confirmed");
     }
