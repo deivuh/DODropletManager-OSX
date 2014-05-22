@@ -142,7 +142,7 @@
         [menu insertItemWithTitle: droplet.name action: nil keyEquivalent: @"" atIndex: dropletMIIndex];
 
         NSMenu *submenu = [[NSMenu alloc] init];
-        [submenu addItemWithTitle:[NSString stringWithFormat:@"Status: %@", droplet.status]
+        [submenu addItemWithTitle:[NSString stringWithFormat:@"Status: %@", [droplet.status capitalizedString]]
                            action:nil
                     keyEquivalent:@""];
 

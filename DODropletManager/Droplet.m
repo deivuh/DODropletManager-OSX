@@ -21,13 +21,13 @@
         _regionID = [dictionary objectForKey:@"region_id"];
         _privateIP = [dictionary objectForKey:@"private_ip_address"];
         _createdAt = [dictionary objectForKey:@"created_at"];
-        _status = [dictionary objectForKey:@"status"];
+        _status = [[dictionary objectForKey:@"status"] uppercaseString];
         
         _region = [regions objectForKey:_regionID];
         _distro = [images objectForKey:_imageID];
         
         _backupActive = (BOOL)[dictionary valueForKey:@"backups_active"];
-        if ([_status isEqualToString:@"active"]) {
+        if ([[_status uppercaseString] isEqualToString:@"ACTIVE"]) {
             _active = YES;
         } else {
             _active = NO;
