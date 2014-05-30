@@ -20,6 +20,7 @@
 
 @property (weak) IBOutlet NSButton *launchAtLoginCB;
 
+@property (weak) IBOutlet NSTextField *versionLabel;
 
 
 @end
