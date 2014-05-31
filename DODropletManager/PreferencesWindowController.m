@@ -75,8 +75,12 @@
         sshPortDictionary = [[userdefaults objectForKey:@"sshPortDictionary"] mutableCopy];
     }
     
-    
-    
+    NSString *pVersion = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"CFBundleShortVersionString"];
+    if (pVersion != nil && ![pVersion isEqualToString:@""]) {
+        [self.versionLabel setStringValue: [NSString stringWithFormat: @"Version: %@", pVersion]];
+    } else {
+        [self.versionLabel setStringValue:@""];
+    }
     
     if([KeychainAccess getClientId: &clientId andAPIKey: &apiKey error: nil]) {
         [_ClientIDTF setStringValue: clientId];
