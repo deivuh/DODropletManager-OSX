@@ -20,6 +20,12 @@
 
 @property (weak) IBOutlet NSButton *launchAtLoginCB;
 
+@property (weak) IBOutlet NSButton *iTermCB;
+
+
+- (BOOL) checkiTerm;
+
+
 
 
 @end

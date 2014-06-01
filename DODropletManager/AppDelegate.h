@@ -6,8 +6,11 @@
 ***REMOVED***  Copyright (c) 2014 David Hsieh. All rights reserved.
 ***REMOVED***
 
+
+
 #import "PreferencesWindowController.h"
 #import <Cocoa/Cocoa.h>
+
 
 @class DropletFormWindowController;
 

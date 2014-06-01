@@ -10,6 +10,8 @@
 #import "KeychainAccess.h"
 #import "LaunchAtLoginController.h"
 #import "DropletManager.h"
+#import <ApplicationServices/ApplicationServices.h>
+
 
 @interface PreferencesWindowController ()
 
@@ -82,6 +84,15 @@
         [_ClientIDTF setStringValue: clientId];
         [_APIKeyTF setStringValue: apiKey];
     }
+    
+    [_iTermCB setEnabled:[self checkiTerm]];
+    
+    if ([[userdefaults valueForKey:@"iTerm"] boolValue]) {
+        [_iTermCB setState:NSOnState];
+    } else
+        [_iTermCB setState:NSOffState];
+
+    
 }
 
 #pragma mark -
@@ -110,6 +121,11 @@
         [launchController setLaunchAtLogin:[sender state]];
 
 
+}
+
+- (IBAction)iTermChecked:(id)sender {
+    [userdefaults setValue:[NSNumber numberWithBool:_iTermCB.state] forKey:@"iTerm"];
+    [userdefaults synchronize];
 }
 
 #pragma mark -
@@ -318,6 +334,45 @@
 {
     DLog(@"control: textShouldEndEditing >%@<", [fieldEditor string] );
     return YES;
+}
+
+#pragma mark -
+#pragma mark Other methods
+
+- (BOOL) checkiTerm {
+    
+    BOOL isPresent = NO;
+    
+    CFURLRef appURL = NULL;
+    OSStatus result = LSFindApplicationForInfo (
+                                                kLSUnknownCreator,         ***REMOVED***creator codes are dead, so we don't care about it
+                                                CFSTR("com.googlecode.iterm2"), ***REMOVED***you can use the bundle ID here
+                                                NULL,                      ***REMOVED***or the name of the app here (CFSTR("Safari.app"))
+                                                NULL,                      ***REMOVED***this is used if you want an FSRef rather than a CFURLRef
+                                                &appURL
+                                                );
+    switch(result)
+    {
+        case noErr:
+            NSLog(@"the app's URL is: %@",appURL);
+            isPresent = YES;
+            break;
+        case kLSApplicationNotFoundErr:
+            NSLog(@"app not found");
+
+            break;
+        default:
+            NSLog(@"an error occurred: %d",result);
+
+            break;
+    }
+    
+    ***REMOVED***the CFURLRef returned from the function is retained as per the docs so we must release it
+    if(appURL)
+        CFRelease(appURL);
+
+    
+    return isPresent;
 }
 
 @end

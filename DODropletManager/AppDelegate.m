@@ -11,6 +11,7 @@
 #import "KeychainAccess.h"
 #import "DropletFormWindowController.h"
 #import "DropletManager.h"
+#import "iTerm.h"
 
 
 @implementation AppDelegate {
@@ -35,12 +36,19 @@
     NSUserDefaults *userdefaults;
     NSMutableDictionary *sshUserDictionary;
     NSMutableDictionary *sshPortDictionary;
+    
+    iTermITermApplication *iTerm;
+    
 }
 
 - (void)applicationDidFinishLaunching:(NSNotification *)aNotification
 {
 
+    
+    
     dropletManager = [DropletManager sharedManager];
+    
+    iTerm = [SBApplication applicationWithBundleIdentifier:@"com.googlecode.iterm2"];
     
     [self createMenuItems];
     
@@ -78,6 +86,14 @@
     } else {
         sshPortDictionary = [[userdefaults objectForKey:@"sshPortDictionary"] mutableCopy];
     }
+    
+    ***REMOVED***Check for iTerm config default
+    if([userDefaults valueForKey:@"iTerm"] == nil) {
+        [userDefaults setValue:[NSNumber numberWithBool:NO] forKey:@"iTerm"];
+        [userdefaults synchronize];
+    }
+    
+
     
     
 }
@@ -254,7 +270,7 @@
 
 - (void)showPreferencesWindow:(id)sender {
     
-    
+
     
     ***REMOVED***Show preferences window
     _preferencesWC = [[PreferencesWindowController alloc] initWithWindowNibName:@"PreferencesWindow"];
@@ -269,6 +285,8 @@
 }
 
 - (void)refresh:(id)sender {
+    
+
     [self loadKeys];
 
     if(refreshingTimer == nil) {
@@ -379,8 +397,34 @@
     NSString *dropletSSHUsername = [sshUserDictionary objectForKey:currentDroplet.name];
     NSString *dropletSSHPort = [sshPortDictionary objectForKey:currentDroplet.name];
     
+    ***REMOVED*** If iTerm option enabled
+    if ([[userdefaults valueForKey:@"iTerm"] boolValue]) {
+           [iTerm activate];
+        if ([iTerm isRunning]) {
+
+            iTermTerminal *terminal = [iTerm currentTerminal];
+            
+            iTermSession *session = [terminal currentSession];
+            
+            session.name = currentDroplet.name;
+
+            
+            
+            [session writeContentsOfFile:nil text:[NSString stringWithFormat:@"ssh %@@%@ -p %@", dropletSSHUsername,  currentDroplet.ip,dropletSSHPort]];
+            
+        }
+    } else {
+    
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"ssh:***REMOVED***%@@%@:%@", dropletSSHUsername,  currentDroplet.ip,dropletSSHPort]]];
+
+    }
+    
 }
+
+
+    
+    
+
 
 - (void)deleteDroplet:(id)sender {
     
