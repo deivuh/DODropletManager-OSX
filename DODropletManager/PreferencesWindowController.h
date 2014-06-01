@@ -20,12 +20,16 @@
 
 @property (weak) IBOutlet NSButton *launchAtLoginCB;
 
+<<<<<<< HEAD
 @property (weak) IBOutlet NSButton *iTermCB;
 
 
 - (BOOL) checkiTerm;
 
 
+=======
+@property (weak) IBOutlet NSTextField *versionLabel;
+>>>>>>> a9e51a8892324a32170949e8161e6a25184cd3a8
 
 
 @end
