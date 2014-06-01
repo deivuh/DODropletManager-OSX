@@ -22,11 +22,11 @@
         <window title="Preferences" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" animationBehavior="default" id="QvC-M9-y7g">
             <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
             <rect key="contentRect" x="1075" y="562" width="480" height="270"/>
-
-
-
+<<<<<<< HEAD
+            <rect key="screenRect" x="0.0" y="0.0" width="2560" height="1418"/>
+=======
             <rect key="screenRect" x="0.0" y="0.0" width="1440" height="878"/>
-
+>>>>>>> a9e51a8892324a32170949e8161e6a25184cd3a8
             <view key="contentView" id="EiT-Mj-1SZ">
                 <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                 <autoresizingMask key="autoresizingMask"/>
