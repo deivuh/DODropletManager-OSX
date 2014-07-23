@@ -48,7 +48,7 @@
     
     dropletManager = [DropletManager sharedManager];
     
-    iTerm = [SBApplication applicationWithBundleIdentifier:@"com.googlecode.iterm2"];
+    
     
     [self createMenuItems];
     
@@ -397,9 +397,16 @@
     NSString *dropletSSHUsername = [sshUserDictionary objectForKey:currentDroplet.name];
     NSString *dropletSSHPort = [sshPortDictionary objectForKey:currentDroplet.name];
     
+    NSLog(@"Establish connection");
+    
     ***REMOVED*** If iTerm option enabled
     if ([[userdefaults valueForKey:@"iTerm"] boolValue]) {
-           [iTerm activate];
+        
+        if (!iTerm) {
+            iTerm = [SBApplication applicationWithBundleIdentifier:@"com.googlecode.iterm2"];
+        };
+        
+        [iTerm activate];
         if ([iTerm isRunning]) {
 
             iTermTerminal *terminal = [iTerm currentTerminal];

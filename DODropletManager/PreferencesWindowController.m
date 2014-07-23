@@ -89,6 +89,7 @@
         [_APIKeyTF setStringValue: apiKey];
     }
     
+
     [_iTermCB setEnabled:[self checkiTerm]];
     
     if ([[userdefaults valueForKey:@"iTerm"] boolValue]) {
