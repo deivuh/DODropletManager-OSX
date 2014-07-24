@@ -1,10 +1,10 @@
-***REMOVED***
-***REMOVED***  DropletManager.m
-***REMOVED***  DODropletManager
-***REMOVED***
-***REMOVED***  Created by David Hsieh on 5/4/14.
-***REMOVED***  Copyright (c) 2014 David Hsieh. All rights reserved.
-***REMOVED***
+//
+//  DropletManager.m
+//  DODropletManager
+//
+//  Created by David Hsieh on 5/4/14.
+//  Copyright (c) 2014 David Hsieh. All rights reserved.
+//
 
 #import "DropletManager.h"
 
@@ -39,7 +39,7 @@
 }
 
 - (void)dealloc {
-    ***REMOVED*** Should never be called, but just here for clarity really.
+    // Should never be called, but just here for clarity really.
 }
 
 
@@ -48,7 +48,7 @@
 #pragma mark Communication methods
 
 - (void) requestRegions {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https:***REMOVED***api.digitalocean.com/regions/?client_id=%@&api_key=%@", _clientID, _APIKey]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.digitalocean.com/regions/?client_id=%@&api_key=%@", _clientID, _APIKey]];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
     regionsConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
     
@@ -62,7 +62,7 @@
 }
 
 - (void) requestImages {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https:***REMOVED***api.digitalocean.com/images/?client_id=%@&api_key=%@", _clientID, _APIKey]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.digitalocean.com/images/?client_id=%@&api_key=%@", _clientID, _APIKey]];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
     imagesConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
     
@@ -74,7 +74,7 @@
 }
 
 - (void) requestDroplets {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https:***REMOVED***api.digitalocean.com/droplets/?client_id=%@&api_key=%@", _clientID, _APIKey]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.digitalocean.com/droplets/?client_id=%@&api_key=%@", _clientID, _APIKey]];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
     dropletsConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
     
@@ -87,7 +87,7 @@
 }
 
 - (void) requestRebootForDroplet:(Droplet*)droplet {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https:***REMOVED***api.digitalocean.com/droplets/%@/reboot/?client_id=%@&api_key=%@", droplet.dropletID, _clientID, _APIKey]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.digitalocean.com/droplets/%@/reboot/?client_id=%@&api_key=%@", droplet.dropletID, _clientID, _APIKey]];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
     rebootDropletConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
     
@@ -100,7 +100,7 @@
 
 - (void) requestShutdownForDroplet:(Droplet*)droplet {
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https:***REMOVED***api.digitalocean.com/droplets/%@/shutdown/?client_id=%@&api_key=%@", droplet.dropletID, _clientID, _APIKey]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.digitalocean.com/droplets/%@/shutdown/?client_id=%@&api_key=%@", droplet.dropletID, _clientID, _APIKey]];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
     shutdownDropletConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
     
@@ -113,7 +113,7 @@
 }
 
 - (void) requestTurnOnForDroplet:(Droplet*)droplet {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https:***REMOVED***api.digitalocean.com/droplets/%@/power_on/?client_id=%@&api_key=%@", droplet.dropletID, _clientID, _APIKey]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.digitalocean.com/droplets/%@/power_on/?client_id=%@&api_key=%@", droplet.dropletID, _clientID, _APIKey]];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
     turnOnDropletConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
     
@@ -128,7 +128,7 @@
 
 - (void)requestDeleteForDroplet:(Droplet*)droplet
 {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https:***REMOVED***api.digitalocean.com/droplets/%@/destroy/?client_id=%@&api_key=%@&scrub_data=true", droplet.dropletID, _clientID, _APIKey]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.digitalocean.com/droplets/%@/destroy/?client_id=%@&api_key=%@&scrub_data=true", droplet.dropletID, _clientID, _APIKey]];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
     deleteDropletConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
 }

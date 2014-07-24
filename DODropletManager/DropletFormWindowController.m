@@ -1,10 +1,10 @@
-***REMOVED***
-***REMOVED***  DropletFormWindowController.m
-***REMOVED***  DODropletManager
-***REMOVED***
-***REMOVED***  Created by Adam Tootle on 4/28/14.
-***REMOVED***  Copyright (c) 2014 David Hsieh. All rights reserved.
-***REMOVED***
+//
+//  DropletFormWindowController.m
+//  DODropletManager
+//
+//  Created by Adam Tootle on 4/28/14.
+//  Copyright (c) 2014 David Hsieh. All rights reserved.
+//
 
 #import "DropletFormWindowController.h"
 #import "NSString+URLEncode.h"
@@ -71,7 +71,7 @@
     NSInteger selectedRegionIndex = [self.availableRegionsPopup indexOfItem:self.availableRegionsPopup.selectedItem] - 1;
     NSNumber *regionID = availableImages[selectedImageIndex][@"region_slugs"][selectedRegionIndex];
     
-    NSString *path = [NSString stringWithFormat:@"https:***REMOVED***api.digitalocean.com/droplets/new/?client_id=%@&api_key=%@&name=%@&size_id=%@&image_id=%@&region_slug=%@", clientID, APIKey, [self.dropletNameField.stringValue urlEncode], sizeID, imageID, regionID];
+    NSString *path = [NSString stringWithFormat:@"https://api.digitalocean.com/droplets/new/?client_id=%@&api_key=%@&name=%@&size_id=%@&image_id=%@&region_slug=%@", clientID, APIKey, [self.dropletNameField.stringValue urlEncode], sizeID, imageID, regionID];
     
     NSURL *url = [NSURL URLWithString:path];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];
@@ -90,14 +90,14 @@
 
 - (void)loadAvailableImages
 {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https:***REMOVED***api.digitalocean.com/images/?filter=global&client_id=%@&api_key=%@", clientID, APIKey]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.digitalocean.com/images/?filter=global&client_id=%@&api_key=%@", clientID, APIKey]];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];
     availableImagesConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
 }
 
 - (void)loadAvailableSizes
 {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https:***REMOVED***api.digitalocean.com/sizes/?client_id=%@&api_key=%@", clientID, APIKey]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.digitalocean.com/sizes/?client_id=%@&api_key=%@", clientID, APIKey]];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];
     availableSizesConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
 }

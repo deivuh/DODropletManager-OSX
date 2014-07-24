@@ -1,10 +1,10 @@
-***REMOVED***
-***REMOVED***  AppDelegate.m
-***REMOVED***  DODropletManager
-***REMOVED***
-***REMOVED***  Created by David Hsieh on 4/27/14.
-***REMOVED***  Copyright (c) 2014 David Hsieh. All rights reserved.
-***REMOVED***
+//
+//  AppDelegate.m
+//  DODropletManager
+//
+//  Created by David Hsieh on 4/27/14.
+//  Copyright (c) 2014 David Hsieh. All rights reserved.
+//
 
 #import "AppDelegate.h"
 #import "Droplet.h"
@@ -73,21 +73,21 @@
     userdefaults = [NSUserDefaults standardUserDefaults];
     
     
-    ***REMOVED***    If dictionary exists, load it from userDefaults;
+    //    If dictionary exists, load it from userDefaults;
     if ([userdefaults objectForKey:@"sshUserDictionary"] == nil) {
         sshUserDictionary = [[NSMutableDictionary alloc] init];
     } else {
         sshUserDictionary = [[userdefaults objectForKey:@"sshUserDictionary"] mutableCopy];
     }
     
-    ***REMOVED***    If dictionary exists, load it from userDefaults;
+    //    If dictionary exists, load it from userDefaults;
     if ([userdefaults objectForKey:@"sshPortDictionary"] == nil) {
         sshPortDictionary = [[NSMutableDictionary alloc] init];
     } else {
         sshPortDictionary = [[userdefaults objectForKey:@"sshPortDictionary"] mutableCopy];
     }
     
-    ***REMOVED***Check for iTerm config default
+    //Check for iTerm config default
     if([userDefaults valueForKey:@"iTerm"] == nil) {
         [userDefaults setValue:[NSNumber numberWithBool:NO] forKey:@"iTerm"];
         [userdefaults synchronize];
@@ -107,8 +107,8 @@
         dropletManager.clientID = client;
         dropletManager.APIKey = key;
         
-***REMOVED***        clientID = client;
-***REMOVED***        APIKey = key;
+//        clientID = client;
+//        APIKey = key;
         
         return YES;
     }
@@ -272,13 +272,13 @@
     
 
     
-    ***REMOVED***Show preferences window
+    //Show preferences window
     _preferencesWC = [[PreferencesWindowController alloc] initWithWindowNibName:@"PreferencesWindow"];
     [_preferencesWC showWindow:self];
     
     
     
-    ***REMOVED***Focus on window
+    //Focus on window
     [NSApp activateIgnoringOtherApps:YES];
     
     
@@ -375,7 +375,7 @@
 - (void)viewDropletOnBrowser:(id)sender {
     Droplet *currentDroplet = ((NSMenuItem*)sender).representedObject;
 
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"https:***REMOVED***cloud.digitalocean.com/droplets/%@", currentDroplet.dropletID]]];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://cloud.digitalocean.com/droplets/%@", currentDroplet.dropletID]]];
     
 }
 
@@ -399,7 +399,7 @@
     
     NSLog(@"Establish connection");
     
-    ***REMOVED*** If iTerm option enabled
+    // If iTerm option enabled
     if ([[userdefaults valueForKey:@"iTerm"] boolValue]) {
         
         if (!iTerm) {
@@ -422,7 +422,7 @@
         }
     } else {
     
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"ssh:***REMOVED***%@@%@:%@", dropletSSHUsername,  currentDroplet.ip,dropletSSHPort]]];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"ssh://%@@%@:%@", dropletSSHUsername,  currentDroplet.ip,dropletSSHPort]]];
 
     }
     

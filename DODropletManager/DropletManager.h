@@ -1,10 +1,10 @@
-***REMOVED***
-***REMOVED***  DropletManager.h
-***REMOVED***  DODropletManager
-***REMOVED***
-***REMOVED***  Created by David Hsieh on 5/4/14.
-***REMOVED***  Copyright (c) 2014 David Hsieh. All rights reserved.
-***REMOVED***
+//
+//  DropletManager.h
+//  DODropletManager
+//
+//  Created by David Hsieh on 5/4/14.
+//  Copyright (c) 2014 David Hsieh. All rights reserved.
+//
 
 #import <Foundation/Foundation.h>
 #import "Droplet.h"

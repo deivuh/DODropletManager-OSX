@@ -1,10 +1,10 @@
-***REMOVED***
-***REMOVED***  PreferencesWindowController.m
-***REMOVED***  DODropletManager
-***REMOVED***
-***REMOVED***  Created by David Hsieh on 4/27/14.
-***REMOVED***  Copyright (c) 2014 David Hsieh. All rights reserved.
-***REMOVED***
+//
+//  PreferencesWindowController.m
+//  DODropletManager
+//
+//  Created by David Hsieh on 4/27/14.
+//  Copyright (c) 2014 David Hsieh. All rights reserved.
+//
 
 #import "PreferencesWindowController.h"
 #import "KeychainAccess.h"
@@ -45,7 +45,7 @@
 {
     self = [super initWithWindow:window];
     if (self) {
-        ***REMOVED*** Initialization code here.
+        // Initialization code here.
     }
     return self;
 }
@@ -63,14 +63,14 @@
     userdefaults = [NSUserDefaults standardUserDefaults];
     
     
-    ***REMOVED***    If dictionary exists, load it from userDefaults;
+    //    If dictionary exists, load it from userDefaults;
     if ([userdefaults objectForKey:@"sshUserDictionary"] == nil) {
         sshUserDictionary = [[NSMutableDictionary alloc] init];
     } else {
         sshUserDictionary = [[userdefaults objectForKey:@"sshUserDictionary"] mutableCopy];
     }
     
-    ***REMOVED***    If dictionary exists, load it from userDefaults;
+    //    If dictionary exists, load it from userDefaults;
     if ([userdefaults objectForKey:@"sshPortDictionary"] == nil) {
         sshPortDictionary = [[NSMutableDictionary alloc] init];
     } else {
@@ -142,7 +142,7 @@
 }
 
 - (void) requestDroplets {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https:***REMOVED***api.digitalocean.com/droplets/?client_id=%@&api_key=%@", _ClientIDTF.stringValue, _APIKeyTF.stringValue]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.digitalocean.com/droplets/?client_id=%@&api_key=%@", _ClientIDTF.stringValue, _APIKeyTF.stringValue]];
     NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
     NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
     
@@ -203,7 +203,7 @@
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     
-    ***REMOVED*** Get a new ViewCell
+    // Get a new ViewCell
     NSTableCellView *cellView = [tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
     
 
@@ -246,7 +246,7 @@
         
     }
     
-***REMOVED***    cellView.objectValue = cellView.textField;
+//    cellView.objectValue = cellView.textField;
     
     [userdefaults setObject:sshUserDictionary forKey:@"sshUserDictionary"];
     [userdefaults setObject:sshPortDictionary forKey:@"sshPortDictionary"];
@@ -301,7 +301,7 @@
     } else if (currentTextField == selectedPortTF) {
         DLog(@"PortTF end editing");
         
-        ***REMOVED***Check if valid port
+        //Check if valid port
         if([inputString rangeOfCharacterFromSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]].location == NSNotFound) {
             
             if ([inputString integerValue] > 65535 || [inputString integerValue] < 1) {
@@ -350,10 +350,10 @@
     
     CFURLRef appURL = NULL;
     OSStatus result = LSFindApplicationForInfo (
-                                                kLSUnknownCreator,         ***REMOVED***creator codes are dead, so we don't care about it
-                                                CFSTR("com.googlecode.iterm2"), ***REMOVED***you can use the bundle ID here
-                                                NULL,                      ***REMOVED***or the name of the app here (CFSTR("Safari.app"))
-                                                NULL,                      ***REMOVED***this is used if you want an FSRef rather than a CFURLRef
+                                                kLSUnknownCreator,         //creator codes are dead, so we don't care about it
+                                                CFSTR("com.googlecode.iterm2"), //you can use the bundle ID here
+                                                NULL,                      //or the name of the app here (CFSTR("Safari.app"))
+                                                NULL,                      //this is used if you want an FSRef rather than a CFURLRef
                                                 &appURL
                                                 );
     switch(result)
@@ -372,7 +372,7 @@
             break;
     }
     
-    ***REMOVED***the CFURLRef returned from the function is retained as per the docs so we must release it
+    //the CFURLRef returned from the function is retained as per the docs so we must release it
     if(appURL)
         CFRelease(appURL);
 

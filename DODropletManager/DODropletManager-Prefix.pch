@@ -1,17 +1,17 @@
-***REMOVED***
-***REMOVED***  Prefix header
-***REMOVED***
-***REMOVED***  The contents of this file are implicitly included at the beginning of every source file.
-***REMOVED***
+//
+//  Prefix header
+//
+//  The contents of this file are implicitly included at the beginning of every source file.
+//
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
+#ifdef __OBJC__
+#import <Cocoa/Cocoa.h>
+#endif
 
-***REMOVED***
-***REMOVED***
-***REMOVED***
-***REMOVED***
-***REMOVED***
-***REMOVED***
-***REMOVED***
+#ifdef DEBUG
+#   define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
+#elif TESTFLIGHT
+#   define DLog(fmt, ...) NSLog((@"%s [Line %d] " fmt), __PRETTY_FUNCTION__, __LINE__, ##__VA_ARGS__);
+#else
+#   define DLog(...)
+#endif

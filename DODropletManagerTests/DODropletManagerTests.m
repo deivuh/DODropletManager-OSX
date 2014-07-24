@@ -1,10 +1,10 @@
-***REMOVED***
-***REMOVED***  DODropletManagerTests.m
-***REMOVED***  DODropletManagerTests
-***REMOVED***
-***REMOVED***  Created by David Hsieh on 4/27/14.
-***REMOVED***  Copyright (c) 2014 David Hsieh. All rights reserved.
-***REMOVED***
+//
+//  DODropletManagerTests.m
+//  DODropletManagerTests
+//
+//  Created by David Hsieh on 4/27/14.
+//  Copyright (c) 2014 David Hsieh. All rights reserved.
+//
 
 #import <XCTest/XCTest.h>
 
@@ -17,12 +17,12 @@
 - (void)setUp
 {
     [super setUp];
-    ***REMOVED*** Put setup code here. This method is called before the invocation of each test method in the class.
+    // Put setup code here. This method is called before the invocation of each test method in the class.
 }
 
 - (void)tearDown
 {
-    ***REMOVED*** Put teardown code here. This method is called after the invocation of each test method in the class.
+    // Put teardown code here. This method is called after the invocation of each test method in the class.
     [super tearDown];
 }
 

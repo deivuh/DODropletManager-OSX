@@ -1,10 +1,10 @@
-***REMOVED***
-***REMOVED***  KeychainAccess.m
-***REMOVED***  DODropletManager
-***REMOVED***
-***REMOVED***  Created by Daniel Parnell on 29/04/2014.
-***REMOVED***  Copyright (c) 2014 David Hsieh. All rights reserved.
-***REMOVED***
+//
+//  KeychainAccess.m
+//  DODropletManager
+//
+//  Created by Daniel Parnell on 29/04/2014.
+//  Copyright (c) 2014 David Hsieh. All rights reserved.
+//
 
 #import "KeychainAccess.h"
 #import <Security/SecKeychain.h>
@@ -17,11 +17,11 @@ static NSString *serviceName = @"digital_ocean";
 @implementation KeychainAccess
 
 + (BOOL) storeClientId:(NSString*)clientId andAPIKey:(NSString*)apiKey error:(NSError**)error {
-    ***REMOVED*** Set password
-    SecKeychainRef keychain = NULL; ***REMOVED*** User's default keychain
+    // Set password
+    SecKeychainRef keychain = NULL; // User's default keychain
     
     
-    ***REMOVED*** Delete keychain item if already exists
+    // Delete keychain item if already exists
     [self removeClientId:clientId andAPIKey:apiKey error:nil];
     
     const char *passwordData = [[NSString stringWithFormat: @"%@:%@", clientId, apiKey] UTF8String];
@@ -46,8 +46,8 @@ static NSString *serviceName = @"digital_ocean";
 }
 
 + (BOOL) getClientId:(NSString**)clientId andAPIKey:(NSString**)apiKey error:(NSError**)error {
-    SecKeychainRef keychain = NULL; ***REMOVED*** User's default keychain
-    ***REMOVED*** Get password
+    SecKeychainRef keychain = NULL; // User's default keychain
+    // Get password
     char *password = NULL;
     UInt32 passwordLen = 0;
     
@@ -58,7 +58,7 @@ static NSString *serviceName = @"digital_ocean";
                                             NULL);
     
     if (status == noErr) {
-        ***REMOVED*** Cool! Use pwd
+        // Cool! Use pwd
         NSString *tmp = [NSString stringWithUTF8String: password];
         NSArray *parts = [tmp componentsSeparatedByString: @":"];
         
@@ -81,7 +81,7 @@ static NSString *serviceName = @"digital_ocean";
 + (BOOL) removeClientId:(NSString*)clientId andAPIKey:(NSString*)apiKey error:(NSError**)error {
     
     
-    SecKeychainRef keychain = NULL; ***REMOVED*** User's default keychain
+    SecKeychainRef keychain = NULL; // User's default keychain
     SecKeychainItemRef keychainItem;
     
     OSStatus status = SecKeychainFindGenericPassword(keychain,

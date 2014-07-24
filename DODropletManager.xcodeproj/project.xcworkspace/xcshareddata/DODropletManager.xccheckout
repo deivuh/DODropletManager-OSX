@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE plist PUBLIC "-***REMOVED***Apple***REMOVED***DTD PLIST 1.0***REMOVED***EN" "http:***REMOVED***www.apple.com/DTDs/PropertyList-1.0.dtd">
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
@@ -11,9 +11,9 @@
 	<key>IDESourceControlProjectOriginsDictionary</key>
 	<dict>
 		<key>97F3647B-9C4C-4835-9619-B68FBD761B28</key>
-		<string>https:***REMOVED***github.com/Mozketo/LaunchAtLoginController.git</string>
+		<string>https://github.com/Mozketo/LaunchAtLoginController.git</string>
 		<key>A0359024-6206-450A-8409-FE148B03D565</key>
-		<string>https:***REMOVED***github.com/deivuh/DODropletManager-OSX.git</string>
+		<string>https://github.com/deivuh/DODropletManager-OSX.git</string>
 	</dict>
 	<key>IDESourceControlProjectPath</key>
 	<string>DODropletManager.xcodeproj/project.xcworkspace</string>
@@ -25,7 +25,7 @@
 		<string>../..</string>
 	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https:***REMOVED***github.com/deivuh/DODropletManager-OSX.git</string>
+	<string>https://github.com/deivuh/DODropletManager-OSX.git</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>

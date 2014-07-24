@@ -1,6 +1,6 @@
 # DigitalOcean Droplets Manager for OSX
 
-Inspired by Andrewsomething's [DigitalOcean Indicator](http:***REMOVED***blog.andrewsomething.com/2014/04/25/digitalocean-indicator-release/).
+Inspired by Andrewsomething's [DigitalOcean Indicator](http://blog.andrewsomething.com/2014/04/25/digitalocean-indicator-release/).
 
 ## Features:
 
@@ -25,4 +25,4 @@ DigitalOcean Droplets Manager for OSX Copyright (C) 2014 David Hsieh
     GNU General Public License for more details.
 
     You should have received a copy of the GNU General Public License
-    along with this program.  If not, see <http:***REMOVED***www.gnu.org/licenses/>.
+    along with this program.  If not, see <http://www.gnu.org/licenses/>.
