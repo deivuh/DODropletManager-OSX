@@ -11,7 +11,7 @@
 
 @implementation DropletManager {
     NSMutableData *responseData;
-    NSURLConnection *dropletsConnection, *regionsConnection, *imagesConnection;
+    NSURLConnection *dropletsConnection, *regionsConnection, *imagesConnection, *testConnection;
     NSURLConnection *rebootDropletConnection, *shutdownDropletConnection, *turnOnDropletConnection, *deleteDropletConnection;
     NSMutableDictionary *regions;
     NSMutableDictionary *images;
@@ -47,12 +47,34 @@
 #pragma mark -
 #pragma mark Communication methods
 
+
+- (void) testConnection {
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.digitalocean.com/v2/regions"]];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    
+    
+    
+    [urlRequest setValue:[NSString stringWithFormat:@"Bearer %@", _token] forHTTPHeaderField:@"Authorization"];
+    
+    
+    testConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
+    
+    if(testConnection) {
+        responseData = [[NSMutableData alloc] init];
+        DLog(@"Connection started for :%@", urlRequest);
+    } else {
+        DLog(@"connection failed");
+    }
+    
+}
+
 - (void) requestRegions {
 
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.digitalocean.com/v2/regions"]];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     
-    DLog(@"Token %@", _token);
+    
     
     [urlRequest setValue:[NSString stringWithFormat:@"Bearer %@", _token] forHTTPHeaderField:@"Authorization"];
 
@@ -181,7 +203,14 @@
     
     if(json != nil)
     {
-        if (connection == dropletsConnection) {
+        if (connection == testConnection) {
+            
+            // Call test connection finished delegate method
+            if (self.delegate && [self.delegate respondsToSelector:@selector(connectionTestFinishedWithResult:)]) {
+                [self.delegate connectionTestFinishedWithResult:json];
+            }
+            
+        } else if (connection == dropletsConnection) {
             NSArray *tempDropletsArray = [json objectForKey:@"droplets"];
             _droplets = [[NSMutableArray alloc] init];
             

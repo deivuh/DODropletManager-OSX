@@ -11,7 +11,10 @@
 @interface KeychainAccess : NSObject
 
 
-+ (BOOL) storeToken:(NSString*)token error:(NSError**)error;
-+ (BOOL) getToken:(NSString**)token error:(NSError**)error;
++ (BOOL) storeAccessToken:(NSString*)token error:(NSError**)error;
++ (BOOL) getAccessToken:(NSString**)token error:(NSError**)error;
+
++ (BOOL) storeRefreshToken:(NSString*)token error:(NSError**)error;
++ (BOOL) getRefreshToken:(NSString**)token error:(NSError**)error;
 
 @end

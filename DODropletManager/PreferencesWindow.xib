@@ -7,9 +7,11 @@
     <objects>
         <customObject id="-2" userLabel="File's Owner" customClass="PreferencesWindowController">
             <connections>
+                <outlet property="accountNameLB" destination="pkc-9S-kCd" id="8BH-VH-lwd"/>
                 <outlet property="checkLaunchAtLogin" destination="KD1-dT-rrM" id="cll-pU-bt6"/>
-                <outlet property="iTermCB" destination="2hf-Rh-gUd" id="8Dd-Ae-zJX"/>
+                <outlet property="iTermCB" destination="U09-XW-9Aa" id="DG7-9j-Sp3"/>
                 <outlet property="launchAtLoginCB" destination="KD1-dT-rrM" id="tpD-oB-epf"/>
+                <outlet property="linkAccountBT" destination="U09-XW-9Aa" id="yJe-n5-Y9G"/>
                 <outlet property="sshUsersTableview" destination="DYV-7b-R4f" id="vsR-G4-qcB"/>
                 <outlet property="statusLB" destination="xxQ-Fx-vOU" id="Szj-nc-Ro5"/>
                 <outlet property="versionLabel" destination="4uE-tQ-30Y" id="ESY-GI-H41"/>
@@ -31,12 +33,12 @@
                         <font key="font" metaFont="system"/>
                         <tabViewItems>
                             <tabViewItem label="Account" identifier="1" id="YNb-wf-6YT">
-                                <view key="view" id="mfB-2t-2iH">
+                                <view key="view" ambiguous="YES" id="mfB-2t-2iH">
                                     <rect key="frame" x="10" y="33" width="434" height="208"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="xxQ-Fx-vOU">
-                                            <rect key="frame" x="58" y="17" width="318" height="17"/>
+                                            <rect key="frame" x="58" y="52" width="318" height="17"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                                             <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" placeholderString="" id="aLa-R8-OWL">
                                                 <font key="font" metaFont="system"/>
@@ -45,9 +47,9 @@
                                             </textFieldCell>
                                         </textField>
                                         <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pkc-9S-kCd">
-                                            <rect key="frame" x="105" y="158" width="226" height="19"/>
+                                            <rect key="frame" x="149" y="135" width="136" height="19"/>
                                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Digital Ocean account settings" id="wie-b4-edR">
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" alignment="center" title="No account linked" id="wie-b4-edR">
                                                 <font key="font" size="15" name="LucidaGrande"/>
                                                 <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                                 <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
@@ -68,7 +70,7 @@
                                 </view>
                             </tabViewItem>
                             <tabViewItem label="SSH" identifier="" id="Ufs-te-NON">
-                                <view key="view" ambiguous="YES" id="zkG-bO-CKN">
+                                <view key="view" id="zkG-bO-CKN">
                                     <rect key="frame" x="10" y="33" width="434" height="208"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>

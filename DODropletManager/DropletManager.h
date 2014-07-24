@@ -9,6 +9,22 @@
 #import <Foundation/Foundation.h>
 #import "Droplet.h"
 
+
+
+@protocol DropletManagerDelegate <NSObject>
+
+
+@optional
+-(void)connectionTestFinishedWithResult:(NSDictionary*)result;
+
+
+@end // end of delegate protocol
+
+
+
+
+
+
 @interface DropletManager : NSObject <NSURLConnectionDataDelegate, NSURLConnectionDelegate> {
 
 
@@ -18,6 +34,7 @@
 
 @property (nonatomic, strong) NSString *token;
 @property (nonatomic, strong) NSMutableArray *droplets;
+@property (nonatomic, weak) id<DropletManagerDelegate> delegate;
 
 + (id)sharedManager;
 
@@ -27,6 +44,8 @@
 - (void)shutdownDroplet:(Droplet*)droplet;
 - (void)turnOnDroplet:(Droplet*)droplet;
 - (void)deleteDroplet:(Droplet*)droplet;
+
+- (void) testConnection;
 
 
 @end

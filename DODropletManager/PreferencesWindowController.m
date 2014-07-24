@@ -9,7 +9,6 @@
 #import "PreferencesWindowController.h"
 #import "KeychainAccess.h"
 #import "LaunchAtLoginController.h"
-#import "DropletManager.h"
 #import <ApplicationServices/ApplicationServices.h>
 
 
@@ -102,6 +101,8 @@
         [_iTermCB setState:NSOffState];
 
     
+    dropletManager.delegate = self;
+    
 }
 
 #pragma mark -
@@ -110,6 +111,8 @@
 
 - (IBAction)linkAccount:(id)sender {
     [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://cloud.digitalocean.com/v1/oauth/authorize?client_id=%@&redirect_uri=dodm%%3A%%2F%%2Fauthorization&response_type=code", clientID]]];
+    
+    [_statusLB setStringValue:@"Requesting authorization..."];
 }
 
 
@@ -134,6 +137,11 @@
     [alert runModal];
 }
 
+#pragma mark -
+#pragma mark Connection methods
+
+
+
 - (void) requestTokenWithAuthorizationCode:(NSString*)code {
     DLog(@"Authorization code %@", code);
     
@@ -144,6 +152,8 @@
     
     
     NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
+    
+    [_statusLB setStringValue:@"Requesting access token..."];
     
     if(connection) {
         responseData = [[NSMutableData alloc] init];
@@ -186,11 +196,23 @@
     {
 
         DLog(@"JSON %@", json);
-//        if ([[json objectForKey:@"status"] isEqualToString:@"OK"]) {
-//            [_statusLB setStringValue:NSLocalizedString(@"Successful! Please refresh", @"Successful! Please refresh")];
-//        } else {
-//            [_statusLB setStringValue:NSLocalizedString(@"Incorrect client-ID and/or API-Key",@"Incorrect client-ID and/or API-Key")];
-//        }
+        if ([json objectForKey:@"access_token"]) {
+
+            dropletManager.token = [json objectForKey:@"access_token"];
+            
+            if ([json objectForKey:@"info"]) {
+                [_accountNameLB setStringValue:[[json objectForKey:@"info"] objectForKey:@"name"]];
+                [_linkAccountBT setStringValue:@"Unlink"];
+            }
+            
+            
+            [self saveToken];
+            
+
+            
+        } else {
+            DLog(@"Token request error");
+        }
     } else {
         [self showAlert: error];
     }
@@ -225,9 +247,14 @@
     
     
     if ([queryStringDictionary objectForKey:@"code"] == nil) {
-        if ([queryStringDictionary objectForKey:@"error"]) {
-            [_statusLB setStringValue:[queryStringDictionary objectForKey:@"error"]];
-        }
+
+            if ([queryStringDictionary objectForKey:@"error"]) {
+                if ([[queryStringDictionary objectForKey:@"error"] isEqualToString:@"access_denied"]) {
+                    [_statusLB setStringValue:@"Acces denied. Please grant DropletManager authorization to your account"];
+                }
+            }
+        
+        
     } else {
         authorizationCode = [queryStringDictionary objectForKey:@"code"];
         [self requestTokenWithAuthorizationCode:authorizationCode];
@@ -419,6 +446,31 @@
 
     
     return isPresent;
+}
+
+- (void) saveToken {
+    
+    NSError *error = nil;
+    
+    if([KeychainAccess storeAccessToken:dropletManager.token error:&error]) {
+        
+        [dropletManager testConnection];
+        [_statusLB setStringValue:@"Testing connection..."];
+
+    } else {
+        [self showAlert: error];
+    }
+}
+
+- (void)connectionTestFinishedWithResult:(NSDictionary *)result {
+    
+
+    
+    if ([result objectForKey:@"regions"]) {
+        [_statusLB setStringValue:@"Online"];
+    }
+
+    
 }
 
 @end

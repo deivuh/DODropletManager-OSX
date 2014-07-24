@@ -103,7 +103,7 @@
 - (BOOL)loadKeys {
     NSString *token;
     
-    if([KeychainAccess getToken:&token error:nil]) {
+    if([KeychainAccess getAccessToken:&token error:nil]) {
         
         dropletManager.token = token;
 
