@@ -16,5 +16,4 @@
 #   define DLog(...)
 #endif
 
-#define clientID @"18159db7364b77ad1f255c1fc58cb7952edee2e044617842e12222a2c4372ec9"
-#define clientSecret @"c954bff480f9b528cca2b426e5e38d4e94af1bc93bed991dcf60516ccd53b3ea"
+
