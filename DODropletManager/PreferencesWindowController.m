@@ -1,10 +1,10 @@
-***REMOVED***
-***REMOVED***  PreferencesWindowController.m
-***REMOVED***  DODropletManager
-***REMOVED***
-***REMOVED***  Created by David Hsieh on 4/27/14.
-***REMOVED***  Copyright (c) 2014 David Hsieh. All rights reserved.
-***REMOVED***
+//
+//  PreferencesWindowController.m
+//  DODropletManager
+//
+//  Created by David Hsieh on 4/27/14.
+//  Copyright (c) 2014 David Hsieh. All rights reserved.
+//
 
 #import "PreferencesWindowController.h"
 #import "KeychainAccess.h"
@@ -26,6 +26,8 @@
     NSUserDefaults *userdefaults;
     NSMutableDictionary *sshUserDictionary;
     NSMutableDictionary *sshPortDictionary;
+    
+    NSString *authorizationCode;
 }
 
 #pragma mark -
@@ -45,7 +47,7 @@
 {
     self = [super initWithWindow:window];
     if (self) {
-        ***REMOVED*** Initialization code here.
+        // Initialization code here.
     }
     return self;
 }
@@ -54,8 +56,7 @@
 {
     [super windowDidLoad];
 
-    NSString *clientId;
-    NSString *apiKey;
+
     launchController = [[LaunchAtLoginController alloc] init];
     _launchAtLoginCB.state = [launchController launchAtLogin];
     
@@ -63,14 +64,14 @@
     userdefaults = [NSUserDefaults standardUserDefaults];
     
     
-    ***REMOVED***    If dictionary exists, load it from userDefaults;
+    //    If dictionary exists, load it from userDefaults;
     if ([userdefaults objectForKey:@"sshUserDictionary"] == nil) {
         sshUserDictionary = [[NSMutableDictionary alloc] init];
     } else {
         sshUserDictionary = [[userdefaults objectForKey:@"sshUserDictionary"] mutableCopy];
     }
     
-    ***REMOVED***    If dictionary exists, load it from userDefaults;
+    //    If dictionary exists, load it from userDefaults;
     if ([userdefaults objectForKey:@"sshPortDictionary"] == nil) {
         sshPortDictionary = [[NSMutableDictionary alloc] init];
     } else {
@@ -84,11 +85,14 @@
         [self.versionLabel setStringValue:@""];
     }
     
-    if([KeychainAccess getClientId: &clientId andAPIKey: &apiKey error: nil]) {
-        [_ClientIDTF setStringValue: clientId];
-        [_APIKeyTF setStringValue: apiKey];
-    }
+//    if([KeychainAccess getClientId: &clientId andAPIKey: &apiKey error: nil]) {
+//        [_ClientIDTF setStringValue: clientId];
+//        [_APIKeyTF setStringValue: apiKey];
+//    }
+
     
+    [self registerAppURL];
+
 
     [_iTermCB setEnabled:[self checkiTerm]];
     
@@ -103,20 +107,9 @@
 #pragma mark -
 #pragma mark Actions
 
-- (IBAction)savePreferences:(id)sender {
-    NSError *error = nil;
-    
-    [_ClientIDTF setStringValue:[_ClientIDTF.stringValue stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]]];
-    [_APIKeyTF setStringValue:[_APIKeyTF.stringValue stringByTrimmingCharactersInSet: [NSCharacterSet whitespaceCharacterSet]]];
-    
-    if([KeychainAccess storeClientId: _ClientIDTF.stringValue andAPIKey: _APIKeyTF.stringValue error: &error]) {
-        [_statusLB setStringValue: NSLocalizedString(@"Verifying...", @"Verifying...")];
-        [self requestDroplets];
-    } else {
-        [self showAlert: error];
-    }
-    
-    
+
+- (IBAction)linkAccount:(id)sender {
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://cloud.digitalocean.com/v1/oauth/authorize?client_id=%@&redirect_uri=dodm%%3A%%2F%%2Fauthorization&response_type=code", clientID]]];
 }
 
 
@@ -141,9 +134,15 @@
     [alert runModal];
 }
 
-- (void) requestDroplets {
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https:***REMOVED***api.digitalocean.com/droplets/?client_id=%@&api_key=%@", _ClientIDTF.stringValue, _APIKeyTF.stringValue]];
-    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
+- (void) requestTokenWithAuthorizationCode:(NSString*)code {
+    DLog(@"Authorization code %@", code);
+    
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://cloud.digitalocean.com/v1/oauth/token?client_id=%@&client_secret=%@&grant_type=authorization_code&code=%@&redirect_uri=%@", clientID, clientSecret, code, @"dodm://authorization"]];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
+    
+    [urlRequest setHTTPMethod:@"POST"];
+    
+    
     NSURLConnection *connection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
     
     if(connection) {
@@ -152,6 +151,10 @@
         [_statusLB setStringValue: NSLocalizedString(@"Connection failed", @"Connection failed")];
     }
 }
+
+
+#pragma mark -
+#pragma mark NSURLConnection delegate methods
 
 - (void) connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
@@ -183,13 +186,51 @@
     {
 
         DLog(@"JSON %@", json);
-        if ([[json objectForKey:@"status"] isEqualToString:@"OK"]) {
-            [_statusLB setStringValue:NSLocalizedString(@"Successful! Please refresh", @"Successful! Please refresh")];
-        } else {
-            [_statusLB setStringValue:NSLocalizedString(@"Incorrect client-ID and/or API-Key",@"Incorrect client-ID and/or API-Key")];
-        }
+//        if ([[json objectForKey:@"status"] isEqualToString:@"OK"]) {
+//            [_statusLB setStringValue:NSLocalizedString(@"Successful! Please refresh", @"Successful! Please refresh")];
+//        } else {
+//            [_statusLB setStringValue:NSLocalizedString(@"Incorrect client-ID and/or API-Key",@"Incorrect client-ID and/or API-Key")];
+//        }
     } else {
         [self showAlert: error];
+    }
+    
+}
+
+#pragma mark -
+#pragma mark URL Scheme methods
+
+- (void)registerAppURL {
+    [[NSAppleEventManager sharedAppleEventManager] setEventHandler:self andSelector:@selector(getUrl:withReplyEvent:) forEventClass:kInternetEventClass andEventID:kAEGetURL];
+}
+
+- (void)getUrl:(NSAppleEventDescriptor *)event withReplyEvent:(NSAppleEventDescriptor *)replyEvent {
+    NSString *url = [[event paramDescriptorForKeyword:keyDirectObject] stringValue]; // Now you can parse the URL and perform whatever action is needed
+    
+    DLog(@"Captured URL: %@", url);
+    
+    url = [[url componentsSeparatedByString:@"?"] objectAtIndex:1];
+    
+    NSMutableDictionary *queryStringDictionary = [[NSMutableDictionary alloc] init];
+    NSArray *urlComponents = [url componentsSeparatedByString:@"&"];
+    
+    for (NSString *keyValuePair in urlComponents)
+    {
+        NSArray *pairComponents = [keyValuePair componentsSeparatedByString:@"="];
+        NSString *key = [pairComponents objectAtIndex:0];
+        NSString *value = [pairComponents objectAtIndex:1];
+        
+        [queryStringDictionary setObject:value forKey:key];
+    }
+    
+    
+    if ([queryStringDictionary objectForKey:@"code"] == nil) {
+        if ([queryStringDictionary objectForKey:@"error"]) {
+            [_statusLB setStringValue:[queryStringDictionary objectForKey:@"error"]];
+        }
+    } else {
+        authorizationCode = [queryStringDictionary objectForKey:@"code"];
+        [self requestTokenWithAuthorizationCode:authorizationCode];
     }
     
 }
@@ -203,7 +244,7 @@
 
 - (NSView *)tableView:(NSTableView *)tableView viewForTableColumn:(NSTableColumn *)tableColumn row:(NSInteger)row {
     
-    ***REMOVED*** Get a new ViewCell
+    // Get a new ViewCell
     NSTableCellView *cellView = [tableView makeViewWithIdentifier:tableColumn.identifier owner:self];
     
 
@@ -246,7 +287,7 @@
         
     }
     
-***REMOVED***    cellView.objectValue = cellView.textField;
+//    cellView.objectValue = cellView.textField;
     
     [userdefaults setObject:sshUserDictionary forKey:@"sshUserDictionary"];
     [userdefaults setObject:sshPortDictionary forKey:@"sshPortDictionary"];
@@ -301,7 +342,7 @@
     } else if (currentTextField == selectedPortTF) {
         DLog(@"PortTF end editing");
         
-        ***REMOVED***Check if valid port
+        //Check if valid port
         if([inputString rangeOfCharacterFromSet:[[NSCharacterSet decimalDigitCharacterSet] invertedSet]].location == NSNotFound) {
             
             if ([inputString integerValue] > 65535 || [inputString integerValue] < 1) {
@@ -350,10 +391,10 @@
     
     CFURLRef appURL = NULL;
     OSStatus result = LSFindApplicationForInfo (
-                                                kLSUnknownCreator,         ***REMOVED***creator codes are dead, so we don't care about it
-                                                CFSTR("com.googlecode.iterm2"), ***REMOVED***you can use the bundle ID here
-                                                NULL,                      ***REMOVED***or the name of the app here (CFSTR("Safari.app"))
-                                                NULL,                      ***REMOVED***this is used if you want an FSRef rather than a CFURLRef
+                                                kLSUnknownCreator,         //creator codes are dead, so we don't care about it
+                                                CFSTR("com.googlecode.iterm2"), //you can use the bundle ID here
+                                                NULL,                      //or the name of the app here (CFSTR("Safari.app"))
+                                                NULL,                      //this is used if you want an FSRef rather than a CFURLRef
                                                 &appURL
                                                 );
     switch(result)
@@ -372,7 +413,7 @@
             break;
     }
     
-    ***REMOVED***the CFURLRef returned from the function is retained as per the docs so we must release it
+    //the CFURLRef returned from the function is retained as per the docs so we must release it
     if(appURL)
         CFRelease(appURL);
 

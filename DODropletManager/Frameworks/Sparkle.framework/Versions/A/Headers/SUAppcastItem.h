@@ -1,10 +1,10 @@
-***REMOVED***
-***REMOVED***  SUAppcastItem.h
-***REMOVED***  Sparkle
-***REMOVED***
-***REMOVED***  Created by Andy Matuschak on 3/12/06.
-***REMOVED***  Copyright 2006 Andy Matuschak. All rights reserved.
-***REMOVED***
+//
+//  SUAppcastItem.h
+//  Sparkle
+//
+//  Created by Andy Matuschak on 3/12/06.
+//  Copyright 2006 Andy Matuschak. All rights reserved.
+//
 
 #ifndef SUAPPCASTITEM_H
 #define SUAPPCASTITEM_H
@@ -26,7 +26,7 @@
 	NSDictionary *propertiesDictionary;
 }
 
-***REMOVED*** Initializes with data from a dictionary provided by the RSS class.
+// Initializes with data from a dictionary provided by the RSS class.
 - initWithDictionary:(NSDictionary *)dict;
 
 - (NSString *)title;
@@ -39,9 +39,9 @@
 - (NSString *)DSASignature;
 - (NSString *)minimumSystemVersion;
 
-***REMOVED*** Returns the dictionary provided in initWithDictionary; this might be useful later for extensions.
+// Returns the dictionary provided in initWithDictionary; this might be useful later for extensions.
 - (NSDictionary *)propertiesDictionary;
 
 @end
 
-***REMOVED***
+#endif

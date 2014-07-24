@@ -1,10 +1,10 @@
-***REMOVED***
-***REMOVED***  SUAppcast.h
-***REMOVED***  Sparkle
-***REMOVED***
-***REMOVED***  Created by Andy Matuschak on 3/12/06.
-***REMOVED***  Copyright 2006 Andy Matuschak. All rights reserved.
-***REMOVED***
+//
+//  SUAppcast.h
+//  Sparkle
+//
+//  Created by Andy Matuschak on 3/12/06.
+//  Copyright 2006 Andy Matuschak. All rights reserved.
+//
 
 #ifndef SUAPPCAST_H
 #define SUAPPCAST_H
@@ -30,4 +30,4 @@
 - (void)appcast:(SUAppcast *)appcast failedToLoadWithError:(NSError *)error;
 @end
 
-***REMOVED***
+#endif

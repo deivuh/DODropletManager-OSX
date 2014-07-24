@@ -1,10 +1,10 @@
-***REMOVED***
-***REMOVED***  DropletFormWindowController.h
-***REMOVED***  DODropletManager
-***REMOVED***
-***REMOVED***  Created by Adam Tootle on 4/28/14.
-***REMOVED***  Copyright (c) 2014 David Hsieh. All rights reserved.
-***REMOVED***
+//
+//  DropletFormWindowController.h
+//  DODropletManager
+//
+//  Created by Adam Tootle on 4/28/14.
+//  Copyright (c) 2014 David Hsieh. All rights reserved.
+//
 
 #import <Cocoa/Cocoa.h>
 

@@ -1,10 +1,10 @@
-***REMOVED***
-***REMOVED***  SUVersionComparisonProtocol.h
-***REMOVED***  Sparkle
-***REMOVED***
-***REMOVED***  Created by Andy Matuschak on 12/21/07.
-***REMOVED***  Copyright 2007 Andy Matuschak. All rights reserved.
-***REMOVED***
+//
+//  SUVersionComparisonProtocol.h
+//  Sparkle
+//
+//  Created by Andy Matuschak on 12/21/07.
+//  Copyright 2007 Andy Matuschak. All rights reserved.
+//
 
 #ifndef SUVERSIONCOMPARISONPROTOCOL_H
 #define SUVERSIONCOMPARISONPROTOCOL_H
@@ -24,4 +24,4 @@
 
 @end
 
-***REMOVED***
+#endif

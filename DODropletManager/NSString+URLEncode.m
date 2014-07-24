@@ -1,9 +1,9 @@
-***REMOVED***
-***REMOVED***  NSString+UrlEncode.m
-***REMOVED***
-***REMOVED***  Created by Kevin Renskers on 31-10-13.
-***REMOVED***  Copyright (c) 2013 Kevin Renskers. All rights reserved.
-***REMOVED***
+//
+//  NSString+UrlEncode.m
+//
+//  Created by Kevin Renskers on 31-10-13.
+//  Copyright (c) 2013 Kevin Renskers. All rights reserved.
+//
 
 #import "NSString+UrlEncode.h"
 

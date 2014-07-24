@@ -47,7 +47,7 @@ Works on 10.6/10.5
 ## ORIGINAL CODE IDEAS:
 
 * Growl. 
-* User: invariant Link: (http:***REMOVED***stackoverflow.com/questions/815063/how-do-you-make-your-app-open-at-login/2318004#2318004)
+* User: invariant Link: (http://stackoverflow.com/questions/815063/how-do-you-make-your-app-open-at-login/2318004#2318004)
 
 
 ## LICENSE:
