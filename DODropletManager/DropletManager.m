@@ -7,7 +7,7 @@
 //
 
 #import "DropletManager.h"
-
+#import "KeychainAccess.h"
 
 @implementation DropletManager {
     NSMutableData *responseData;
@@ -15,6 +15,7 @@
     NSURLConnection *rebootDropletConnection, *shutdownDropletConnection, *turnOnDropletConnection, *deleteDropletConnection;
     NSMutableDictionary *regions;
     NSMutableDictionary *images;
+    
 }
 
 
@@ -32,6 +33,19 @@
 - (id)init {
     if (self = [super init]) {
         _droplets = [[NSMutableArray alloc] init];
+        
+        NSString *accessToken, *refreshToken;
+        NSError *err;
+        
+        if([KeychainAccess getAccessToken:&accessToken andRefreshToken:&refreshToken error:nil]) {
+            DLog(@"AccessToken retreival success? ")
+            _accessToken = accessToken;
+            _refreshToken = refreshToken;
+        } else {
+            DLog(@"Error loading keys");
+        }
+        
+
         
 
     }
@@ -55,7 +69,7 @@
     
     
     
-    [urlRequest setValue:[NSString stringWithFormat:@"Bearer %@", _token] forHTTPHeaderField:@"Authorization"];
+    [urlRequest setValue:[NSString stringWithFormat:@"Bearer %@", _accessToken] forHTTPHeaderField:@"Authorization"];
     
     
     testConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
@@ -76,7 +90,7 @@
     
     
     
-    [urlRequest setValue:[NSString stringWithFormat:@"Bearer %@", _token] forHTTPHeaderField:@"Authorization"];
+    [urlRequest setValue:[NSString stringWithFormat:@"Bearer %@", _accessToken] forHTTPHeaderField:@"Authorization"];
 
     
     regionsConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
@@ -94,7 +108,9 @@
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.digitalocean.com/v2/images"]];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     
-    [urlRequest setValue:[NSString stringWithFormat:@"Bearer %@", _token] forHTTPHeaderField:@"Authorization"];
+    [urlRequest setValue:[NSString stringWithFormat:@"Bearer %@", _accessToken] forHTTPHeaderField:@"Authorization"];
+    
+    
     
     imagesConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
     
@@ -106,10 +122,24 @@
 }
 
 - (void) requestDroplets {
+    DLog(@"Request droplets");
+    
     NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.digitalocean.com/v2/droplets"]];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     
-    [urlRequest setValue:[NSString stringWithFormat:@"Bearer %@", _token] forHTTPHeaderField:@"Authorization"];
+    
+    
+    [urlRequest setValue:[NSString stringWithFormat:@"Bearer %@", _accessToken] forHTTPHeaderField:@"Authorization"];
+    
+    DLog(@"Auth token %@", _accessToken);
+    
+
+    
+
+    
+
+    
+        DLog(@"THE REQUEST %@", [urlRequest allHTTPHeaderFields]);
     
     dropletsConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
     
@@ -201,6 +231,8 @@
                           options:NSUTF8StringEncoding
                           error:&error];
     
+
+    
     if(json != nil)
     {
         if (connection == testConnection) {
@@ -211,6 +243,10 @@
             }
             
         } else if (connection == dropletsConnection) {
+            
+            DLog(@"Droplet Connection loaded %@", json );
+            
+            
             NSArray *tempDropletsArray = [json objectForKey:@"droplets"];
             _droplets = [[NSMutableArray alloc] init];
             
@@ -237,7 +273,7 @@
                 [regions setObject:regionName forKey:regionID];
             }
             
-            [self requestImages];
+//            [self requestImages];
         } else  if (connection == imagesConnection) {
             NSArray *tempImagesArray = [json objectForKey:@"images"];
             images = [[NSMutableDictionary alloc] init];
@@ -249,7 +285,7 @@
                 [images setObject:distro forKey:imageID];
             }
             
-            [self requestDroplets];
+//            [self requestDroplets];
         } else  if (connection == rebootDropletConnection) {
             DLog(@"Result status %@", [json objectForKey:@"status"]);
 
@@ -267,7 +303,8 @@
 
 
 - (void)refreshDroplets {
-    [self requestRegions];
+    DLog(@"Refresh droplets");
+    [self requestDroplets];
 
 }
 

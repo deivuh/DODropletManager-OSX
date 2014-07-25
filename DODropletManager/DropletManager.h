@@ -32,7 +32,8 @@
 }
 
 
-@property (nonatomic, strong) NSString *token;
+@property (nonatomic, strong) NSString *accessToken;
+@property (nonatomic, strong) NSString *refreshToken;
 @property (nonatomic, strong) NSMutableArray *droplets;
 @property (nonatomic, weak) id<DropletManagerDelegate> delegate;
 

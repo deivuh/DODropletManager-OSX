@@ -88,6 +88,8 @@
 //        [_ClientIDTF setStringValue: clientId];
 //        [_APIKeyTF setStringValue: apiKey];
 //    }
+    
+    
 
     
     [self registerAppURL];
@@ -102,6 +104,8 @@
 
     
     dropletManager.delegate = self;
+    
+    [_tokenLB setStringValue:dropletManager.accessToken];
     
 }
 
@@ -198,11 +202,14 @@
         DLog(@"JSON %@", json);
         if ([json objectForKey:@"access_token"]) {
 
-            dropletManager.token = [json objectForKey:@"access_token"];
+            dropletManager.accessToken = [json objectForKey:@"access_token"];
+            dropletManager.refreshToken = [json objectForKey:@"refresh_token"];
+            
+            DLog(@"Access token %@", dropletManager.accessToken);
             
             if ([json objectForKey:@"info"]) {
                 [_accountNameLB setStringValue:[[json objectForKey:@"info"] objectForKey:@"name"]];
-                [_linkAccountBT setStringValue:@"Unlink"];
+                [_linkAccountBT setTitle:@"Unlink"];
             }
             
             
@@ -452,7 +459,9 @@
     
     NSError *error = nil;
     
-    if([KeychainAccess storeAccessToken:dropletManager.token error:&error]) {
+    DLog(@"Saving token %@", dropletManager.accessToken);
+    
+    if([KeychainAccess storeAccesToken:dropletManager.accessToken andRefreshToken:dropletManager.refreshToken error:nil]) {
         
         [dropletManager testConnection];
         [_statusLB setStringValue:@"Testing connection..."];

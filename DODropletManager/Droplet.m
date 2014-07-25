@@ -13,6 +13,9 @@
 - (id) initWithDictionary:(NSDictionary*) dictionary regions:(NSDictionary*) regions andImages:(NSDictionary*)images{
     
     if (self = [super init]) {
+        
+        DLog(@"Dictionary: %@", dictionary);
+        
         _name = [dictionary objectForKey:@"name"];
         _ip = [dictionary objectForKey:@"ip_address"];
         _dropletID = [dictionary objectForKey:@"id"];

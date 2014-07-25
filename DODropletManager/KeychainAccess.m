@@ -12,24 +12,22 @@
 static const char *digital_ocean = "Digital Ocean";
 static const char *account = "Account";
 
+
 static NSString *serviceName = @"digital_ocean";
 
 @implementation KeychainAccess
 
 
 
-
-
-+ (BOOL) storeRefreshToken:(NSString*)token error:(NSError**)error {
-    
++ (BOOL) storeAccesToken:(NSString*)accessToken andRefreshToken:(NSString*)refreshToken error:(NSError**)error {
     // Set password
     SecKeychainRef keychain = NULL; // User's default keychain
     
     
     // Delete keychain item if already exists
-    [self removeRefreshToken:token error:nil];
+    [self removeAccessToken:accessToken andRefreshToken:refreshToken error:(NSError**)error];
     
-    const char *passwordData = [[NSString stringWithFormat: @"%@", token] UTF8String];
+    const char *passwordData = [[NSString stringWithFormat: @"%@:%@", accessToken, refreshToken] UTF8String];
     OSStatus status = SecKeychainAddGenericPassword(keychain,
                                                     (UInt32)strlen(digital_ocean), digital_ocean,
                                                     (UInt32)strlen(account), account,
@@ -48,13 +46,9 @@ static NSString *serviceName = @"digital_ocean";
     }
     
     return NO;
-
-    
 }
 
-+ (BOOL) getRefreshToken:(NSString**)token error:(NSError**)error {
-    
-    
++ (BOOL) getAccessToken:(NSString**)accessToken andRefreshToken:(NSString**)refreshToken error:(NSError**)error {
     SecKeychainRef keychain = NULL; // User's default keychain
     // Get password
     char *password = NULL;
@@ -69,7 +63,10 @@ static NSString *serviceName = @"digital_ocean";
     if (status == noErr) {
         // Cool! Use pwd
         NSString *tmp = [NSString stringWithUTF8String: password];
-        *token = tmp;
+        NSArray *parts = [tmp componentsSeparatedByString: @":"];
+        
+        *accessToken = [parts objectAtIndex: 0];
+        *refreshToken = [parts objectAtIndex: 1];
         SecKeychainItemFreeContent(NULL, (void*)password);
         
         return YES;
@@ -82,7 +79,9 @@ static NSString *serviceName = @"digital_ocean";
     return NO;
 }
 
-+ (BOOL) removeRefreshToken:(NSString*)token error:(NSError**)error {
+
+
++ (BOOL) removeAccessToken:(NSString*)accessToken andRefreshToken:(NSString*)refreshToken error:(NSError**)error {
     
     
     SecKeychainRef keychain = NULL; // User's default keychain
@@ -108,95 +107,5 @@ static NSString *serviceName = @"digital_ocean";
     
     return NO;
 }
-
-+ (BOOL) storeAccessToken:(NSString*)token error:(NSError**)error {
-    
-    // Set password
-    SecKeychainRef keychain = NULL; // User's default keychain
-    
-    
-    // Delete keychain item if already exists
-    [self removeAccessToken:token error:nil];
-    
-    const char *passwordData = [[NSString stringWithFormat: @"%@", token] UTF8String];
-    OSStatus status = SecKeychainAddGenericPassword(keychain,
-                                                    (UInt32)strlen(digital_ocean), digital_ocean,
-                                                    (UInt32)strlen(account), account,
-                                                    (UInt32)strlen(passwordData), passwordData,
-                                                    NULL);
-    
-    
-    
-    
-    if (status == noErr) {
-        return YES;
-    }
-    
-    if(error) {
-        *error = [NSError errorWithDomain: NSLocalizedString(@"Keychain", @"Keychain") code: status userInfo: nil];
-    }
-    
-    return NO;
-    
-    
-}
-
-+ (BOOL) getAccessToken:(NSString**)token error:(NSError**)error {
-    
-    
-    SecKeychainRef keychain = NULL; // User's default keychain
-    // Get password
-    char *password = NULL;
-    UInt32 passwordLen = 0;
-    
-    OSStatus status = SecKeychainFindGenericPassword(keychain,
-                                                     (UInt32)strlen(digital_ocean), digital_ocean,
-                                                     (UInt32)strlen(account), account,
-                                                     &passwordLen, (void**)&password,
-                                                     NULL);
-    
-    if (status == noErr) {
-        // Cool! Use pwd
-        NSString *tmp = [NSString stringWithUTF8String: password];
-        *token = tmp;
-        SecKeychainItemFreeContent(NULL, (void*)password);
-        
-        return YES;
-    }
-    
-    if(error) {
-        *error = [NSError errorWithDomain: NSLocalizedString(@"Keychain", @"Keychain") code: status userInfo: nil];
-    }
-    
-    return NO;
-}
-
-+ (BOOL) removeAccessToken:(NSString*)token error:(NSError**)error {
-    
-    
-    SecKeychainRef keychain = NULL; // User's default keychain
-    SecKeychainItemRef keychainItem;
-    
-    OSStatus status = SecKeychainFindGenericPassword(keychain,
-                                                     (UInt32)strlen(digital_ocean), digital_ocean,
-                                                     (UInt32)strlen(account), account,
-                                                     NULL, NULL,
-                                                     &keychainItem);
-    
-    
-    if (status == noErr) {
-        SecKeychainItemDelete(keychainItem);
-        CFRelease(keychainItem);
-    } else {
-        if (error) {
-            *error = [NSError errorWithDomain: NSLocalizedString(@"Keychain", @"Keychain") code: status userInfo: nil];
-        }
-    }
-    
-    
-    
-    return NO;
-}
-
 
 @end

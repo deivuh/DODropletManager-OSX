@@ -26,6 +26,7 @@
 @property (weak) IBOutlet NSButton *iTermCB;
 @property (weak) IBOutlet NSTextField *versionLabel;
 
+@property (weak) IBOutlet NSTextField *tokenLB;
 - (BOOL) checkiTerm;
 
 

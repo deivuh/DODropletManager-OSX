@@ -14,6 +14,7 @@
                 <outlet property="linkAccountBT" destination="U09-XW-9Aa" id="yJe-n5-Y9G"/>
                 <outlet property="sshUsersTableview" destination="DYV-7b-R4f" id="vsR-G4-qcB"/>
                 <outlet property="statusLB" destination="xxQ-Fx-vOU" id="Szj-nc-Ro5"/>
+                <outlet property="tokenLB" destination="NEJ-Wc-cO8" id="DxW-4r-hFO"/>
                 <outlet property="versionLabel" destination="4uE-tQ-30Y" id="ESY-GI-H41"/>
             </connections>
         </customObject>
@@ -66,6 +67,15 @@
                                                 <action selector="linkAccount:" target="-2" id="BhJ-Uu-77D"/>
                                             </connections>
                                         </button>
+                                        <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="NEJ-Wc-cO8">
+                                            <rect key="frame" x="40" y="77" width="38" height="17"/>
+                                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                            <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" sendsActionOnEndEditing="YES" title="Label" id="D0E-9G-03e">
+                                                <font key="font" metaFont="system"/>
+                                                <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                                <color key="backgroundColor" name="controlColor" catalog="System" colorSpace="catalog"/>
+                                            </textFieldCell>
+                                        </textField>
                                     </subviews>
                                 </view>
                             </tabViewItem>

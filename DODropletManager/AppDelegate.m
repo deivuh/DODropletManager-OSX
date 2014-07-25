@@ -50,11 +50,11 @@
     
     [self createMenuItems];
     
-    if([self loadKeys]) {
+//    if([self loadKeys]) {
         [self refresh: self];
-    } else {
-        [self showPreferencesWindow: self];
-    }
+//    } else {
+//        [self showPreferencesWindow: self];
+//    }
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(receivedNotification:)
@@ -103,14 +103,7 @@
 - (BOOL)loadKeys {
     NSString *token;
     
-    if([KeychainAccess getAccessToken:&token error:nil]) {
-        
-        dropletManager.token = token;
-
-
-        
-        return YES;
-    }
+    NSError *error;
     
     return NO;
 
@@ -285,8 +278,9 @@
 
 - (void)refresh:(id)sender {
     
+    NSLog(@"Refreshing");
+    
 
-    [self loadKeys];
 
     if(refreshingTimer == nil) {
         refreshingTimer = [NSTimer scheduledTimerWithTimeInterval: 0.1 target: self selector: @selector(refreshingTimerTick:) userInfo: nil repeats: YES];
