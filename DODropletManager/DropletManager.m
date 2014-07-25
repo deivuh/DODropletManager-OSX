@@ -45,6 +45,7 @@
             DLog(@"Error loading keys");
         }
         
+        [self requestDroplets];
 
         
 
@@ -251,7 +252,7 @@
             _droplets = [[NSMutableArray alloc] init];
             
             for (NSDictionary *dropletDictionary in tempDropletsArray) {
-                Droplet *droplet = [[Droplet alloc] initWithDictionary:dropletDictionary regions:regions andImages:images];
+                Droplet *droplet = [[Droplet alloc] initWithDictionary:dropletDictionary];
                 [_droplets addObject:droplet];
             }
             

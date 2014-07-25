@@ -199,7 +199,7 @@
     if(json)
     {
 
-        DLog(@"JSON %@", json);
+        DLog(@"Token request response:  %@", json);
         if ([json objectForKey:@"access_token"]) {
 
             dropletManager.accessToken = [json objectForKey:@"access_token"];

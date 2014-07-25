@@ -20,12 +20,15 @@
 @property (nonatomic, strong) NSString *createdAt;
 @property (nonatomic, strong) NSString *status;
 
+
+
+
 @property (nonatomic, strong) NSString *region;
 @property (nonatomic, strong) NSString *distro;
 @property BOOL backupActive;
 @property BOOL active;
 @property BOOL locked;
 
-- (id) initWithDictionary:(NSDictionary*) dictionary regions:(NSDictionary*) regions andImages:(NSDictionary*)images;
+- (id) initWithDictionary:(NSDictionary*) dictionary;
 
 @end

@@ -50,11 +50,11 @@
     
     [self createMenuItems];
     
-//    if([self loadKeys]) {
+    if([self loadKeys]) {
         [self refresh: self];
-//    } else {
-//        [self showPreferencesWindow: self];
-//    }
+    } else {
+        [self showPreferencesWindow: self];
+    }
     
     [[NSNotificationCenter defaultCenter] addObserver:self
                                              selector:@selector(receivedNotification:)
@@ -104,7 +104,7 @@
     NSString *token;
     
     NSError *error;
-    
+        
     return NO;
 
 }
@@ -280,7 +280,7 @@
     
     NSLog(@"Refreshing");
     
-
+    [self loadKeys];
 
     if(refreshingTimer == nil) {
         refreshingTimer = [NSTimer scheduledTimerWithTimeInterval: 0.1 target: self selector: @selector(refreshingTimerTick:) userInfo: nil repeats: YES];
