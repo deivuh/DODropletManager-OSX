@@ -34,8 +34,10 @@
 
 @property (nonatomic, strong) NSString *accessToken;
 @property (nonatomic, strong) NSString *refreshToken;
+@property (nonatomic, strong) NSString *accountName;
 @property (nonatomic, strong) NSMutableArray *droplets;
 @property (nonatomic, weak) id<DropletManagerDelegate> delegate;
+
 
 + (id)sharedManager;
 
@@ -46,7 +48,10 @@
 - (void)turnOnDroplet:(Droplet*)droplet;
 - (void)deleteDroplet:(Droplet*)droplet;
 
+- (void) requestForAction:(NSString*)action onDroplet:(Droplet*)droplet;
+
 - (void) testConnection;
+- (BOOL)isConnectionSuccessful;
 
 
 @end

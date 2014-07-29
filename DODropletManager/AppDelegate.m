@@ -50,7 +50,7 @@
     
     [self createMenuItems];
     
-    if([self loadKeys]) {
+    if(dropletManager.accessToken) {
         [self refresh: self];
     } else {
         [self showPreferencesWindow: self];
@@ -101,9 +101,7 @@
 
 
 - (BOOL)loadKeys {
-    NSString *token;
-    
-    NSError *error;
+
         
     return NO;
 
@@ -278,7 +276,7 @@
 
 - (void)refresh:(id)sender {
     
-    NSLog(@"Refreshing");
+  
     
     [self loadKeys];
 

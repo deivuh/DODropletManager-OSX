@@ -107,14 +107,25 @@
     
     [_tokenLB setStringValue:dropletManager.accessToken];
     
+
+    if ([dropletManager isConnectionSuccessful]) {
+        [_statusLB setStringValue:@"Connected"];
+        [_accountNameLB setStringValue:dropletManager.accountName];
+    } else {
+        [_statusLB setStringValue:@"Something is wrong"];
+        [_accountNameLB setStringValue:@""];
+    }
+    
 }
+
+
 
 #pragma mark -
 #pragma mark Actions
 
 
 - (IBAction)linkAccount:(id)sender {
-    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://cloud.digitalocean.com/v1/oauth/authorize?client_id=%@&redirect_uri=dodm%%3A%%2F%%2Fauthorization&response_type=code", clientID]]];
+    [[NSWorkspace sharedWorkspace] openURL:[NSURL URLWithString:[NSString stringWithFormat:@"https://cloud.digitalocean.com/v1/oauth/authorize?client_id=%@&redirect_uri=dodm%%3A%%2F%%2Fauthorization&response_type=code&scope=read%%20write", clientID]]];
     
     [_statusLB setStringValue:@"Requesting authorization..."];
 }
@@ -210,6 +221,11 @@
             if ([json objectForKey:@"info"]) {
                 [_accountNameLB setStringValue:[[json objectForKey:@"info"] objectForKey:@"name"]];
                 [_linkAccountBT setTitle:@"Unlink"];
+                
+                dropletManager.accountName =[_accountNameLB stringValue];
+                
+                [userdefaults setObject:dropletManager.accountName forKey:@"accountName"];
+                [userdefaults synchronize];
             }
             
             
