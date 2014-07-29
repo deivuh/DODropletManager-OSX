@@ -24,6 +24,8 @@
     NSMutableData *createDropletResponseData;
     NSArray *availableImages;
     NSArray *availableSizes;
+    
+    DropletManager *dropletManager;
 }
 
 - (id)initWithWindow:(NSWindow *)window
@@ -41,13 +43,8 @@
 {
     [super windowDidLoad];
     
-//    NSString *client;
-//    NSString *key;
+    dropletManager = [DropletManager sharedManager];
     
-//    if([KeychainAccess getClientId: &client andAPIKey: &key error: nil]) {
-//        clientID = client;
-//        APIKey = key;
-//    }
     
     [self.availableImagesPopup addItemWithTitle:@"Select image..."];
     [self loadAvailableImages];
@@ -56,18 +53,41 @@
     
     [self.availableSizePopup addItemWithTitle:@"Choose size..."];
     [self loadAvailableSizes];
+    
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receivedNotification:)
+                                                 name:@"imagesLoaded"
+                                               object:nil];
+
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self
+                                             selector:@selector(receivedNotification:)
+                                                 name:@"sizesLoaded"
+                                               object:nil];
+
 }
 
-- (void)createDroplet:(id)sender
+- (IBAction)createDroplet:(id)sender
 {
     NSInteger selectedSizeIndex = [self.availableSizePopup indexOfItem:self.availableSizePopup.selectedItem] - 1;
-    NSNumber *sizeID = availableSizes[selectedSizeIndex][@"id"];
+    NSString *sizeID = availableSizes[selectedSizeIndex][@"slug"];
     
     NSInteger selectedImageIndex = [self.availableImagesPopup indexOfItem:self.availableImagesPopup.selectedItem] - 1;
-    NSNumber *imageID = availableImages[selectedImageIndex][@"id"];
+    NSString *imageID = availableImages[selectedImageIndex][@"id"];
     
     NSInteger selectedRegionIndex = [self.availableRegionsPopup indexOfItem:self.availableRegionsPopup.selectedItem] - 1;
-    NSNumber *regionID = availableImages[selectedImageIndex][@"region_slugs"][selectedRegionIndex];
+    NSString *regionID = availableImages[selectedImageIndex][@"regions"][selectedRegionIndex];
+    
+    DLog(@"Create droplet with %@, %@, %@", sizeID, imageID, regionID);
+    
+    Droplet *newDroplet = [[Droplet alloc] init];
+    newDroplet.name = self.dropletNameField.stringValue.urlEncode;
+    newDroplet.sizeID = sizeID;
+    newDroplet.imageID = imageID;
+    newDroplet.regionID = regionID;
+    
+    [dropletManager requestCreateDroplet:newDroplet];
     
 //    NSString *path = [NSString stringWithFormat:@"https://api.digitalocean.com/droplets/new/?client_id=%@&api_key=%@&name=%@&size_id=%@&image_id=%@&region_slug=%@", clientID, APIKey, [self.dropletNameField.stringValue urlEncode], sizeID, imageID, regionID];
     
@@ -88,19 +108,37 @@
 
 - (void)loadAvailableImages
 {
-//    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.digitalocean.com/images/?filter=global&client_id=%@&api_key=%@", clientID, APIKey]];
-//    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];
-//    availableImagesConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
+    
+    if (dropletManager.images == nil) {
+        [dropletManager requestImages];
+    } else {
+    
+
+        for(NSDictionary *image in availableImages)
+        {
+            [self.availableImagesPopup addItemWithTitle:image[@"name"]];
+        }
+    }
+
+    
 }
 
 - (void)loadAvailableSizes
 {
-//    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.digitalocean.com/sizes/?client_id=%@&api_key=%@", clientID, APIKey]];
-//    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];
-//    availableSizesConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
+    
+    if (dropletManager.sizes == nil) {
+        [dropletManager requestSizes];
+    } else {
+        
+        for(NSDictionary *size in availableSizes)
+        {
+            [self.availableSizePopup addItemWithTitle:size[@"slug"]];
+        }
+    }
 }
 
-- (void)didSelectImage:(id)sender
+
+- (IBAction)didSelectImage:(id)sender
 {
     if([sender isEqual:self.availableImagesPopup])
     {
@@ -108,7 +146,7 @@
         [self.availableRegionsPopup addItemWithTitle:@"Select region..."];
         NSInteger selectedImageIndex = [self.availableImagesPopup indexOfItem:self.availableImagesPopup.selectedItem];
         
-        for(NSString *slug in availableImages[selectedImageIndex][@"region_slugs"])
+        for(NSString *slug in availableImages[selectedImageIndex][@"regions"])
         {
             [self.availableRegionsPopup addItemWithTitle:slug];
         }
@@ -119,15 +157,7 @@
 
 - (void) connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
-    if([connection isEqual:availableImagesConnection])
-    {
-        [imagesResponseData setLength:0];
-    }
-    else if([connection isEqual:availableSizesConnection])
-    {
-        [sizesResponseData setLength:0];
-    }
-    else if([connection isEqual:createNewDropletConnection])
+    if([connection isEqual:createNewDropletConnection])
     {
         [createDropletResponseData setLength:0];
     }
@@ -135,15 +165,7 @@
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-    if([connection isEqual:availableImagesConnection])
-    {
-        [imagesResponseData appendData:data];
-    }
-    else if([connection isEqual:availableSizesConnection])
-    {
-        [sizesResponseData appendData:data];
-    }
-    else if([connection isEqual:createNewDropletConnection])
+    if([connection isEqual:createNewDropletConnection])
     {
         [createDropletResponseData appendData:data];
     }
@@ -153,46 +175,8 @@
 {
     NSError *error;
     NSDictionary* json;
-    
-    if([connection isEqual:availableImagesConnection])
-    {
-        json = [NSJSONSerialization
-                JSONObjectWithData:imagesResponseData
-                options:NSUTF8StringEncoding
-                error:&error];
-    }
-    else if([connection isEqual:availableSizesConnection])
-    {
-        json = [NSJSONSerialization
-                JSONObjectWithData:sizesResponseData
-                options:NSUTF8StringEncoding
-                error:&error];
-    }
-    else if([connection isEqual:createNewDropletConnection])
-    {
-        json = [NSJSONSerialization
-                JSONObjectWithData:createDropletResponseData
-                options:NSUTF8StringEncoding
-                error:&error];
-    }
-    
-    if([connection isEqual:availableImagesConnection] && json != nil)
-    {
-        availableImages = [NSArray arrayWithArray:json[@"images"]];
-        for(NSDictionary *image in availableImages)
-        {
-            [self.availableImagesPopup addItemWithTitle:image[@"name"]];
-        }
-    }
-    else if([connection isEqual:availableSizesConnection] && json != nil)
-    {
-        availableSizes = [NSArray arrayWithArray:json[@"sizes"]];
-        for(NSDictionary *image in availableSizes)
-        {
-            [self.availableSizePopup addItemWithTitle:image[@"name"]];
-        }
-    }
-    else if([connection isEqual:createNewDropletConnection])
+
+    if([connection isEqual:createNewDropletConnection])
     {
         NSLog(@"%@", json);
         
@@ -228,6 +212,25 @@
 - (void)connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
 {
     NSLog(@"%@", [error description]);
+}
+
+#pragma mark -
+#pragma mark Notification methods
+
+- (void) receivedNotification:(NSNotification *) notification
+{
+    
+    if ([[notification name] isEqualToString:@"imagesLoaded"]) {
+        
+        availableImages = dropletManager.images;
+        [self loadAvailableImages];
+        DLog(@"Images Loaded");
+    } else if ([[notification name] isEqualToString:@"sizesLoaded"]) {
+        
+        availableSizes = dropletManager.sizes;
+        [self loadAvailableSizes];
+        DLog(@"Sizes Loaded");
+    }
 }
 
 @end

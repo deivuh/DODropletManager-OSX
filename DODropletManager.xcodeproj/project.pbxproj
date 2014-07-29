@@ -188,6 +188,9 @@
 			children = (
 				4DC5DB11190CEA0A0080C9CD /* AppDelegate.h */,
 				4DC5DB12190CEA0A0080C9CD /* AppDelegate.m */,
+				DB835655190EE9C400B62EA0 /* DropletFormWindow.xib */,
+				DB835652190EE99900B62EA0 /* DropletFormWindowController.h */,
+				DB835653190EE99900B62EA0 /* DropletFormWindowController.m */,
 				4D20C35D19173DA1008A0E2C /* DropletManager.h */,
 				4D20C35E19173DA1008A0E2C /* DropletManager.m */,
 				4DC5DB39190D030C0080C9CD /* PreferencesWindow.xib */,
@@ -200,9 +203,6 @@
 				4DC5DB14190CEA0A0080C9CD /* MainMenu.xib */,
 				4DC5DB17190CEA0A0080C9CD /* Images.xcassets */,
 				4DC5DB06190CEA0A0080C9CD /* Supporting Files */,
-				DB835652190EE99900B62EA0 /* DropletFormWindowController.h */,
-				DB835653190EE99900B62EA0 /* DropletFormWindowController.m */,
-				DB835655190EE9C400B62EA0 /* DropletFormWindow.xib */,
 				DB835657190F4B9E00B62EA0 /* NSString+URLEncode.h */,
 				DB835658190F4B9E00B62EA0 /* NSString+URLEncode.m */,
 			);

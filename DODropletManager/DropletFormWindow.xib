@@ -52,7 +52,7 @@
                             <menu key="menu" title="OtherViews" id="3Ia-dG-sDc"/>
                         </popUpButtonCell>
                         <connections>
-                            <action selector="didSelectImage:" target="-2" id="xzf-em-bxh"/>
+                            <action selector="didSelectImage:" target="-2" id="uJi-uX-vZp"/>
                         </connections>
                     </popUpButton>
                     <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0I8-GF-FcC">

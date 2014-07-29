@@ -10,14 +10,7 @@
 #import "KeychainAccess.h"
 
 @implementation DropletManager {
-    NSMutableData *responseData;
-    NSURLConnection *dropletsConnection, *regionsConnection, *imagesConnection, *testConnection;
-    NSURLConnection *rebootDropletConnection, *shutdownDropletConnection, *turnOnDropletConnection, *deleteDropletConnection;
-    NSMutableDictionary *regions;
-    NSMutableDictionary *images;
-    
-    BOOL connectionSuccessful;
-    NSUserDefaults *userDefaults;
+
     
 }
 
@@ -82,7 +75,7 @@
     testConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
     
     if(testConnection) {
-        responseData = [[NSMutableData alloc] init];
+        testResponseData = [[NSMutableData alloc] init];
         DLog(@"Connection started for :%@", urlRequest);
     } else {
         DLog(@"connection failed");
@@ -103,7 +96,7 @@
     regionsConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
     
     if(regionsConnection) {
-        responseData = [[NSMutableData alloc] init];
+        regionsResponseData = [[NSMutableData alloc] init];
         DLog(@"Connection started for :%@", urlRequest);
     } else {
         DLog(@"connection failed");
@@ -122,7 +115,23 @@
     imagesConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
     
     if(imagesConnection) {
-        responseData = [[NSMutableData alloc] init];
+        imagesResponseData = [[NSMutableData alloc] init];
+    } else {
+        DLog(@"connection failed");
+    }
+}
+
+- (void) requestSizes {
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.digitalocean.com/v2/sizes"]];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    
+    [urlRequest setValue:[NSString stringWithFormat:@"Bearer %@", _accessToken] forHTTPHeaderField:@"Authorization"];
+    
+    
+    sizesConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
+    
+    if(sizesConnection) {
+        sizesResponseData = [[NSMutableData alloc] init];
     } else {
         DLog(@"connection failed");
     }
@@ -137,6 +146,7 @@
     
     
     [urlRequest setValue:[NSString stringWithFormat:@"Bearer %@", _accessToken] forHTTPHeaderField:@"Authorization"];
+    [urlRequest addValue:@"application/x-www-form-urlencoded" forHTTPHeaderField:@"Content-Type"];
     
     DLog(@"Auth token %@", _accessToken);
     
@@ -151,7 +161,7 @@
     dropletsConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
     
     if(dropletsConnection) {
-        responseData = [[NSMutableData alloc] init];
+        dropletsResponseData = [[NSMutableData alloc] init];
     } else {
         DLog(@"connection failed");
     }
@@ -186,56 +196,129 @@
     
     
     if(rebootDropletConnection) {
-        responseData = [[NSMutableData alloc] init];
+        rebootDropletResponseData = [[NSMutableData alloc] init];
     } else {
         DLog(@"connection failed");
     }
 }
 
-//- (void) requestShutdownForDroplet:(Droplet*)droplet {
-//    
-//    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.digitalocean.com/droplets/%@/shutdown/?client_id=%@&api_key=%@", droplet.dropletID, _clientID, _APIKey]];
-//    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
-//    shutdownDropletConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
-//    
-//    if(shutdownDropletConnection) {
-//        responseData = [[NSMutableData alloc] init];
-//    } else {
-//        DLog(@"connection failed");
-//    }
-//    
-//}
-//
-//- (void) requestTurnOnForDroplet:(Droplet*)droplet {
-//    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.digitalocean.com/droplets/%@/power_on/?client_id=%@&api_key=%@", droplet.dropletID, _clientID, _APIKey]];
-//    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
-//    turnOnDropletConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
-//    
-//    DLog(@"Request turnOn %@", urlRequest.URL);
-//    
-//    if(turnOnDropletConnection) {
-//        responseData = [[NSMutableData alloc] init];
-//    } else {
-//        DLog(@"connection failed");
-//    }
-//}
-//
-//- (void)requestDeleteForDroplet:(Droplet*)droplet
-//{
-//    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.digitalocean.com/droplets/%@/destroy/?client_id=%@&api_key=%@&scrub_data=true", droplet.dropletID, _clientID, _APIKey]];
-//    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:60.0];
-//    deleteDropletConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
-//}
+
+
+- (void)requestDeleteForDroplet:(Droplet*)droplet
+{
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.digitalocean.com/v2/droplets/%@/", droplet.dropletID]];
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
+    
+    [urlRequest setValue:[NSString stringWithFormat:@"Bearer %@", _accessToken] forHTTPHeaderField:@"Authorization"];
+    
+    [urlRequest setHTTPMethod:@"DELETE"];
+    
+    DLog(@"DELETE FIELDS %@", [urlRequest allHTTPHeaderFields]);
+    
+    deleteDropletConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
+    
+    
+    if(deleteDropletConnection) {
+        deleteDropletResponseData = [[NSMutableData alloc] init];
+    } else {
+        DLog(@"connection failed");
+    }
+
+}
+
+- (void)requestCreateDroplet:(Droplet*)droplet {
+    
+    
+    NSError *error;
+    
+    NSURL *url = [NSURL URLWithString:@"https://api.digitalocean.com/v2/droplets/"];
+    
+    NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0f];
+    
+    DLog(@"Auth line %@", [NSString stringWithFormat:@"Bearer %@", _accessToken]);
+    
+    [urlRequest setValue:[NSString stringWithFormat:@"Bearer %@", _accessToken] forHTTPHeaderField:@"Authorization"];
+    
+    NSDictionary* jsonDictionary = [NSDictionary dictionaryWithObjectsAndKeys:
+                                    droplet.name, @"name",
+                                    droplet.regionID, @"region",
+                                    droplet.sizeID, @"size",
+                                    droplet.imageID, @"image",
+                                    nil];
+    
+    NSData *bodyData = [NSJSONSerialization dataWithJSONObject:jsonDictionary options:NSJSONWritingPrettyPrinted error:&error];
+    
+    [urlRequest setHTTPMethod:@"POST"];
+    [urlRequest setHTTPBody:bodyData];
+    [urlRequest addValue:@"application/json" forHTTPHeaderField:@"Content-Type"];
+    
+    DLog(@"Sending request %@", [urlRequest description]);
+    
+    createDropletConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
+    
+    
+    
+    if(createDropletConnection) {
+        createDropletResponseData = [[NSMutableData alloc] init];
+    } else {
+        DLog(@"connection failed");
+    }
+    
+}
 
 
 - (void) connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response
 {
-    [responseData setLength:0];
+    
+    if (connection == dropletsConnection) {
+        [dropletsResponseData setLength:0];
+    } else if (connection == regionsConnection) {
+        [regionsResponseData setLength:0];
+    } else if (connection == imagesConnection) {
+        [imagesResponseData setLength:0];
+    } else if (connection == testConnection) {
+        [testResponseData setLength:0];
+    } else if (connection == sizesConnection) {
+        [sizesResponseData setLength:0];
+    } else if (connection == rebootDropletConnection) {
+        [rebootDropletResponseData setLength:0];
+    } else if (connection == shutdownDropletConnection) {
+        [shutdownDropletResponseData setLength:0];
+    } else if (connection == turnOnDropletConnection) {
+        [turnOnDropletResponseData setLength:0];
+    } else if (connection == deleteDropletConnection) {
+        [deleteDropletResponseData setLength:0];
+    } else if (connection == createDropletConnection) {
+        [createDropletResponseData setLength:0];
+    }
+    
+    
 }
 
 - (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data
 {
-    [responseData appendData:data];
+    if (connection == dropletsConnection) {
+        [dropletsResponseData appendData:data];
+    } else if (connection == regionsConnection) {
+        [regionsResponseData appendData:data];
+    } else if (connection == imagesConnection) {
+        [imagesResponseData appendData:data];
+    } else if (connection == testConnection) {
+        [testResponseData appendData:data];
+    } else if (connection == sizesConnection) {
+        [sizesResponseData appendData:data];
+    } else if (connection == rebootDropletConnection) {
+        [rebootDropletResponseData appendData:data];
+    } else if (connection == shutdownDropletConnection) {
+        [shutdownDropletResponseData appendData:data];
+    } else if (connection == turnOnDropletConnection) {
+        [turnOnDropletResponseData appendData:data];
+    } else if (connection == deleteDropletConnection) {
+        [deleteDropletResponseData appendData:data];
+    } else if (connection == createDropletConnection) {
+        [createDropletResponseData appendData:data];
+    }
+    
 }
 
 - (void) connection:(NSURLConnection *)connection didFailWithError:(NSError *)error
@@ -245,9 +328,13 @@
     
     DLog(@"connection error");
     
-    [[NSNotificationCenter defaultCenter]
-     postNotificationName:@"dropletsFailed"
-     object:self];
+    if (connection == dropletsConnection) {
+        
+        [[NSNotificationCenter defaultCenter]
+         postNotificationName:@"dropletsFailed"
+         object:self];
+    }
+    
 
 }
 
@@ -255,10 +342,70 @@
 {
     NSError *error;
     
-    NSDictionary* json = [NSJSONSerialization
-                          JSONObjectWithData:responseData
-                          options:NSUTF8StringEncoding
-                          error:&error];
+    NSDictionary* json;
+    
+    
+    if (connection == dropletsConnection) {
+        json = [NSJSONSerialization
+         JSONObjectWithData:dropletsResponseData
+         options:NSUTF8StringEncoding
+         error:&error];
+        
+        DLog(@"JSON %@", json);
+
+    } else if (connection == regionsConnection) {
+        json = [NSJSONSerialization
+         JSONObjectWithData:regionsResponseData
+         options:NSUTF8StringEncoding
+         error:&error];
+        
+    } else if (connection == imagesConnection) {
+        json = [NSJSONSerialization
+         JSONObjectWithData:imagesResponseData
+         options:NSUTF8StringEncoding
+         error:&error];
+        
+    } else if (connection == testConnection) {
+        json = [NSJSONSerialization
+         JSONObjectWithData:testResponseData
+         options:NSUTF8StringEncoding
+         error:&error];
+        
+    } else if (connection == sizesConnection) {
+        json = [NSJSONSerialization
+         JSONObjectWithData:sizesResponseData
+         options:NSUTF8StringEncoding
+         error:&error];
+        
+    } else if (connection == rebootDropletConnection) {
+        json = [NSJSONSerialization
+         JSONObjectWithData:rebootDropletResponseData
+         options:NSUTF8StringEncoding
+         error:&error];
+        
+    } else if (connection == shutdownDropletConnection) {
+        json = [NSJSONSerialization
+         JSONObjectWithData:shutdownDropletResponseData
+         options:NSUTF8StringEncoding
+         error:&error];
+        
+    } else if (connection == turnOnDropletConnection) {
+        json = [NSJSONSerialization
+         JSONObjectWithData:turnOnDropletResponseData
+         options:NSUTF8StringEncoding
+         error:&error];
+        
+    } else if (connection == deleteDropletConnection) {
+        json = [NSJSONSerialization
+         JSONObjectWithData:deleteDropletResponseData
+         options:NSUTF8StringEncoding
+         error:&error];
+    } else if (connection == createDropletConnection) {
+        json = [NSJSONSerialization
+                JSONObjectWithData:createDropletResponseData
+                options:NSUTF8StringEncoding
+                error:&error];
+    }
     
 
     
@@ -302,29 +449,32 @@
             
 
         } else  if (connection == regionsConnection) {
-            NSArray *tempRegionsArray = [json objectForKey:@"regions"];
-            regions = [[NSMutableDictionary alloc] init];
-            
-            for (NSDictionary *region in tempRegionsArray) {
-                NSString *regionID = [region objectForKey:@"id"];
-                NSString *regionName = [region objectForKey:@"name"];
+            if ([json objectForKey:@"regions"]) {
                 
-                [regions setObject:regionName forKey:regionID];
+                _regions = [json objectForKey:@"regions"];
             }
             
-//            [self requestImages];
+            
+
         } else  if (connection == imagesConnection) {
-            NSArray *tempImagesArray = [json objectForKey:@"images"];
-            images = [[NSMutableDictionary alloc] init];
-            
-            for (NSDictionary *image in tempImagesArray) {
-                NSString *imageID = [image objectForKey:@"id"];
-                NSString *distro = [image objectForKey:@"name"];
+            if ([json objectForKey:@"images"]) {
+                _images = [json objectForKey:@"images"];
                 
-                [images setObject:distro forKey:imageID];
+                [[NSNotificationCenter defaultCenter]
+                 postNotificationName:@"imagesLoaded"
+                 object:nil];
             }
             
-//            [self requestDroplets];
+        } else if (connection == sizesConnection) {
+            if ([json objectForKey:@"sizes"]) {
+                _sizes = [json objectForKey:@"sizes"];
+                
+                [[NSNotificationCenter defaultCenter]
+                 postNotificationName:@"sizesLoaded"
+                 object:nil];
+            }
+            
+
         } else  if (connection == rebootDropletConnection) {
             DLog(@"Results :%@", json);
 //            DLog(@"Result status %@", [json objectForKey:@"status"]);
@@ -336,7 +486,11 @@
             DLog(@"Result status %@", json);
 
         } else if (connection == deleteDropletConnection) {
-            [self refreshDroplets];
+//            [self refreshDroplets];
+            DLog(@"Result status %@", json);
+        } else if (connection == createDropletConnection) {
+            //            [self refreshDroplets];
+            DLog(@"Result status %@", json);
         }
     }
 }
@@ -362,7 +516,7 @@
 
 - (void)deleteDroplet:(Droplet *)droplet
 {
-//    [self requestDeleteForDroplet:droplet];
+    [self requestDeleteForDroplet:droplet];
 }
 
 - (BOOL)isConnectionSuccessful {
