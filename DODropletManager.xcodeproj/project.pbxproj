@@ -62,6 +62,7 @@
 		4D1FB3CD1988958A00EA7059 /* LaunchAtLoginController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LaunchAtLoginController.h; sourceTree = "<group>"; };
 		4D1FB3CE1988958A00EA7059 /* LaunchAtLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchAtLoginController.m; sourceTree = "<group>"; };
 		4D1FB3CF1988958A00EA7059 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
+		4D1FB3D2198898BA00EA7059 /* DigitalOceanAPICredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DigitalOceanAPICredentials.h; sourceTree = "<group>"; };
 		4D20C35D19173DA1008A0E2C /* DropletManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropletManager.h; sourceTree = "<group>"; };
 		4D20C35E19173DA1008A0E2C /* DropletManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropletManager.m; sourceTree = "<group>"; };
 		4D260B4E19370D820079F48D /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
@@ -191,6 +192,7 @@
 				DB835652190EE99900B62EA0 /* DropletFormWindowController.h */,
 				DB835653190EE99900B62EA0 /* DropletFormWindowController.m */,
 				4D20C35D19173DA1008A0E2C /* DropletManager.h */,
+				4D1FB3D2198898BA00EA7059 /* DigitalOceanAPICredentials.h */,
 				4D20C35E19173DA1008A0E2C /* DropletManager.m */,
 				4DC5DB39190D030C0080C9CD /* PreferencesWindow.xib */,
 				4DC5DB3B190D03C30080C9CD /* PreferencesWindowController.h */,
