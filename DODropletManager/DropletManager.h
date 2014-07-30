@@ -10,6 +10,8 @@
 #import "Droplet.h"
 
 
+#define clientID <# Application client ID #>
+#define clientSecret <# Application client secret #>
 
 @protocol DropletManagerDelegate <NSObject>
 
