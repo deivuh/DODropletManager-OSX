@@ -7,5 +7,5 @@
 //
 
 
-#define clientID <# Application client ID #>
-#define clientSecret <# Application client secret #>
+#define clientID @"<# Application client ID #>"
+#define clientSecret @"<# Application client secret #>"
