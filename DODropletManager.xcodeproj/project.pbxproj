@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		4D1FB3D01988958A00EA7059 /* LaunchAtLoginController.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D1FB3CE1988958A00EA7059 /* LaunchAtLoginController.m */; };
 		4D1FB3D11988958A00EA7059 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = 4D1FB3CF1988958A00EA7059 /* README.md */; };
-		4D1FB3D4198899A500EA7059 /* Sparkle.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D1FB3D3198899A500EA7059 /* Sparkle.framework */; };
 		4D20C35F19173DA1008A0E2C /* DropletManager.m in Sources */ = {isa = PBXBuildFile; fileRef = 4D20C35E19173DA1008A0E2C /* DropletManager.m */; };
 		4D260B4F19370D820079F48D /* ScriptingBridge.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4D260B4E19370D820079F48D /* ScriptingBridge.framework */; };
 		4DC5DB00190CEA0A0080C9CD /* Cocoa.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4DC5DAFF190CEA0A0080C9CD /* Cocoa.framework */; };
@@ -61,7 +60,6 @@
 		4D1FB3CE1988958A00EA7059 /* LaunchAtLoginController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LaunchAtLoginController.m; sourceTree = "<group>"; };
 		4D1FB3CF1988958A00EA7059 /* README.md */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = README.md; sourceTree = "<group>"; };
 		4D1FB3D2198898BA00EA7059 /* DigitalOceanAPICredentials.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DigitalOceanAPICredentials.h; sourceTree = "<group>"; };
-		4D1FB3D3198899A500EA7059 /* Sparkle.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Sparkle.framework; sourceTree = "<group>"; };
 		4D20C35D19173DA1008A0E2C /* DropletManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DropletManager.h; sourceTree = "<group>"; };
 		4D20C35E19173DA1008A0E2C /* DropletManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DropletManager.m; sourceTree = "<group>"; };
 		4D260B4E19370D820079F48D /* ScriptingBridge.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ScriptingBridge.framework; path = System/Library/Frameworks/ScriptingBridge.framework; sourceTree = SDKROOT; };
@@ -107,7 +105,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				4DEF8DC3193AD14C009D3AAA /* ApplicationServices.framework in Frameworks */,
-				4D1FB3D4198899A500EA7059 /* Sparkle.framework in Frameworks */,
 				4D260B4F19370D820079F48D /* ScriptingBridge.framework in Frameworks */,
 				65E32DB0190F7A4900476F2B /* Security.framework in Frameworks */,
 				4DC5DB00190CEA0A0080C9CD /* Cocoa.framework in Frameworks */,
@@ -163,7 +160,6 @@
 				4D260B5219370FAF0079F48D /* iTerm.h */,
 				4D260B4E19370D820079F48D /* ScriptingBridge.framework */,
 				65E32DAF190F7A4900476F2B /* Security.framework */,
-				4D1FB3D3198899A500EA7059 /* Sparkle.framework */,
 				4DC5DAFF190CEA0A0080C9CD /* Cocoa.framework */,
 				4DC5DB1E190CEA0A0080C9CD /* XCTest.framework */,
 				4DC5DB01190CEA0A0080C9CD /* Other Frameworks */,
