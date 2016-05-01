@@ -465,8 +465,8 @@
         delta = -delta;
     }
     
-    NSImage *img1 = [NSImage imageNamed:@"DropletStatusIconHighlightedTemplate"];
-    NSImage *img2 = [NSImage imageNamed:@"DropletStatusIconTemplate"];
+    NSImage *img1 = [NSImage imageNamed:@"dropletStatusIconHighlightedTemplate"];
+    NSImage *img2 = [NSImage imageNamed:@"dropletStatusIconTemplate"];
     NSSize size = img1.size;
     NSImage *img = [[NSImage alloc] initWithSize: size];
     NSRect r = NSMakeRect(0, 0, size.width, size.height);
@@ -498,7 +498,7 @@
         refreshMI.title = NSLocalizedString(@"Refresh", @"Refresh");
         refreshMI.action = @selector(refresh:);
     
-        [self setStatusImage: @"DropletStatusIconFailedTemplate"];
+        [self setStatusImage: @"dropletStatusIconFailedTemplate"];
         
     }
 }
