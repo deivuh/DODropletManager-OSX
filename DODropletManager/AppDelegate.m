@@ -127,7 +127,7 @@
         _statusItem = [[NSStatusBar systemStatusBar] statusItemWithLength:NSVariableStatusItemLength];
         
         _statusItem.title = @"";
-        _statusItem.alternateImage = [NSImage imageNamed:@"DropletStatusIconHighlighted"];
+        _statusItem.alternateImage = [NSImage imageNamed:@"dropletStatusIconHighlightedTemplate"];
         _statusItem.highlightMode = YES;
         menu = [[NSMenu alloc] init];
         addItems = YES;
@@ -140,7 +140,7 @@
         }
     }
     
-    [self setStatusImage: @"DropletStatusIcon"];
+    [self setStatusImage: @"dropletStatusIconTemplate"];
     
     int dropletMIIndex = 0;
     
@@ -175,21 +175,21 @@
         
         NSMenuItem *viewOnWebMI = [[NSMenuItem alloc] initWithTitle:@"View on website" action:@selector(viewDropletOnBrowser:) keyEquivalent:@""];
         
-        [viewOnWebMI setImage:[NSImage imageNamed:@"info-icon"]];
+        [viewOnWebMI setImage:[NSImage imageNamed:@"infoIconTemplate"]];
         [viewOnWebMI setRepresentedObject:droplet];
         
         [submenu addItem:viewOnWebMI];
         
         NSMenuItem *connectToDroplet = [[NSMenuItem alloc] initWithTitle:@"Connect to Droplet" action:@selector(establishSSHConnectionToDroplet:) keyEquivalent:@""];
         
-        [connectToDroplet setImage:[NSImage imageNamed:@"ssh-icon"]];
+        [connectToDroplet setImage:[NSImage imageNamed:@"sshIconTemplate"]];
         [connectToDroplet setRepresentedObject:droplet];
         
         [submenu addItem:connectToDroplet];
         
         NSMenuItem *rebootMI = [[NSMenuItem alloc] initWithTitle:@"Reboot" action:@selector(confirmReboot:) keyEquivalent:@""];
         
-        [rebootMI setImage:[NSImage imageNamed:@"reboot-icon"]];
+        [rebootMI setImage:[NSImage imageNamed:@"rebootIconTemplate"]];
         [rebootMI setRepresentedObject:droplet];
         
         [submenu addItem:rebootMI];
@@ -197,7 +197,7 @@
         if (droplet.active) {
             NSMenuItem *shutdownMI = [[NSMenuItem alloc] initWithTitle:@"Shutdown" action:@selector(confirmShutdown:) keyEquivalent:@""];
             
-            [shutdownMI setImage:[NSImage imageNamed:@"power-icon"]];
+            [shutdownMI setImage:[NSImage imageNamed:@"powerIconTemplate"]];
             [shutdownMI setRepresentedObject:droplet];
             
             [submenu addItem:shutdownMI];
@@ -205,7 +205,7 @@
         } else {
 
             NSMenuItem *turnOnMI = [[NSMenuItem alloc] initWithTitle:@"Power On" action:@selector(turnOnDroplet:) keyEquivalent:@""];
-            [turnOnMI setImage:[NSImage imageNamed:@"power-icon"]];
+            [turnOnMI setImage:[NSImage imageNamed:@"powerIconTemplate"]];
             [turnOnMI setRepresentedObject:droplet];
         
             [submenu addItem:turnOnMI];
@@ -213,7 +213,7 @@
         
         NSMenuItem *deleteDropletMI = [[NSMenuItem alloc] initWithTitle:@"Delete Droplet" action:@selector(confirmDropletDeletion:) keyEquivalent:@""];
         
-        [deleteDropletMI setImage:[NSImage imageNamed:@"trash-icon"]];
+        [deleteDropletMI setImage:[NSImage imageNamed:@"trashIconTemplate"]];
         [deleteDropletMI setRepresentedObject:droplet];
         
         [submenu addItem:deleteDropletMI];
@@ -465,8 +465,8 @@
         delta = -delta;
     }
     
-    NSImage *img1 = [NSImage imageNamed:@"DropletStatusIconHighlighted"];
-    NSImage *img2 = [NSImage imageNamed:@"DropletStatusIcon"];
+    NSImage *img1 = [NSImage imageNamed:@"DropletStatusIconHighlightedTemplate"];
+    NSImage *img2 = [NSImage imageNamed:@"DropletStatusIconTemplate"];
     NSSize size = img1.size;
     NSImage *img = [[NSImage alloc] initWithSize: size];
     NSRect r = NSMakeRect(0, 0, size.width, size.height);
@@ -474,7 +474,8 @@
     [img1 drawInRect: r fromRect: r operation: NSCompositeCopy fraction: 1.0];
     [img2 drawInRect: r fromRect: r operation: NSCompositeSourceOver fraction: fade];
     [img unlockFocus];
-    
+    [img setTemplate:YES];
+
     _statusItem.image = img;
 }
 
@@ -497,7 +498,7 @@
         refreshMI.title = NSLocalizedString(@"Refresh", @"Refresh");
         refreshMI.action = @selector(refresh:);
     
-        [self setStatusImage: @"DropletStatusIconFailed"];
+        [self setStatusImage: @"DropletStatusIconFailedTemplate"];
         
     }
 }
