@@ -12,6 +12,7 @@
                 <outlet property="iTermCB" destination="U09-XW-9Aa" id="DG7-9j-Sp3"/>
                 <outlet property="launchAtLoginCB" destination="KD1-dT-rrM" id="tpD-oB-epf"/>
                 <outlet property="linkAccountBT" destination="U09-XW-9Aa" id="yJe-n5-Y9G"/>
+                <outlet property="publicIPsCB" destination="QG9-Wc-ZbG" id="aHo-JD-fsX"/>
                 <outlet property="sshUsersTableview" destination="DYV-7b-R4f" id="vsR-G4-qcB"/>
                 <outlet property="statusLB" destination="xxQ-Fx-vOU" id="Szj-nc-Ro5"/>
                 <outlet property="tokenLB" destination="NEJ-Wc-cO8" id="DxW-4r-hFO"/>
@@ -247,6 +248,16 @@
                                             </buttonCell>
                                             <connections>
                                                 <action selector="checkLaunchAtLogin:" target="-2" id="dwi-cY-zaE"/>
+                                            </connections>
+                                        </button>
+                                        <button fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="QG9-Wc-ZbG">
+                                            <rect key="frame" x="15" y="149" width="225" height="18"/>
+                                            <buttonCell key="cell" type="check" title="Use public IP addresses" bezelStyle="regularSquare" imagePosition="left" state="on" inset="2" id="U6v-Sg-goJ">
+                                                <behavior key="behavior" changeContents="YES" doesNotDimImage="YES" lightByContents="YES"/>
+                                                <font key="font" metaFont="system"/>
+                                            </buttonCell>
+                                            <connections>
+                                                <action selector="publicIPsChecked:" target="-2" id="vx3-uu-wdA"/>
                                             </connections>
                                         </button>
                                     </subviews>
