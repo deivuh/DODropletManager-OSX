@@ -432,8 +432,11 @@
             
             NSArray *tempDropletsArray = [json objectForKey:@"droplets"];
             _droplets = [[NSMutableArray alloc] init];
-            
-            for (NSDictionary *dropletDictionary in tempDropletsArray) {
+
+            NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"name"  ascending:YES];
+            NSArray *sortedDropletsArray = [tempDropletsArray sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]];
+
+            for (NSDictionary *dropletDictionary in sortedDropletsArray) {
                 Droplet *droplet = [[Droplet alloc] initWithDictionary:dropletDictionary];
                 [_droplets addObject:droplet];
             }
