@@ -140,7 +140,7 @@
 - (void) requestDroplets {
     DLog(@"Request droplets");
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.digitalocean.com/v2/droplets"]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.digitalocean.com/v2/droplets?page=1&per_page=1000"]];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     
     
