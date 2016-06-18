@@ -140,7 +140,7 @@
 - (void) requestDroplets {
     DLog(@"Request droplets");
     
-    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.digitalocean.com/v2/droplets"]];
+    NSURL *url = [NSURL URLWithString:[NSString stringWithFormat:@"https://api.digitalocean.com/v2/droplets?page=1&per_page=1000"]];
     NSMutableURLRequest *urlRequest = [NSMutableURLRequest requestWithURL:url];
     
     
@@ -432,8 +432,11 @@
             
             NSArray *tempDropletsArray = [json objectForKey:@"droplets"];
             _droplets = [[NSMutableArray alloc] init];
-            
-            for (NSDictionary *dropletDictionary in tempDropletsArray) {
+
+            NSSortDescriptor *descriptor = [[NSSortDescriptor alloc] initWithKey:@"name"  ascending:YES];
+            NSArray *sortedDropletsArray = [tempDropletsArray sortedArrayUsingDescriptors:[NSArray arrayWithObjects:descriptor,nil]];
+
+            for (NSDictionary *dropletDictionary in sortedDropletsArray) {
                 Droplet *droplet = [[Droplet alloc] initWithDictionary:dropletDictionary];
                 [_droplets addObject:droplet];
             }

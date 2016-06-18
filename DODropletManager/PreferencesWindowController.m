@@ -102,7 +102,11 @@
     } else
         [_iTermCB setState:NSOffState];
 
-    
+    if ([[userdefaults valueForKey:@"publicIPs"] boolValue]) {
+        [_publicIPsCB setState:NSOnState];
+    } else
+        [_publicIPsCB setState:NSOffState];
+
     dropletManager.delegate = self;
     
     [_tokenLB setStringValue:dropletManager.accessToken];
@@ -136,6 +140,12 @@
         
         [launchController setLaunchAtLogin:[sender state]];
 
+
+}
+
+- (IBAction)publicIPsChecked:(id)sender {
+    [userdefaults setValue:[NSNumber numberWithBool:_publicIPsCB.state] forKey:@"publicIPs"];
+    [userdefaults synchronize];
 
 }
 

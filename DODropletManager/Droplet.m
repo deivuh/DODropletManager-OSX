@@ -12,12 +12,15 @@
 
 - (id) initWithDictionary:(NSDictionary*) dictionary {
     
+    int index = 0;
+    if ([[[NSUserDefaults standardUserDefaults] valueForKey:@"publicIPs"] boolValue]) index = 1;
+
     if (self = [super init]) {
         
         DLog(@"Dictionary: %@", dictionary);
         
         _name = [dictionary objectForKey:@"name"];
-        _ip = [[[[dictionary objectForKey:@"networks"] objectForKey:@"v4"] objectAtIndex:0] objectForKey:@"ip_address"];
+        _ip = [[[[dictionary objectForKey:@"networks"] objectForKey:@"v4"] objectAtIndex:index] objectForKey:@"ip_address"];
         _dropletID = [dictionary objectForKey:@"id"];
 //        _imageID = [dictionary objectForKey:@"image_id"];
 //        _sizeID = [dictionary objectForKey:@"size_id"];

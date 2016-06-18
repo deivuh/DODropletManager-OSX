@@ -24,6 +24,9 @@
 @property (weak) IBOutlet NSButton *linkAccountBT;
 
 @property (weak) IBOutlet NSButton *iTermCB;
+
+@property (weak) IBOutlet NSButton *publicIPsCB;
+
 @property (weak) IBOutlet NSTextField *versionLabel;
 
 @property (weak) IBOutlet NSTextField *tokenLB;
