@@ -8,14 +8,12 @@
         <customObject id="-2" userLabel="File's Owner" customClass="PreferencesWindowController">
             <connections>
                 <outlet property="accountNameLB" destination="pkc-9S-kCd" id="8BH-VH-lwd"/>
-                <outlet property="checkLaunchAtLogin" destination="KD1-dT-rrM" id="cll-pU-bt6"/>
                 <outlet property="iTermCB" destination="2hf-Rh-gUd" id="Va5-sg-1Xk"/>
                 <outlet property="launchAtLoginCB" destination="KD1-dT-rrM" id="tpD-oB-epf"/>
                 <outlet property="linkAccountBT" destination="U09-XW-9Aa" id="yJe-n5-Y9G"/>
                 <outlet property="publicIPsCB" destination="QG9-Wc-ZbG" id="aHo-JD-fsX"/>
                 <outlet property="sshUsersTableview" destination="DYV-7b-R4f" id="vsR-G4-qcB"/>
                 <outlet property="statusLB" destination="xxQ-Fx-vOU" id="Szj-nc-Ro5"/>
-                <outlet property="tokenLB" destination="NEJ-Wc-cO8" id="DxW-4r-hFO"/>
                 <outlet property="versionLabel" destination="4uE-tQ-30Y" id="ESY-GI-H41"/>
             </connections>
         </customObject>
@@ -320,7 +318,6 @@
             <size key="contentSize" width="100" height="100"/>
             <size key="maxContentSize" width="10000" height="10000"/>
         </drawer>
-        <customObject id="fYl-oT-ujy" customClass="SUUpdater"/>
         <button verticalHuggingPriority="750" id="dhH-Xi-OKp">
             <rect key="frame" x="0.0" y="0.0" width="94" height="43"/>
             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>

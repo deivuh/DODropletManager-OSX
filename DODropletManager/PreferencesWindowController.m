@@ -84,14 +84,6 @@
         [self.versionLabel setStringValue:@""];
     }
     
-//    if([KeychainAccess getClientId: &clientId andAPIKey: &apiKey error: nil]) {
-//        [_ClientIDTF setStringValue: clientId];
-//        [_APIKeyTF setStringValue: apiKey];
-//    }
-    
-    
-
-    
     [self registerAppURL];
 
 
@@ -108,9 +100,6 @@
         [_publicIPsCB setState:NSOffState];
 
     dropletManager.delegate = self;
-    
-    [_tokenLB setStringValue:dropletManager.accessToken];
-    
 
     if ([dropletManager isConnectionSuccessful]) {
         [_statusLB setStringValue:@"Connected"];
@@ -346,8 +335,6 @@
         
         
     }
-    
-//    cellView.objectValue = cellView.textField;
     
     [userdefaults setObject:sshUserDictionary forKey:@"sshUserDictionary"];
     [userdefaults setObject:sshPortDictionary forKey:@"sshPortDictionary"];

@@ -22,10 +22,6 @@
         _name = [dictionary objectForKey:@"name"];
         _ip = [[[[dictionary objectForKey:@"networks"] objectForKey:@"v4"] objectAtIndex:index] objectForKey:@"ip_address"];
         _dropletID = [dictionary objectForKey:@"id"];
-//        _imageID = [dictionary objectForKey:@"image_id"];
-//        _sizeID = [dictionary objectForKey:@"size_id"];
-//        _regionID = [dictionary objectForKey:@"region_id"];
-//        _privateIP = [dictionary objectForKey:@"private_ip_address"];
         _createdAt = [dictionary objectForKey:@"created_at"];
         _status = [[dictionary objectForKey:@"status"] uppercaseString];
         
