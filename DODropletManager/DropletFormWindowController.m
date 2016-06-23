@@ -173,7 +173,6 @@
 
 - (void)connectionDidFinishLoading:(NSURLConnection *)connection
 {
-    NSError *error;
     NSDictionary* json;
 
     if([connection isEqual:createNewDropletConnection])

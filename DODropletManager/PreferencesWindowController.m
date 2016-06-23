@@ -108,9 +108,6 @@
         [_publicIPsCB setState:NSOffState];
 
     dropletManager.delegate = self;
-    
-    [_tokenLB setStringValue:dropletManager.accessToken];
-    
 
     if ([dropletManager isConnectionSuccessful]) {
         [_statusLB setStringValue:@"Connected"];
