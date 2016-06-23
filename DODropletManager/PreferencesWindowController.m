@@ -84,14 +84,6 @@
         [self.versionLabel setStringValue:@""];
     }
     
-//    if([KeychainAccess getClientId: &clientId andAPIKey: &apiKey error: nil]) {
-//        [_ClientIDTF setStringValue: clientId];
-//        [_APIKeyTF setStringValue: apiKey];
-//    }
-    
-    
-
-    
     [self registerAppURL];
 
 
@@ -343,8 +335,6 @@
         
         
     }
-    
-//    cellView.objectValue = cellView.textField;
     
     [userdefaults setObject:sshUserDictionary forKey:@"sshUserDictionary"];
     [userdefaults setObject:sshPortDictionary forKey:@"sshPortDictionary"];

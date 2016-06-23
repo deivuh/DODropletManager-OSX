@@ -480,7 +480,6 @@
 
         } else  if (connection == rebootDropletConnection) {
             DLog(@"Results :%@", json);
-//            DLog(@"Result status %@", [json objectForKey:@"status"]);
 
         } else  if (connection == shutdownDropletConnection) {
             DLog(@"Result status %@", json);
@@ -489,10 +488,8 @@
             DLog(@"Result status %@", json);
 
         } else if (connection == deleteDropletConnection) {
-//            [self refreshDroplets];
             DLog(@"Result status %@", json);
         } else if (connection == createDropletConnection) {
-            //            [self refreshDroplets];
             DLog(@"Result status %@", json);
         }
     }

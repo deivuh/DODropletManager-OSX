@@ -88,12 +88,6 @@
     newDroplet.regionID = regionID;
     
     [dropletManager requestCreateDroplet:newDroplet];
-    
-//    NSString *path = [NSString stringWithFormat:@"https://api.digitalocean.com/droplets/new/?client_id=%@&api_key=%@&name=%@&size_id=%@&image_id=%@&region_slug=%@", clientID, APIKey, [self.dropletNameField.stringValue urlEncode], sizeID, imageID, regionID];
-    
-//    NSURL *url = [NSURL URLWithString:path];
-//    NSURLRequest *urlRequest = [NSURLRequest requestWithURL:url cachePolicy:NSURLRequestUseProtocolCachePolicy timeoutInterval:30.0];
-//    createNewDropletConnection = [[NSURLConnection alloc] initWithRequest:urlRequest delegate:self];
 }
 
 - (void)cancelDroplet:(id)sender
