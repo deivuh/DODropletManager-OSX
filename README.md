@@ -11,7 +11,7 @@ Inspired by Andrewsomething's [DigitalOcean Indicator](http://blog.andrewsomethi
 - Open a SSH session to droplets
  
 
-##License
+## License
 DigitalOcean Droplets Manager for OSX Copyright (C) 2014 David Hsieh
 
     This program is free software: you can redistribute it and/or modify
